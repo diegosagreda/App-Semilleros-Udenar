@@ -1,0 +1,22 @@
+{
+  "menu": [
+    {
+      "url": "/",
+      "name": "Inicio",
+      "icon": "menu-icon tf-icons bx bx-home-circle",
+      "slug": "pages-home"
+    },
+    {
+      "url": "/coordinadores",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Coordinadores",
+      "slug": "pages-coordinadores"
+    },
+    {
+      "url": "/semilleros",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Semilleros",
+      "slug": "pages-semilleros"
+    }
+  ]
+}
