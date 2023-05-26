@@ -24,10 +24,10 @@ return new class extends Migration
             $table->string('fecha_nacimiento');
             $table->string('programa_academico');
             $table->string('areas_conocimiento');
-            $table->string('fecha_vinculacion');
-            $table->string('acuerdo_nombramiento');
+            $table->string('fecha_vinculacion')->nullable();
+            $table->string('acuerdo_nombramiento')->nullable();
             //Releacion apuntando al modelo semillero
-            $table->unsignedBigInteger('semillero_id');            
+            $table->unsignedBigInteger('semillero_id')->nullable();            
             $table->timestamps();
         });
     }

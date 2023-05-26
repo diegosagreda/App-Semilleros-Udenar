@@ -17,6 +17,24 @@
       "icon": "menu-icon tf-icons bx bx-file",
       "name": "Semilleros",
       "slug": "pages-semilleros"
+    },
+    {
+      "url": "/semilleristas",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Semilleristas",
+      "slug": "pages-semilleristas"
+    },
+    {
+      "url": "/proyectos",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Proyectos",
+      "slug": "pages-proyectos"
+    },
+    {
+      "url": "/eventos",
+      "icon": "menu-icon tf-icons bx bx-file",
+      "name": "Eventos",
+      "slug": "pages-eventos"
     }
   ]
 }

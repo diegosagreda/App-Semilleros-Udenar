@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -24,6 +25,13 @@ return new class extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
+        //Ingresamos super usuario por defecto
+        User::create([
+            'name' => 'Administracion',
+            'email' => 'admin',
+            'password' => password_hash('123', PASSWORD_DEFAULT)
+        ]);
+        
     }
 
     /**

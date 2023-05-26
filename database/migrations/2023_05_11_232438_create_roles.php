@@ -16,12 +16,11 @@ return new class extends Migration
     public function up()
     {
        $role1=Role::create(['name'=>'admin']);
-       $role2=Role::create(['name'=>'coordinador']);
-       $role3=Role::create(['name'=>'semillarista']);
-       //$user=User::find(1);
-       //$user->assignRole($role1);
-
-       
+       Role::create(['name'=>'coordinador']);
+       Role::create(['name'=>'semillarista']);
+       //Se agrega el rol admin al super usuario
+       $user=User::find(1);
+       $user->assignRole($role1);
     }
 
     /**

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\pages;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Semilleros extends Controller
+class SemillerosController extends Controller
 {
   public function index()
   {
