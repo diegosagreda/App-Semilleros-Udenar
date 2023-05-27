@@ -10,7 +10,7 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="javascript:void(0)">Semilleros</a>
     
-    <a href="{{route('coordinadores.create')}}" class="btn btn-primary text-nowrap">
+    <a href="{{route('semilleros.create')}}" class="btn btn-primary text-nowrap">
       <i class='bx bx-user'></i> Nuevo
     </a>
   </div>

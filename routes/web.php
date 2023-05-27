@@ -20,6 +20,7 @@ Route::middleware([
     Route::get('/',[InicioController::class, 'index'])->name('pages-home');
     /*RUTAS SEMILLEROS -------------------------------------------------------------------------------------- */
     Route::get('/semilleros', [SemillerosController::class, 'index'])->name('pages-semilleros');
+    Route::get('/semilleros/create', [SemillerosController::class, 'create'])->name('semilleros.create');
     /*RUTAS SEMILLERISTAS ------------------------------------------------------------------------------------*/
     Route::get('/semilleristas', [SemilleristaController::class, 'index'])->name('pages-semilleristas');
     Route::get('/semilleristas/create', [SemilleristaController::class, 'create'])->name('semilleristas.create');
