@@ -15,4 +15,7 @@ class SemillerosController extends Controller
   public function create(){
     return view('content.pages.semilleros.pages-semilleros-create');
   }
+  public function edit(){
+    return view('content.pages.semilleros.pages-semilleros-edit');
+  }
 }
