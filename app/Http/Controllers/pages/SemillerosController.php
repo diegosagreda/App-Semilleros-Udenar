@@ -9,6 +9,6 @@ class SemillerosController extends Controller
 {
   public function index()
   {
-    return view('content.pages.pages-semilleros');
+    return view('content.pages.semilleros.pages-semilleros');
   }
 }
