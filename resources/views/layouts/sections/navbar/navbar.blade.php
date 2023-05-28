@@ -70,7 +70,12 @@ $containerNav = $containerNav ?? 'container-fluid';
                       John Doe
                       @endif
                     </span>
-                    <small class="text-muted">Admin</small>
+                    @role('admin')
+                    <small class="text-muted">Administrador</small>
+                    @endrole
+                    @role('coordinador')
+                    <small class="text-muted">Coordinador</small>
+                    @endrole
                   </div>
                 </div>
               </a>

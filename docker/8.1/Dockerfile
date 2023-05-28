@@ -1,4 +1,5 @@
-FROM ubuntu:21.10
+FROM ubuntu:20.04
+
 
 LABEL maintainer="Taylor Otwell"
 

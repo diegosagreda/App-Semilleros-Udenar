@@ -17,7 +17,7 @@ return new class extends Migration
     {
        $role1=Role::create(['name'=>'admin']);
        Role::create(['name'=>'coordinador']);
-       Role::create(['name'=>'semillarista']);
+       Role::create(['name'=>'semillerista']);
        //Se agrega el rol admin al super usuario
        $user=User::find(1);
        $user->assignRole($role1);

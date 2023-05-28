@@ -13,22 +13,24 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('coordinadors', function (Blueprint $table) {
+        Schema::create('semilleristas', function (Blueprint $table) {
             $table->string('identificacion')->primaryKey();
             $table->string('nombre');
+            $table->string('codigo'); 
             $table->string('direccion');
             $table->string('telefono');
             $table->string('correo');
             $table->string('genero');
-            $table->string('foto')->nullable();
             $table->string('fecha_nacimiento');
+            $table->string('semestre');
+            $table->string('foto')->nullable();
+            $table->string('reporte_matricula')->nullable();
             $table->string('programa_academico');
-            $table->string('areas_conocimiento');
             $table->string('fecha_vinculacion')->nullable();
-            $table->string('acuerdo_nombramiento')->nullable();
+            $table->string('estado')->nullable();
             //Releacion apuntando al modelo semillero
             $table->unsignedBigInteger('semillero_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();         
+            $table->unsignedBigInteger('user_id')->nullable();    
             $table->timestamps();
         });
     }
@@ -40,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coordinadors');
+        Schema::dropIfExists('semilleristas');
     }
 };

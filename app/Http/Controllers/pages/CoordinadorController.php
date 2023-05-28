@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Coordinador;
 use App\Models\Semillero;
+use Spatie\Permission\Models\Role;
+
+
 
 
 class CoordinadorController extends Controller
@@ -25,11 +29,23 @@ class CoordinadorController extends Controller
       $foto->move($ruta, $fotoUsuario);
       $coordinador->foto = "$fotoUsuario";
     }
-    //dd($coordinador);
+    
+    //De igual manera creamos usuario para el coordinador-----------------------
+    $user = new User();
+    $user->name = $coordinador->nombre;
+    $user->email = $coordinador->correo;
+    $user->password = password_hash($coordinador->identificacion, PASSWORD_DEFAULT);
+
+    $user->save();
+    $coordinador->user_id = $user->id;
     $coordinador->save();
 
+    //Asiganar rol
+    $role = Role::where('name','coordinador')->first();
+    $user->assignRole($role);
+
+    //-----------------------------------------------------------------------------
     return redirect()->route('pages-coordinadores');
-    
   }
   public function create(){
     $semilleros = Semillero::all();

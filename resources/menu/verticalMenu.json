@@ -4,37 +4,43 @@
       "url": "/",
       "name": "Inicio",
       "icon": "menu-icon tf-icons bx bx-home-circle",
-      "slug": "pages-home"
+      "slug": "pages-home",
+      "role": ["admin","coordinador","semilleristas"]
     },
     {
       "url": "/coordinadores",
-      "icon": "menu-icon tf-icons bx bx-file",
+      "icon": "menu-icon tf-icons bx bx-group",
       "name": "Coordinadores",
-      "slug": "pages-coordinadores"
+      "slug": "pages-coordinadores",
+      "role": ["admin"]
     },
     {
       "url": "/semilleros",
-      "icon": "menu-icon tf-icons bx bx-file",
+      "icon": "menu-icon tf-icons bx bx-shield",
       "name": "Semilleros",
-      "slug": "pages-semilleros"
+      "slug": "pages-semilleros",
+      "role": ["admin"]
     },
     {
       "url": "/semilleristas",
-      "icon": "menu-icon tf-icons bx bx-file",
+      "icon": "menu-icon tf-icons bx bx-group",
       "name": "Semilleristas",
-      "slug": "pages-semilleristas"
+      "slug": "pages-semilleristas",
+      "role": ["admin","coordinador"]
     },
     {
       "url": "/proyectos",
-      "icon": "menu-icon tf-icons bx bx-file",
+      "icon": "menu-icon tf-icons bx bx-cube",
       "name": "Proyectos",
-      "slug": "pages-proyectos"
+      "slug": "pages-proyectos",
+      "role": ["admin","coordinador","semillerista"]
     },
     {
       "url": "/eventos",
-      "icon": "menu-icon tf-icons bx bx-file",
+      "icon": "menu-icon tf-icons bx bx-purchase-tag",
       "name": "Eventos",
-      "slug": "pages-eventos"
+      "slug": "pages-eventos",
+      "role": ["admin","coordinador","semilleristas"]
     }
   ]
 }

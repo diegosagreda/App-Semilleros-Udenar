@@ -60,4 +60,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+    //Relaciones
+    public function coordinador()
+    {
+        return $this->hasOne(Coordinador::class);
+    }
+    public function semillerista()
+    {
+        return $this->hasOne(Semillerista::class);
+    }
 }

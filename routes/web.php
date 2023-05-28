@@ -23,6 +23,11 @@ Route::middleware([
     /*RUTAS SEMILLERISTAS ------------------------------------------------------------------------------------*/
     Route::get('/semilleristas', [SemilleristaController::class, 'index'])->name('pages-semilleristas');
     Route::get('/semilleristas/create', [SemilleristaController::class, 'create'])->name('semilleristas.create');
+    Route::post('/semilleritas/store', [SemilleristaController::class, 'store'])->name('semilleristas.store');
+    Route::get('/semilleristas/show/{coordinador}',[SemilleristaController::class, 'show'])->name('semilleristas.show');
+    Route::get('/semilleristas/edit/{coordinador}', [SemilleristaController::class, 'edit'])->name('semilleristas.edit');
+    Route::put('/semilleristas/update/{coordinador}', [SemilleristaController::class,'update'])->name('semilleristas.update');
+    Route::delete('/semilleristas/destroy/{coordinador}',[SemilleristaController::class,'destroy'])->name('semilleristas.destroy');
     /*RUTAS COORDINADORES ------------------------------------------------------------------------------------*/
     Route::get('/coordinadores', [CoordinadorController::class, 'index'])->name('pages-coordinadores');
     Route::get('/coordinadores/create', [CoordinadorController::class, 'create'])->name('coordinadores.create');

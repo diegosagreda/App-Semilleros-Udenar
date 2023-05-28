@@ -27,11 +27,12 @@ $configData = Helper::appClasses();
 </h4>
 
 <div class="row">
+  @role('admin')
   <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-6 mb-4">
     <div class="card">
       <div class="card-body text-center">
         <div class="avatar avatar-md mx-auto mb-3">
-          <span class="avatar-initial rounded-circle bg-label-info"><i class='bx bx-edit fs-3'></i></span>
+          <span class="avatar-initial rounded-circle bg-label-info"><i class='bx bx-shield fs-4'></i></span>
         </div>
         <span class="d-block mb-1 text-nowrap">Semilleros</span>
         <h2 class="mb-0">3</h2>
@@ -42,24 +43,27 @@ $configData = Helper::appClasses();
     <div class="card">
       <div class="card-body text-center">
         <div class="avatar avatar-md mx-auto mb-3">
-          <span class="avatar-initial rounded-circle bg-label-warning"><i class='bx bx-user fs-3'></i></span>
-        </div>
-        <span class="d-block mb-1 text-nowrap">Semilleristas</span>
-        <h2 class="mb-0">17</h2>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-6 mb-4">
-    <div class="card">
-      <div class="card-body text-center">
-        <div class="avatar avatar-md mx-auto mb-3">
-          <span class="avatar-initial rounded-circle bg-label-danger"><i class='bx bx-message-square-detail fs-3'></i></span>
+          <span class="avatar-initial rounded-circle bg-label-danger"><i class='bx bx-group fs-3'></i></span>
         </div>
         <span class="d-block mb-1 text-nowrap">Coordinadores</span>
         <h2 class="mb-0">29</h2>
       </div>
     </div>
   </div>
+  @endrole
+  
+  <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-6 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="avatar avatar-md mx-auto mb-3">
+          <span class="avatar-initial rounded-circle bg-label-warning"><i class='bx bx-group fs-3'></i></span>
+        </div>
+        <span class="d-block mb-1 text-nowrap">Semilleristas</span>
+        <h2 class="mb-0">17</h2>
+      </div>
+    </div>
+  </div>
+ 
   <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-6 mb-4">
     <div class="card">
       <div class="card-body text-center">
