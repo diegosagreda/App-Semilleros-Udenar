@@ -83,12 +83,15 @@ $containerNav = $containerNav ?? 'container-fluid';
             <li>
               <div class="dropdown-divider"></div>
             </li>
+            <!--ADMINISTRACION DE PERFIL-->
+            <!--
             <li>
               <a class="dropdown-item" href="{{ Route::has('profile.show') ? route('profile.show') : 'javascript:void(0);' }}">
                 <i class="bx bx-user me-2"></i>
                 <span class="align-middle">Mi perfil</span>
               </a>
             </li>
+            -->
             @if (Auth::check() && Laravel\Jetstream\Jetstream::hasApiFeatures())
             <li>
               <a class="dropdown-item" href="{{ route('api-tokens.index') }}">
