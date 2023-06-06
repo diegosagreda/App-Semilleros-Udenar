@@ -10,17 +10,17 @@ class EventoController extends Controller
     public function index()
     {
       
-      return view('content..pages.eventos.pages-eventos');
+      return view('content.pages.eventos.pages-eventos');
     }
     /**
      * Show the form for creating the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        abort(404);
-    }
+    public function create(){
+        return view('content.pages.eventos.pages-eventos-create');
+      }
+    
 
     /**
      * Store the newly created resource in storage.
@@ -29,10 +29,22 @@ class EventoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        abort(404);
+{
+    $evento = new Evento();
+    $evento->fill($request->all());
+
+    // Guardar la imagen
+    if ($foto = $request->file('foto')) {
+        $ruta = 'ruta/donde/guardar/la/imagen';
+        $nombreFoto = date('YmdHis') . "." . $foto->getClientOriginalExtension();
+        $foto->move($ruta, $nombreFoto);
+        $evento->foto = $nombreFoto;
     }
 
+    $evento->save();
+
+    return redirect()->route('pages-eventos');
+}
     /**
      * Display the resource.
      *
