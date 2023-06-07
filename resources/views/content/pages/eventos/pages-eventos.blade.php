@@ -28,7 +28,7 @@
 <!-- Header -->
 <div class="d-flex justify-content-between">
   <a href="{{route('eventos.create')}}" class="btn btn-primary text-nowrap">
-    <i class='bx bx-user'></i> Crear Evento
+    <i class='bx bx-calendar text-info display-6'></i> Crear Evento
   </a>
 </div>
 <!--/ Header -->

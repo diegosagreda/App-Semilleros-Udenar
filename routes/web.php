@@ -43,7 +43,8 @@ Route::middleware([
     /*RUTAS EVENTOS--------------------------------------------------------------------------------*/
     Route::get('/eventos', [EventoController::class, 'index'])->name('pages-eventos');
     Route::get('/eventos/create', [EventoController::class, 'create'])->name('eventos.create');
-    Route::get('/eventos/store', [EventoController::class, 'store'])->name('eventos.store');
+    Route::post('/eventos/store', [EventoController::class, 'store'])->name('eventos.store');
+
     /*RUTAS PROYECTOS ----------------------------------------------------------------------*/
     Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');
 

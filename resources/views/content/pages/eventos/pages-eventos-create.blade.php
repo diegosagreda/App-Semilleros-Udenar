@@ -25,7 +25,7 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <form action="{{ route('eventos.store') }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ route('eventos.store') }}" method="POST" enctype="multipart/form-data">>
         @csrf
         <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
           <h5 class="card-title mb-sm-0 me-2">Registrar Evento</h5>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Evento;
 
 class EventoController extends Controller
 {
@@ -31,13 +32,13 @@ class EventoController extends Controller
     public function store(Request $request)
 {
     $evento = new Evento();
-    $evento->fill($request->all());
+    $evento = new Evento($request->all());
 
     // Guardar la imagen
     if ($foto = $request->file('foto')) {
-        $ruta = 'ruta/donde/guardar/la/imagen';
+        $ruta = 'public/images/eventos';;
         $nombreFoto = date('YmdHis') . "." . $foto->getClientOriginalExtension();
-        $foto->move($ruta, $nombreFoto);
+        $foto->storeAs($ruta, $nombreFoto);
         $evento->foto = $nombreFoto;
     }
 
