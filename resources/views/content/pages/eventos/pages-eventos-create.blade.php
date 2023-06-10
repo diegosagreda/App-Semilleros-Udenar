@@ -101,6 +101,13 @@
                     </div>
                   </div>
                   <br>
+                  <div class="col-md-6">
+                    <label class="form-label" for="observaciones">Observaciones</label>
+                    <div class="input-group input-group-merge">
+                      <textarea name="observaciones" class="form-control" id="observaciones" rows="1"></textarea>
+                    </div>
+                  </div>
+                  <br>
                   <div class="col-12">
                     <label class="form-label" for="foto">Foto del Evento</label>
                     <input type="file" id="foto" name="foto" class="form-control" />
