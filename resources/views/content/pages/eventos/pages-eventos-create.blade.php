@@ -30,7 +30,7 @@
         <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
           <h5 class="card-title mb-sm-0 me-2">Registrar Evento</h5>
           <div class="action-btns">
-            <a href="{{ route('pages-eventos')}}" class="btn btn-danger">
+            <a href="{{ route('eventos.index')}}" class="btn btn-danger">
               <span class="align-middle">Cancelar</span>
             </a>
             <button type="submit" class="btn btn-primary">

@@ -9,19 +9,19 @@
 
 @section('content')
 
-    <h4 class="py-3 breadcrumb-wrapper mb-4">
-      <span class="text-muted fw-light">Gestión |</span> Eventos
-    </h4>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="javascript:void(0)">Eventos</a>
+   <h4 class="py-3 breadcrumb-wrapper mb-4">
+  <span class="text-muted fw-light">Gestión |</span> Eventos
+</h4>
 
-        <a href="{{ route('eventos.create') }}" class="btn btn-primary text-nowrap">
-          <i class='bx bx-plus'></i> Nuevo
-        </a>
-      </div>
-    </nav>
-
+<!-- Header -->
+<div class="d-flex justify-content-between">
+  <a href="{{route('eventos.create')}}" class="btn btn-primary text-nowrap">
+    <i class='bx bx-calendar text-info display-6'></i> Crear Evento
+  </a>
+</div>
+<!--/ Header -->
+  
+<br>
     <!-- Cards Eventos -->
     <div class="row g-4">
       @forelse ($eventos as $evento)
