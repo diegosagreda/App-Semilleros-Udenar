@@ -73,7 +73,8 @@ class EventoController extends Controller
         $evento->save();
 
         // Mostrar los datos del evento en la página
-        dd($evento);
+        //dd($evento);
+        return redirect('/eventos');
         }
     /**
      * Display the resource.
@@ -116,6 +117,6 @@ class EventoController extends Controller
     {
         $evento->delete();
     
-        return redirect()->route('pages-eventos')->with('success', 'El evento ha sido eliminado exitosamente');
+        return redirect()->route('eventos.index')->with('success', 'El evento ha sido eliminado exitosamente');
     }
 }
