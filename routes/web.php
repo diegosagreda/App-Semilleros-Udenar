@@ -40,9 +40,15 @@ Route::middleware([
     Route::put('/coordinadores/update/{coordinador}', [CoordinadorController::class,'update'])->name('coordinadores.update');
     Route::delete('/coordinadores/destroy/{coordinador}',[CoordinadorController::class,'destroy'])->name('coordinadores.destroy');
     /**------------------------------------------------------------------------------------------------------------ */
-    /*RUTAS EVENTOS*/
-    Route::get('/eventos', [EventoController::class, 'index'])->name('pages-eventos');
-    /*RUTAS PROYECTOS */
+    /*RUTAS EVENTOS--------------------------------------------------------------------------------*/
+    Route::get('/eventos', [EventoController::class, 'index'])->name('eventos.index');
+    Route::get('/eventos/create', [EventoController::class, 'create'])->name('eventos.create');
+    Route::post('/eventos/store', [EventoController::class, 'store'])->name('eventos.store');
+    Route::get('/eventos/show/{evento}', [EventoController::class, 'show'])->name('eventos.show');
+    Route::get('/eventos/edit/{evento}', [EventoController::class, 'edit'])->name('eventos.edit');
+    Route::delete('/evento/destroy/{evento}',[EventoController::class,'destroy'])->name('eventos.destroy');
+   
+    /*RUTAS PROYECTOS ----------------------------------------------------------------------*/
     Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');
 
 });
