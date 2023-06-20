@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Sticky Actions - Forms')
+@section('title', 'Crear Proyecto')
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
@@ -38,7 +38,7 @@
                 <div class="row g-3">
                   <div class="col-md-6">
                     <label class="form-label" for="codProyecto">Código</label>
-                    <input type="text" id="codProyecto" name="codProyecto" class="form-control" required/>
+                    <input type="text" id="codProyecto" name="codProyecto" class="form-control"  required/>
                   </div> 
                   <div class="col-md-6">
                     <label class="form-label" for="nomProyecto">Título del Proyecto</label>
@@ -112,3 +112,4 @@
 
 <!-- /Sticky Actions -->
 @endsection
+

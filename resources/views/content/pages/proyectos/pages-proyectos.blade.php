@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Sticky Actions - Forms')
+@section('title', 'Proyectos')
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
@@ -27,7 +27,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inspiration for Pricing Tables | Codrops</title>
+    <title>Proyectos</title>
     <meta name="description" content="Various styles and inspiration for responsive, flexbox-based HTML pricing tables" />
     <meta name="keywords" content="pricing table, inspiration, ui, modern, responsive, flexbox, html, component" />
     <meta name="author" content="Codrops" />
@@ -60,36 +60,44 @@
            
         </header>
         <section class="pricing-section bg-1">
-          <div class="pricing pricing--sonam">
-            @foreach($proyectos as $proyecto)
-            <div class="pricing__item">
-              <h3 class="pricing__title">{{$proyecto->nomProyecto}}</h3>
-              <div class="pricing__details">
-                <div class="pricing__price">
-                  <span class="pricing__highlight">{{$proyecto->tipoProyecto}}</span>
-                </div>
-                <p class="pricing__description">{{$proyecto->estProyecto}}</p>
-                <div class="pricing__dates">
-                  <p class="pricing__date"><span class="pricing__label">Inicio:</span> <span class="pricing__date-value">{{$proyecto->fecha_inicioPro}}</span></p>
-                  <p class="pricing__date"><span class="pricing__label">Fin:</span> <span class="pricing__date-value">{{$proyecto->fecha_finPro}}</span></p>
-                </div>
-              </div>
-              <div class="pricing__actions">
-                <button class="pricing__action">Seleccionar</button>
-                <button class="pricing__action" onclick="eliminarProyecto({{$proyecto->id}})">Eliminar</button>
-              </div>
-            </div>
-            @endforeach
-          </div>
-        </section>
-        
-        
-        
-        
+			<div class="pricing pricing--sonam">
+				@if(count($proyectos) > 0)
+					@foreach($proyectos as $proyecto)
+					<div class="pricing__item">
+						<h3 class="pricing__title">{{$proyecto->nomProyecto}}</h3>
+						<div class="pricing__details">
+							<div class="pricing__price">
+								<span class="pricing__highlight">{{$proyecto->tipoProyecto}}</span>
+							</div>
+							<p class="pricing__description">{{$proyecto->estProyecto}}</p>
+							<div class="pricing__dates">
+								<p class="pricing__date"><span class="pricing__label">Inicio:</span> <span class="pricing__date-value">{{$proyecto->fecha_inicioPro}}</span></p>
+								<p class="pricing__date"><span class="pricing__label">Fin:</span> <span class="pricing__date-value">{{$proyecto->fecha_finPro}}</span></p>
+							</div>
+						</div>
+						<div class="pricing__actions">
+							<a href="{{ route('proyectos.show', $proyecto->codProyecto) }}" class="btn btn-outline-primary btn-shine text-white">Ver detalles</a>
+							<form action="{{ url('proyectos/'.$proyecto->codProyecto)}}" method="POST" class="d-inline">
+								@csrf
+								@method('DELETE')
+								<button type="submit" onclick="return confirm('¿Quieres borrar?')" class="btn btn-outline-danger btn-shine">Eliminar</button>
+							</form>
+						</div>
+					</div>
+					
+					@endforeach
+				@else
+				<div class="no-proyectos-message">
+					<p style="font-size: 50px; color: #555; text-align: center;">No hay proyectos registrados</p>
+				</div>
+				@endif
+			</div>
+		</section>
+		
         
         <!-- Related demos -->
         <section class="content content--related">
-            <p>Universidad de Nariño</p>
+            <h3 class="media-item__title">Universidad de Nariño</h3>
             <h3 class="media-item__title">San juan de Pasto</h3>
             <h3 class="media-item__title">&copy;2023</h3>
            
@@ -101,18 +109,16 @@
 </html>
 
 <style>
-  /* Common styles */
 
-.pricing {
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	-webkit-justify-content: center;
-	justify-content: center;
-	width: 100%;
-	margin: 0 auto 3em;
+.btn-shine {
+    transition: box-shadow 0.3s ease;
 }
+
+.btn-shine:hover,
+.btn-shine:focus {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
 
 .pricing__item {
 	position: relative;
@@ -197,156 +203,6 @@
 	background: #BD3C3C;
 }
 
-/* Jinpa */
-.pricing--jinpa .pricing__item {
-	font-family: 'Sahitya', serif;
-	margin: 1.5em 0;
-	padding: 2em;
-	cursor: default;
-	color: #fff;
-	border: 1px solid #CBFFC8;
-	-webkit-transition: background-color 0.6s, color 0.3s;
-	transition: background-color 0.6s, color 0.3s;
-}
-
-.pricing--jinpa .pricing__item:nth-child(2) {
-	border-right: none;
-	border-left: none;
-}
-
-.pricing--jinpa .pricing__item:hover {
-	color: #e6a9a9;
-	background: #CBFFC8;
-}
-
-.pricing--jinpa .pricing__title {
-	font-size: 2em;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-}
-
-.pricing--jinpa .pricing__price {
-	font-size: 1.45em;
-	font-weight: bold;
-	line-height: 95px;
-	width: 100px;
-	height: 100px;
-	margin: 1.15em auto 1em;
-	border-radius: 50%;
-	background: #ea716e;
-	-webkit-transition: color 0.3s, background 0.3s;
-	transition: color 0.3s, background 0.3s;
-}
-
-.pricing--jinpa .pricing__item:first-child .pricing__price {
-	background: #eac36e;
-}
-
-.pricing--jinpa .pricing__item:nth-child(2) .pricing__price {
-	background: #eaa36e;
-}
-
-.pricing--jinpa .pricing__item:hover .pricing__price {
-	color: #fff;
-	background: #82C57E;
-}
-
-.pricing--jinpa .pricing__sentence {
-	font-weight: bold;
-}
-
-.pricing--jinpa .pricing__feature-list {
-	margin: 0;
-	padding: 1em 1em 2em 1em;
-	list-style: none;
-	text-align: center;
-}
-
-.pricing--jinpa .pricing__action {
-	font-weight: bold;
-	margin-top: auto;
-	padding: 0.75em 2em;
-	opacity: 0;
-	color: #fff;
-	background: #82C57E;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-	transition: transform 0.3s, opacity 0.3s;
-	-webkit-transform: translate3d(0, -15px, 0);
-	transform: translate3d(0, -15px, 0);
-}
-
-.pricing--jinpa .pricing__item:hover .pricing__action {
-	opacity: 1;
-	-webkit-transform: translate3d(0, 0, 0);
-	transform: translate3d(0, 0, 0);
-}
-
-.pricing--jinpa .pricing__action:hover,
-.pricing--jinpa .pricing__action:focus {
-	background: #6EA76B;
-}
-
-@media screen and (max-width: 60em) {
-	.pricing--jinpa .pricing__item {
-		max-width: none;
-		width: 90%;
-		flex: none;
-	}
-	.pricing--jinpa .pricing__item:nth-child(2) {
-		border: 1px solid #fff;
-	}
-}
-
-/* Tenzin */
-.pricing--tenzin .pricing__item {
-	margin: 1em;
-	padding: 2em 2.5em;
-	text-align: left;
-	color: #262b38;
-	background: #EEF0F3;
-	border-top: 3px solid #EEF0F3;
-	-webkit-transition: border-color 0.3s;
-	transition: border-color 0.3s;
-}
-
-.pricing--tenzin .pricing__item:hover {
-	border-color: #3e62e0;
-}
-
-.pricing--tenzin .pricing__title {
-	font-size: 1em;
-	margin: 0 0 1em;
-}
-
-.pricing--tenzin .pricing__price {
-	font-size: 2em;
-	font-weight: bold;
-	padding: 0.5em 0 0.75em;
-	border-top: 3px solid rgba(139, 144, 157, 0.18);
-}
-
-.pricing--tenzin .pricing__currency {
-	font-size: 0.5em;
-	vertical-align: super;
-}
-
-.pricing--tenzin .pricing__sentence {
-	font-weight: bold;
-	padding: 0 0 0.5em;
-	color: #9CA0A9;
-	border-bottom: 3px solid rgba(139, 144, 157, 0.18);
-}
-
-.pricing--tenzin .pricing__feature-list {
-	font-size: 0.85em;
-	font-style: italic;
-	margin: 0;
-	padding: 0.25em 0 2.5em;
-	list-style: none;
-	text-align: right;
-	color: #8b909d;
-}
 
 
 @font-face {

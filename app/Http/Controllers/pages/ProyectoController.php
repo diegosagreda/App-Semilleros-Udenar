@@ -32,6 +32,9 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
+
+        
+
         $datosProyecto = request()->except('_token');
         Proyecto::insert($datosProyecto);
         //return response()->json($datosProyecto);
@@ -43,9 +46,11 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
         //
+        $proyecto = Proyecto::find($id);
+        return view('content.pages.proyectos.pages-proyectos-show', compact('proyecto'));
     }
 
     /**
@@ -53,9 +58,12 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
         //
+        $proyecto = Proyecto::findOrfail($id);
+        //return view('programas.edit',compact('programa'));
+        return view('content.pages.proyectos.pages-proyectos-edit',compact('proyecto'));
     }
 
     /**
@@ -64,9 +72,12 @@ class ProyectoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //
+        $datosProyecto = request()->except('_token','_method');
+        Proyecto::where('codProyecto','=',$id)->update($datosProyecto);
+        return redirect('/proyectos');
     }
 
     /**
@@ -74,8 +85,9 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
-        abort(404);
+        Proyecto::destroy($id);
+        return redirect('/proyectos');
     }
 }
