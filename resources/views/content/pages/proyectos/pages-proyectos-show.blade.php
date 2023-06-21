@@ -51,6 +51,7 @@
                     </div>
                     
                     <a href="{{ route('proyectos.edit', $proyecto->codProyecto) }}" class="btn btn-primary">Editar</a>
+                    <a href="/proyectos" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </div>

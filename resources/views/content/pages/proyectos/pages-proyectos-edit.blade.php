@@ -20,7 +20,6 @@
 
 
 @section('content')
-
 <!-- Sticky Actions -->
 <div class="row">
   <div class="col-12">
@@ -29,7 +28,7 @@
         @csrf
         {{method_field('PUT')}}
         <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
-            <h5 class="card-title mb-sm-0 me-2">Registro de Proyecto</h5>
+            <h5 class="card-title mb-sm-0 me-2">Edicion del proyecto</h5>
           </div>
           <div class="card-body">
             <div class="row">
@@ -106,3 +105,4 @@
     </div>
   </div>
 </div>
+@endsection
