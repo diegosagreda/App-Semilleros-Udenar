@@ -15,13 +15,14 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-   
+
     /*RUTA INICIO ------------------------------------------------------------------------------------------- */
     Route::get('/',[InicioController::class, 'index'])->name('pages-home');
     /*RUTAS SEMILLEROS -------------------------------------------------------------------------------------- */
     Route::get('/semilleros', [SemillerosController::class, 'index'])->name('pages-semilleros');
     Route::get('/semilleros/create', [SemillerosController::class, 'create'])->name('semilleros.create');
     Route::get('/semilleros/edit', [SemillerosController::class, 'edit'])->name('semilleros.edit');
+    Route::post('/semilleros/store', [SemillerosController::class, 'store'])->name('semilleros.store');
     Route::get('/semilleros/view', [SemillerosController::class, 'view'])->name('semilleros.view');
     /*RUTAS SEMILLERISTAS ------------------------------------------------------------------------------------*/
     Route::get('/semilleristas', [SemilleristaController::class, 'index'])->name('pages-semilleristas');
@@ -47,7 +48,7 @@ Route::middleware([
     Route::get('/eventos/show/{evento}', [EventoController::class, 'show'])->name('eventos.show');
     Route::get('/eventos/edit/{evento}', [EventoController::class, 'edit'])->name('eventos.edit');
     Route::delete('/evento/destroy/{evento}',[EventoController::class,'destroy'])->name('eventos.destroy');
-   
+
     /*RUTAS PROYECTOS ----------------------------------------------------------------------*/
     Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');
 
