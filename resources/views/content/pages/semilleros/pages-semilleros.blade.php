@@ -56,7 +56,15 @@
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="{{route('semilleros.view')}}"><i class="bx bx-search-alt me-1"></i> Ver</a>
                   <a class="dropdown-item" href="{{route('semilleros.edit')}}"><i class="bx bx-edit-alt me-1"></i> Editar</a>
-                  <a class="dropdown-item" href="{{route('semilleros.edit')}}"><i class="bx bx-trash me-1"></i> Eliminar</a>
+                  <a class="dropdown-item" href="{{ route('semilleros.destroy', $semillero->id) }}"
+                    onclick="event.preventDefault(); document.getElementById('delete-form-{{ $semillero->id }}').submit();">
+                     <i class="bx bx-trash me-1"></i> Eliminar
+                 </a>
+                 <form id="delete-form-{{ $semillero->id }}" action="{{ route('semilleros.destroy', $semillero->id) }}"
+                       method="POST" style="display: none;">
+                     @csrf
+                     @method('DELETE')
+                 </form>
                 </div>
               </div>
             </td>

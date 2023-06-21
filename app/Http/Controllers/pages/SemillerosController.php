@@ -5,6 +5,7 @@ namespace App\Http\Controllers\pages;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Semillero;
+use Illuminate\Support\Facades\Storage;
 
 
 class SemillerosController extends Controller
@@ -24,13 +25,11 @@ class SemillerosController extends Controller
   public function view(){
     return view('content.pages.semilleros.pages-semilleros-view');
   }
-  public function store(Request $request){
-    $semillero =new Semillero();
-
-    $semillero =new Semillero();
+  public function store(Request $request)
+{
+    $semillero = new Semillero();
     $semillero->nombre = $request->input('nombreSemillero');
     $semillero->correo = $request->input('correo');
-    $semillero->logo = $request->input('logo');
     $semillero->descripcion = $request->input('descripcion');
     $semillero->mision = $request->input('mision');
     $semillero->vision = $request->input('vision');
@@ -40,22 +39,38 @@ class SemillerosController extends Controller
     $semillero->presentacion = $request->input('presentacion');
     $semillero->fecha_creacion = now();
     $semillero->numero_resolucion = $request->input('numero_resolucion');
-    $semillero->arhivo_resolucion = $request->input('arhivo_resolucion');
 
-     if($logo= $request->file('logo')){
-      $semillero->logo = $request->file('logo')->store('semilleros');
+    if ($request->hasFile('logo')) {
+        $logoPath = $request->file('logo')->store('semilleros');
+        $semillero->logo = $logoPath;
     }
-    if($arhivo_resolucion= $request->file('arhivo_resolucion')){
-      $semillero->arhivo_resolucion = $request->file('arhivo_resolucion')->store('semilleros.store');
+
+    if ($request->hasFile('arhivo_resolucion')) {
+        $arhivoResolucionPath = $request->file('arhivo_resolucion')->store('semilleros');
+        $semillero->arhivo_resolucion = $arhivoResolucionPath;
     }
+
     $semillero->save();
-    //return view('content.pages.semilleros.pages-semilleros');
-    return redirect()->route('pages-semilleros');
-  }
-  public function destroy(Request $request) {
-    $semillero= $request->id;
-    Estudiantes::where('id', $semillero)->delete();
+
     return redirect()->route('pages-semilleros');
 }
+public function destroy(Request $request) {
+  $semilleroId = $request->id;
+  $semillero = Semillero::find($semilleroId);
+
+  if ($semillero) {
+      if ($semillero->logo) {
+          Storage::delete($semillero->logo);
+      }
+      if ($semillero->arhivo_resolucion) {
+          Storage::delete($semillero->arhivo_resolucion);
+      }
+
+      $semillero->delete();
+  }
+
+  return redirect()->route('pages-semilleros');
+}
+
 
 }
