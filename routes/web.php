@@ -50,6 +50,7 @@ Route::middleware([
     Route::delete('/evento/destroy/{evento}',[EventoController::class,'destroy'])->name('eventos.destroy');
 
     /*RUTAS PROYECTOS ----------------------------------------------------------------------*/
-    Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');
+    //Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');
+    Route::resource('/proyectos', ProyectoController::class);
 
 });
