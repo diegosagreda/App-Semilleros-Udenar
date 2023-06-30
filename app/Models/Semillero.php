@@ -9,8 +9,11 @@ use App\Models\Coordinador;
 class Semillero extends Model
 {
     use HasFactory;
-
+    protected $table='semilleros';
+    protected $primaryKey = 'id';
+    public $timestamps='true';
     protected $guarded= [];
+
     public function coordinador()
     {
         return $this->hasOne(Coordinador::class);

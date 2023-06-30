@@ -14,7 +14,6 @@ class Coordinador extends Model
     use HasFactory;
     protected $primaryKey = 'identificacion';
     protected $guarded= [];
-
     public function semillero(){
         return $this->BelongsTo(Semillero::class);
     }
