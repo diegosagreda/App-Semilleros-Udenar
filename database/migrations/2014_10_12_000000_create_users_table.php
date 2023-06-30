@@ -26,12 +26,12 @@ return new class extends Migration
             $table->timestamps();
         });
         //Ingresamos super usuario por defecto
-        User::create([
+        /*User::create([
             'name' => 'Administracion',
             'email' => 'admin',
             'password' => password_hash('123', PASSWORD_DEFAULT)
-        ]);
-        
+        ]);*/
+
     }
 
     /**
