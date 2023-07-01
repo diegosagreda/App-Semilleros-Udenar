@@ -8,9 +8,9 @@ $configData = Helper::appClasses();
   @if(!isset($navbarFull))
   <div class="app-brand demo">
     <a href="{{url('/')}}" class="app-brand-link">
-      <span class="app-brand-logo demo">
+      <!--<span class="app-brand-logo demo">
         @include('_partials.macros')
-      </span>
+      </span>-->
       <span class="app-brand-text demo menu-text fw-bold ms-2">Semilleros</span>
     </a>
     <!--Ocultar menu-->
@@ -32,7 +32,7 @@ $configData = Helper::appClasses();
   <ul class="menu-inner py-1">
     @foreach ($menuData[0]->menu as $menu)
 
-    
+
 
     {{-- menu headers --}}
     @if (isset($menu->menuHeader))
@@ -70,7 +70,7 @@ $configData = Helper::appClasses();
     @endphp
 
     {{-- main menu --}}
-    
+
     @if (is_array($menu->role) && in_array($role, $menu->role))
       <li class="menu-item {{$activeClass}}">
         <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0);' }}" class="{{ isset($menu->submenu) ? 'menu-link menu-toggle' : 'menu-link' }}" @if (isset($menu->target) and !empty($menu->target)) target="_blank" @endif>
@@ -79,7 +79,7 @@ $configData = Helper::appClasses();
           @endisset
           <div>{{ isset($menu->name) ? __($menu->name) : '' }}</div>
         </a>
-        
+
         {{-- submenu --}}
         @isset($menu->submenu)
         @include('layouts.sections.menu.submenu',['menu' => $menu->submenu])
@@ -87,8 +87,8 @@ $configData = Helper::appClasses();
       </li>
 
     @endif
-    
-    
+
+
     @endif
     @endforeach
   </ul>

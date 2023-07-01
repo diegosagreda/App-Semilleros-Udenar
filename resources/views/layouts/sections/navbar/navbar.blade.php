@@ -37,11 +37,11 @@ $containerNav = $containerNav ?? 'container-fluid';
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
       <!-- Style Switcher tema -->
-      <!--<div class="navbar-nav align-items-center">
+      <div class="navbar-nav align-items-center">
         <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
           <i class='bx bx-sm'></i>
         </a>
-      </div>-->
+      </div>
       <!--/ Style Switcher -->
 
       <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -100,7 +100,7 @@ $containerNav = $containerNav ?? 'container-fluid';
               </a>
             </li>
             @endif
-           
+
             @if (Auth::User() && Laravel\Jetstream\Jetstream::hasTeamFeatures())
             <li>
               <div class="dropdown-divider"></div>
