@@ -24,12 +24,12 @@ class CoordinadorController extends Controller
     $coordinador->fill($request->all());
     //Imagen
     if($foto = $request->file('foto')){
-      $ruta = 'assets/profile';
+      $ruta = public_path('assets/profile');
       $fotoUsuario = date('YmdHis').".".$foto->getClientOriginalExtension();
       $foto->move($ruta, $fotoUsuario);
       $coordinador->foto = "$fotoUsuario";
     }
-    
+
     //De igual manera creamos usuario para el coordinador-----------------------
     $user = new User();
     $user->name = $coordinador->nombre;
