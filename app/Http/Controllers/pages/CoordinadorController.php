@@ -20,10 +20,10 @@ class CoordinadorController extends Controller
     return view('content.pages.coordinadores.pages-coordinadores', compact('coordinadores'));
   }
   public function store(Request $request){
-
+//Comentsf
     $coordinador =new Coordinador();
     $coordinador->fill($request->all());
-    //Imagen
+    //Imagennn
     if($foto = $request->file('foto')){
       $ruta = public_path('assets/img_coordinadores/');
       $fotoUsuario = date('YmdHis').".".$foto->getClientOriginalExtension();
