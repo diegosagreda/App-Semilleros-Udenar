@@ -30,7 +30,7 @@ class CoordinadorController extends Controller
       $foto->move($ruta, $fotoUsuario);
       $coordinador->foto = "$fotoUsuario";
     }
-     //Doc acuerdo nombramiento
+     //Doc acuerdo nombramiento-1
      if($acuerdo_nombramiento = $request->file('acuerdo_nombramiento')){
       $ruta = public_path('assets/docs_coordinadores/');
       $documento = $coordinador->identificacion.".".$acuerdo_nombramiento->getClientOriginalExtension();
