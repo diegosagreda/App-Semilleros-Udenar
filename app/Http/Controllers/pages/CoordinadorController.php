@@ -20,7 +20,7 @@ class CoordinadorController extends Controller
     return view('content.pages.coordinadores.pages-coordinadores', compact('coordinadores'));
   }
   public function store(Request $request){
-//Comentsf
+//Comentsfg
     $coordinador =new Coordinador();
     $coordinador->fill($request->all());
     //Imagennn
