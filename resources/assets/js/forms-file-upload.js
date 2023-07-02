@@ -11,7 +11,7 @@
 <div class="dz-details">
   <div class="dz-thumbnail">
     <img data-dz-thumbnail>
-    <span class="dz-nopreview">No preview</span>
+    <span class="dz-nopreview">Archivo</span>
     <div class="dz-success-mark"></div>
     <div class="dz-error-mark"></div>
     <div class="dz-error-message"><span data-dz-errormessage></span></div>

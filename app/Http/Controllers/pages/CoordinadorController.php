@@ -20,6 +20,7 @@ class CoordinadorController extends Controller
     return view('content.pages.coordinadores.pages-coordinadores', compact('coordinadores'));
   }
   public function store(Request $request){
+
     $coordinador =new Coordinador();
     $coordinador->fill($request->all());
     //Imagen
@@ -28,6 +29,13 @@ class CoordinadorController extends Controller
       $fotoUsuario = date('YmdHis').".".$foto->getClientOriginalExtension();
       $foto->move($ruta, $fotoUsuario);
       $coordinador->foto = "$fotoUsuario";
+    }
+     //Doc acuerdo nombramiento
+     if($acuerdo_nombramiento = $request->file('acuerdo_nombramiento')){
+      $ruta = public_path('assets/docs_coordinadores');
+      $documento = $coordinador->identificacion.".".$acuerdo_nombramiento->getClientOriginalExtension();
+      $acuerdo_nombramiento->move($ruta, $documento);
+      $coordinador->acuerdo_nombramiento = "$documento";
     }
 
     //De igual manera creamos usuario para el coordinador-----------------------

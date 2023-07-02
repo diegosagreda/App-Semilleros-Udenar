@@ -41,6 +41,13 @@
       "name": "Eventos",
       "slug": "pages-eventos",
       "role": ["admin","coordinador","semilleristas"]
+    },
+    {
+      "url": "/test",
+      "icon": "menu-icon tf-icons bx bx-test-tube",
+      "name": "Test Elements",
+      "slug": "pages-test",
+      "role": ["admin","coordinador","semilleristas"]
     }
   ]
 }

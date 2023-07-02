@@ -4,6 +4,8 @@
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
+<!--Input upload file-->
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/dropzone/dropzone.css')}}" />
 @endsection
 
 @section('vendor-script')
@@ -11,15 +13,19 @@
 <script src="{{asset('assets/vendor/libs/cleavejs/cleave.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/cleavejs/cleave-phone.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
+<!--Input upload file-->
+<script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
 @endsection
 
 @section('page-script')
 <script src="{{asset('assets/js/form-layouts.js')}}"></script>
+<!--Input upload file-->
+<script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
 @endsection
 
 
-
 @section('content')
+
 
 <!-- Sticky Actions -->
 <div class="row">
@@ -30,7 +36,7 @@
           <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
             <h5 class="card-title mb-sm-0 me-2">Registro coordinador</h5>
             <div class="action-btns">
-             
+
               <a href="{{ route('pages-coordinadores')}}" class="btn btn-danger">
                 <span class="align-middle">Cancelar</span>
               </a>
@@ -44,12 +50,28 @@
               <div class="col-lg-8 mx-auto">
                 <!--Seccion informacion personal-->
                 <fieldset class="border p-4 mb-5">
-                    <legend class="w-auto">Información Personal</legend>
-                    <div class="row g-3">
+                  <legend class="w-auto">Información Personal</legend>
+                  <div class="row g-3">
+                      <!--Foto-->
+                      <div class="col-md-12 mb-3">
+                        <div class="d-flex flex-column align-items-center align-items-sm-center gap-4">
+                          <img src="{{ asset('assets/img/avatars/avatar.png')}}" alt="user-avatar" class="rounded-circle h-px-100 w-px-100" height="100" width="100" id="uploadedAvatar" />
+                          <div class="button-wrapper">
+                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                              <i class="bx bx-upload d-block "></i>
+                              <input name="foto" type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" required/>
+                            </label>
+                            <button id="btn-reset" type="button" class="btn btn-label-secondary account-image-reset mb-4">
+                              <i class="bx bx-reset d-block"></i>
+                            </button>
+                            <p class="mb-0">Permitido JPG o PNG</p>
+                          </div>
+                        </div>
+                      </div>
                       <div class="col-md-6">
                         <label class="form-label" for="identificacion">Identificacion</label>
-                        <input type="text" id="identificacion" name="identificacion" class="form-control" required/>
-                      </div> 
+                        <input type="number" id="identificacion" name="identificacion" class="form-control" required/>
+                      </div>
                       <div class="col-md-6">
                         <label class="form-label" for="nombre">Nombre completo</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" required/>
@@ -57,8 +79,8 @@
                       <div class="col-md-6">
                         <label class="form-label" for="email">Correo</label>
                         <div class="input-group input-group-merge">
-                          <input class="form-control" type="email" id="email" name="correo" placeholder="alguien" aria-label="alguien" aria-describedby="email3" required/>
-                          <span class="input-group-text" id="email3">@example.com</span>
+                          <input class="form-control" type="email" id="email" name="correo"  aria-label="alguien" aria-describedby="email3" required/>
+
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -73,18 +95,14 @@
                           <option value="masculino">Masculino</option>
                         </select>
                       </div>
-                      <div class="col-12">
-                        <label class="form-label" for="direccion">Dirección</label>
-                        <textarea name="direccion" class="form-control" id="direccion" rows="1" required></textarea>
-                      </div>
                       <div class="col-md-6">
                         <label class="form-label" for="fecha_nacimiento">Fecha nacimiento</label>
                         <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control"/>
                       </div>
-                      <div class="col-md-6">
-                        <label for="foto">Foto</label>
-                        <input name="foto" type="file" class="form-control" id="foto" placeholder="Foto" required>
-                       </div>
+                      <div class="col-12">
+                        <label class="form-label" for="direccion">Dirección</label>
+                        <textarea name="direccion" class="form-control" id="direccion" rows="1" required></textarea>
+                      </div>
                     </div>
                 </fieldset>
                 <!--Seccion formacion academica-->
@@ -94,11 +112,11 @@
                         <div class="col-md-6">
                           <label class="form-label" for="programa_academico">Programa académico</label>
                           <input type="text" id="programa_academico" name="programa_academico" class="form-control" required/>
-                        </div> 
+                        </div>
                         <div class="col-md-6">
                           <label class="form-label" for="areas_conocimiento">Áreas conocimiento</label>
                           <input type="text " id="areas_conocimiento" name="areas_conocimiento" class="form-control" required/>
-                        </div>  
+                        </div>
                     </div>
                 </fieldset>
                 <!--Seccion asignacion semillero-->
@@ -142,10 +160,11 @@
                         </div>
                       </div>
                     </div>
+
                 </fieldset>
+                <!--Sticky form-->
                  <div class="row g-3" style="display: none">
-                   
-                   <div class="col-12 col-md-10 col-xxl-8">  
+                   <div class="col-12 col-md-10 col-xxl-8">
                      <div class="row">
                        <div class="col-6 col-md-3">
                          <div class="mb-3">
@@ -159,12 +178,41 @@
                      </div>
                    </div>
                  </div>
+                 <!--Input load file-->
+                 <div class="col-12">
+                  <div class="card mb-4">
+                    <h5 class="card-header">Acuerdo de nombramiento</h5>
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <input name="acuerdo_nombramiento" type="file" class="form-control" accept="application/pdf"  required>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-      </form>
+
+        </form>
     </div>
   </div>
 </div>
+<script>
+  document.getElementById('btn-reset').addEventListener('click', ()=>{
+    document.getElementById('uploadedAvatar').src = "{{ url('assets/img/avatars/avatar.png') }}";
+  })
+
+  //Funcion para hacer el preview de la foto subida para el coordinador
+  function handleFileSelect(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById('uploadedAvatar').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  document.getElementById('upload').addEventListener('change', handleFileSelect);
+</script>
 <!-- /Sticky Actions -->
 @endsection

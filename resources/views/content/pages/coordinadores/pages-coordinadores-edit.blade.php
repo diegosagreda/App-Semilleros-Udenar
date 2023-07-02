@@ -30,9 +30,9 @@
 
 <div class="row">
   <div class="col-md-12">
-  
+
     <div class="card mb-4">
-    
+
       <!-- Header -->
       <div class="card-body">
         <div class="d-flex align-items-start align-items-sm-center gap-4">
@@ -175,7 +175,7 @@
       </div>
       <!-- /Account -->
     </div>
-    
+
   </div>
 </div>
 @endsection

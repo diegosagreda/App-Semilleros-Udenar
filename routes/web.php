@@ -54,4 +54,10 @@ Route::middleware([
     //Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');
     Route::resource('/proyectos', ProyectoController::class);
 
+    /*Ruta test elements template*/
+    Route::get('/test', function (){
+      return view('content.pages.testPlantilla.pages-test');
+    });
+
+
 });

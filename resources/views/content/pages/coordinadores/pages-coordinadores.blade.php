@@ -14,7 +14,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
   <div class="container-fluid">
     <a class="navbar-brand" href="javascript:void(0)">Coordinadores</a>
-    
+
     <a href="{{route('coordinadores.create')}}" class="btn btn-primary text-nowrap">
       <i class='bx bx-user'></i> Nuevo
     </a>
@@ -22,7 +22,7 @@
 </nav>
 
 
-<!-- Cards Semilleristas-->
+<!-- Cards coordinadores-->
 <div class="row g-4">
   <div class="col-xl-4 col-lg-6 col-md-6">
     <div class="card">
@@ -54,9 +54,10 @@
         <div class="d-flex align-items-center justify-content-center mt-5">
           <a href="#" class="btn btn-primary d-flex align-items-center me-3"><i class="bx bx-user"></i>Ver perfil</a>
         </div>
+
       </div>
     </div>
-  </div>  
+  </div>
   @forelse ($coordinadores as $coordinador)
   <div class="col-xl-4 col-lg-6 col-md-6">
     <div class="card">
@@ -90,13 +91,13 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
   @empty
   <div class="alert alert-warning" role="alert">
     <p>
       En el momento no hay coordinadores registrados
     </p>
-  </div>  
+  </div>
   @endforelse
 </div>
 <!--/ Semilleristas Cards -->
