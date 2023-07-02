@@ -25,14 +25,14 @@ class CoordinadorController extends Controller
     $coordinador->fill($request->all());
     //Imagen
     if($foto = $request->file('foto')){
-      $ruta = public_path('assets/profile');
+      $ruta = public_path('assets/img/avatars/');
       $fotoUsuario = date('YmdHis').".".$foto->getClientOriginalExtension();
       $foto->move($ruta, $fotoUsuario);
       $coordinador->foto = "$fotoUsuario";
     }
      //Doc acuerdo nombramiento
      if($acuerdo_nombramiento = $request->file('acuerdo_nombramiento')){
-      $ruta = public_path('assets/docs_coordinadores');
+      $ruta = public_path('assets/docs_coordinadores/');
       $documento = $coordinador->identificacion.".".$acuerdo_nombramiento->getClientOriginalExtension();
       $acuerdo_nombramiento->move($ruta, $documento);
       $coordinador->acuerdo_nombramiento = "$documento";
