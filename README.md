@@ -1,2 +1,9 @@
-# El Rincon de Isma
-## Template for Laravel install
+# Install Project
+
+composer install
+yarn 
+yarn dev
+
+# Deployed
+
+Railway
