@@ -25,7 +25,7 @@ class CoordinadorController extends Controller
     $coordinador->fill($request->all());
     //Imagen
     if($foto = $request->file('foto')){
-      $ruta = public_path('assets/img/avatars/');
+      $ruta = public_path('assets/img_coordinadores/');
       $fotoUsuario = date('YmdHis').".".$foto->getClientOriginalExtension();
       $foto->move($ruta, $fotoUsuario);
       $coordinador->foto = "$fotoUsuario";
