@@ -74,7 +74,9 @@ class CoordinadorController extends Controller
   }
   public function destroy(Request $request, $identificacion){
     $coordinador = Coordinador::where('identificacion',$identificacion)->firstOrFail();
+    $user = User::where('id',$coordinador->user_id)->firstOrFail();
 
+    $user->delete();
     $coordinador->delete();
     return redirect()->route('pages-coordinadores');
   }

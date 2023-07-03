@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('semilleristas', function (Blueprint $table) {
             $table->string('identificacion')->primaryKey();
             $table->string('nombre');
-            $table->string('codigo'); 
+            $table->string('codigo');
             $table->string('direccion');
             $table->string('telefono');
             $table->string('correo');
@@ -30,7 +30,11 @@ return new class extends Migration
             $table->string('estado')->nullable();
             //Releacion apuntando al modelo semillero
             $table->unsignedBigInteger('semillero_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();    
+            //Releacion apuntando al modelo usuario
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                  ->references('id')->on('users')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }

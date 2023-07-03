@@ -31,21 +31,21 @@ class SemilleristaController extends Controller
         $foto->move($ruta, $fotoUsuario);
         $semillerista->foto = "$fotoUsuario";
       }
-      
+
       //De igual manera creamos usuario para el semillerista-----------------------
       $user = new User();
       $user->name = $semillerista->nombre;
       $user->email = $semillerista->correo;
       $user->password = password_hash($semillerista->identificacion, PASSWORD_DEFAULT);
-  
+
       $user->save();
       $semillerista->user_id = $user->id;
       $semillerista->save();
-  
+
       //Asiganar rol
       $role = Role::where('name','semillerista')->first();
       $user->assignRole($role);
-  
+
       //-----------------------------------------------------------------------------
       return redirect()->route('pages-semilleristas');
     }
@@ -60,13 +60,15 @@ class SemilleristaController extends Controller
     }
     public function update(Request $request, $identificacion){
       $semillerista = Semillerista::where('identificacion',$identificacion)->firstOrFail();
-  
+
       $semillerista->update($request->all());
       return redirect()->route('pages-semilleristas');
     }
     public function destroy(Request $request, $identificacion){
       $semillerista = Semillerista::where('identificacion',$identificacion)->firstOrFail();
-  
+      $user = User::where('id',$semillerista->user_id)->firstOrFail();
+
+      $user->delete();
       $semillerista->delete();
       return redirect()->route('pages-semilleristas');
     }
