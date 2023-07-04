@@ -31,10 +31,16 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
+      @if (session('error'))
+          <div class="alert alert-danger">
+              {{ session('error') }}
+          </div>
+      @endif
+
       <form action="{{ route('coordinadores.store') }}" method="POST" enctype="multipart/form-data">
            @csrf
           <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
-            <h5 class="card-title mb-sm-0 me-2">Registro coordinador</h5>
+            <h5 class="card-title mb-sm-0 me-2">Actualizar información coordinador</h5>
             <div class="action-btns">
 
               <a href="{{ route('pages-coordinadores')}}" class="btn btn-danger">
@@ -59,7 +65,7 @@
                           <div class="button-wrapper">
                             <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                               <i class="bx bx-upload d-block "></i>
-                              <input name="foto" type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" required/>
+                              <input name="foto" type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg"/>
                             </label>
                             <button id="btn-reset" type="button" class="btn btn-label-secondary account-image-reset mb-4">
                               <i class="bx bx-reset d-block"></i>
@@ -68,40 +74,41 @@
                           </div>
                         </div>
                       </div>
+                      <!--Identificacion-->
                       <div class="col-md-6">
                         <label class="form-label" for="identificacion">Identificacion</label>
-                        <input type="number" id="identificacion" name="identificacion" class="form-control" required/>
+                        <input  type="number" id="identificacion" name="identificacion" class="form-control" required/>
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="nombre">Nombre completo</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" required/>
+                        <input  type="text" id="nombre" name="nombre" class="form-control" required/>
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="email">Correo</label>
                         <div class="input-group input-group-merge">
-                          <input class="form-control" type="email" id="email" name="correo"  aria-label="alguien" aria-describedby="email3" required/>
-
+                          <input  class="form-control" type="email" id="email" name="correo"  aria-label="alguien" aria-describedby="email3" required/>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="telefono">Teléfono</label>
-                        <input type="text" id="telefono" name="telefono" class="form-control phone-mask" required/>
+                        <input  type="text" id="telefono" name="telefono" class="form-control phone-mask" required/>
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="genero">Género</label>
                         <select id="genero" name="genero" class="select2 form-select" data-allow-clear="true" required>
-                          <option value="">Selecciona genero</option>
+                          <option value="">Selecciona género</option>
                           <option value="femenino">Femenino</option>
                           <option value="masculino">Masculino</option>
                         </select>
+
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="fecha_nacimiento">Fecha nacimiento</label>
-                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control"/>
+                        <input  type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control"/>
                       </div>
                       <div class="col-12">
                         <label class="form-label" for="direccion">Dirección</label>
-                        <textarea name="direccion" class="form-control" id="direccion" rows="1" required></textarea>
+                        <textarea name="direccion" class="form-control" id="direccion" rows="1"></textarea>
                       </div>
                     </div>
                 </fieldset>
@@ -115,7 +122,7 @@
                         </div>
                         <div class="col-md-6">
                           <label class="form-label" for="areas_conocimiento">Áreas conocimiento</label>
-                          <input type="text " id="areas_conocimiento" name="areas_conocimiento" class="form-control" required/>
+                          <input  type="text " id="areas_conocimiento" name="areas_conocimiento" class="form-control" required/>
                         </div>
                     </div>
                 </fieldset>
@@ -170,10 +177,11 @@
                          <div class="mb-3">
                            <label class="form-label" for="collapsible-payment-cvv">CVV Code</label>
                            <div class="input-group input-group-merge">
-                             <input type="text" id="collapsible-payment-cvv" class="form-control cvv-code-mask" maxlength="3" placeholder="654" />
+                             <input  type="text" id="collapsible-payment-cvv" class="form-control cvv-code-mask" maxlength="3" placeholder="654" />
                              <span class="input-group-text cursor-pointer" id="collapsible-payment-cvv2"><i class="bx bx-help-circle text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Card Verification Value"></i></span>
-                           </div>
-                         </div>
+                            </div>
+                          </div>
+
                        </div>
                      </div>
                    </div>
@@ -184,7 +192,7 @@
                     <h5 class="card-header">Acuerdo de nombramiento</h5>
                     <div class="card-body">
                       <div class="mb-3">
-                        <input name="acuerdo_nombramiento" type="file" class="form-control" accept="application/pdf"  required>
+                        <input  name="acuerdo_nombramiento" type="file" class="form-control" accept="application/pdf">
                       </div>
                       </div>
                     </div>
@@ -198,6 +206,7 @@
     </div>
   </div>
 </div>
+
 <script>
   document.getElementById('btn-reset').addEventListener('click', ()=>{
     document.getElementById('uploadedAvatar').src = "{{ url('assets/img/avatars/avatar.png') }}";
@@ -213,6 +222,10 @@
     reader.readAsDataURL(file);
   }
   document.getElementById('upload').addEventListener('change', handleFileSelect);
+
+
 </script>
 <!-- /Sticky Actions -->
 @endsection
+
+

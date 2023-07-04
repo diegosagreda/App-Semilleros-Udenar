@@ -38,7 +38,7 @@
       <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
         <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
 
-          <img alt="Avatar Image" class="rounded-circle h-px-100 w-px-100" src="{{ asset('assets/profile') . '/' . $coordinador->foto }}"
+          <img alt="Avatar Image" class="rounded-circle h-px-100 w-px-100" src="{{ asset('assets/img_coordinadores') . '/' . $coordinador->foto }}"
           alt="Foto del coordinador">
         </div>
         <div class="flex-grow-1 mt-3 mt-sm-5">
@@ -51,7 +51,7 @@
                 </li>
 
                 <li class="list-inline-item fw-semibold">
-                  <i class='bx bx-calendar-alt'></i> Fecha vinculación
+                  <i class='bx bx-calendar-alt'></i> Fecha vinculación: <span style="color:rgb(9, 164, 9)">{{$coordinador->fecha_vinculacion}}</span>
                 </li>
               </ul>
             </div>

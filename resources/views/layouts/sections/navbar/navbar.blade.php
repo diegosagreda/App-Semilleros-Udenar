@@ -55,7 +55,7 @@ $containerNav = $containerNav ?? 'container-fluid';
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
-              <a class="dropdown-item" href="{{ Route::has('profile.show') ? route('profile.show') : 'javascript:void(0);' }}">
+              <a class="dropdown-item">
                 <div class="d-flex">
                   <div class="flex-shrink-0 me-3">
                     <div class="avatar avatar-online">
@@ -67,7 +67,7 @@ $containerNav = $containerNav ?? 'container-fluid';
                       @if (Auth::check())
                       {{ Auth::user()->name }}
                       @else
-                      John Doe
+                      Usuario
                       @endif
                     </span>
                     @role('admin')
@@ -84,14 +84,14 @@ $containerNav = $containerNav ?? 'container-fluid';
               <div class="dropdown-divider"></div>
             </li>
             <!--ADMINISTRACION DE PERFIL-->
-            <!--
+
             <li>
               <a class="dropdown-item" href="{{ Route::has('profile.show') ? route('profile.show') : 'javascript:void(0);' }}">
                 <i class="bx bx-user me-2"></i>
                 <span class="align-middle">Mi perfil</span>
               </a>
             </li>
-            -->
+
             @if (Auth::check() && Laravel\Jetstream\Jetstream::hasApiFeatures())
             <li>
               <a class="dropdown-item" href="{{ route('api-tokens.index') }}">
