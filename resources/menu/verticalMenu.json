@@ -8,17 +8,17 @@
       "role": ["admin","coordinador","semilleristas"]
     },
     {
-      "url": "/coordinadores",
-      "icon": "menu-icon tf-icons bx bx-group",
-      "name": "Coordinadores",
-      "slug": "pages-coordinadores",
-      "role": ["admin"]
-    },
-    {
       "url": "/semilleros",
       "icon": "menu-icon tf-icons bx bx-shield",
       "name": "Semilleros",
       "slug": "pages-semilleros",
+      "role": ["admin"]
+    },
+    {
+      "url": "/coordinadores",
+      "icon": "menu-icon tf-icons bx bx-group",
+      "name": "Coordinadores",
+      "slug": "pages-coordinadores",
       "role": ["admin"]
     },
     {

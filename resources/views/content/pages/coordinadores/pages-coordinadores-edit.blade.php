@@ -127,49 +127,28 @@
                         </div>
                     </div>
                 </fieldset>
-                <!--Seccion asignacion semillero-->
-                <fieldset class="border p-4 mb-5">
-                    <legend class="w-auto">Asignár a semillero</legend>
-                    <div class="row gy-3">
+                 <!--Seccion asignacion semillero-->
+                 <fieldset class="border p-4 mb-5">
+                  <legend class="w-auto">Asignár a semillero</legend>
+                  <div class="row gy-3">
+                    @forelse ($semilleros as $index => $semillero)
                       <div class="col-md">
                         <div class="form-check custom-option custom-option-icon">
-                          <label class="form-check-label custom-option-content" for="customRadioIcon1">
+                          <label class="form-check-label custom-option-content" for="customRadioIcon{{$index}}">
                             <span class="custom-option-body">
                               <i class='bx bx-crown'></i>
-                              <span class="custom-option-title"> Semillero 1 </span>
-                              <small>Pasto</small>
+                              <small>Semillero</small>
+                              <span class="custom-option-title">{{$semillero->nombre}}</span>
                             </span>
-                            <input name="semillero_id" class="form-check-input" type="radio" value="" id="customRadioIcon1" checked />
+                            <input name="semillero_id" class="form-check-input" type="radio" value="{{$semillero->id}}" id="customRadioIcon{{$index}}" required {{$semillero->id === $coordinador->semillero->id ? 'checked' : ''}} />
                           </label>
                         </div>
                       </div>
-                      <div class="col-md">
-                        <div class="form-check custom-option custom-option-icon">
-                          <label class="form-check-label custom-option-content" for="customRadioIcon2">
-                            <span class="custom-option-body">
-                              <i class='bx bx-crown'></i>
-                              <span class="custom-option-title">Semillero 2 </span>
-                              <small>Ipiales</small>
-                            </span>
-                            <input name="semillero_id" class="form-check-input" type="radio" value="" id="customRadioIcon2" />
-                          </label>
-                        </div>
-                      </div>
-                      <div class="col-md">
-                        <div class="form-check custom-option custom-option-icon">
-                          <label class="form-check-label custom-option-content" for="customRadioIcon3">
-                            <span class="custom-option-body">
-                              <i class='bx bx-crown'></i>
-                              <span class="custom-option-title"> Semillero 3 </span>
-                              <small> Tumaco </small>
-                            </span>
-                            <input name="semillero_id" class="form-check-input" type="radio" value="" id="customRadioIcon3" />
-                          </label>
-                        </div>
-                      </div>
-                    </div>
+                    @empty
 
-                </fieldset>
+                    @endforelse
+                  </div>
+              </fieldset>
                 <!--Sticky form-->
                  <div class="row g-3" style="display: none">
                    <div class="col-12 col-md-10 col-xxl-8">

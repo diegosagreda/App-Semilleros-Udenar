@@ -30,16 +30,17 @@
           {{ session('error') }}
       </div>
       @endif
-      <form action="{{ route('semilleristas.store') }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ route('semilleristas.update', $semillerista->identificacion) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method("PUT")
         <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
-          <h5 class="card-title mb-sm-0 me-2">Registro semillerista</h5>
+          <h5 class="card-title mb-sm-0 me-2">Actualizar semillerista</h5>
           <div class="action-btns">
             <a href="{{ route('pages-semilleristas')}}" class="btn btn-danger">
               <span class="align-middle">Cancelar</span>
             </a>
             <button type="submit" class="btn btn-primary">
-              Guardar
+              Actualizar
             </button>
           </div>
         </div>
@@ -52,7 +53,7 @@
                     <!--Foto-->
                     <div class="col-md-12 mb-3">
                         <div class="d-flex flex-column align-items-center align-items-sm-center gap-4">
-                          <img src="{{ asset('assets/img/avatars/avatar.png')}}" alt="user-avatar" class="rounded-circle h-px-100 w-px-100" height="100" width="100" id="uploadedAvatar" />
+                          <img src="{{ asset('assets/img_semilleristas') . '/' . $semillerista->foto }}" alt="user-avatar" class="rounded-circle h-px-100 w-px-100" height="100" width="100" id="uploadedAvatar" />
                           <div class="button-wrapper">
                             <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                               <i class="bx bx-upload d-block "></i>
@@ -68,42 +69,43 @@
 
                     <div class="col-md-6">
                       <label class="form-label" for="identificacion">Identificacion</label>
-                      <input type="text" id="identificacion" name="identificacion" class="form-control" />
+                      <input value="{{$semillerista->identificacion}}"  type="text" id="identificacion" name="identificacion" class="form-control" />
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="codigo">Código</label>
-                      <input type="text" id="codigo" name="codigo" class="form-control" />
+                      <input value="{{$semillerista->identificacion}}"  type="text" id="codigo" name="codigo" class="form-control" />
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="nombre">Nombre completo</label>
-                      <input type="text" id="nombre" name="nombre" class="form-control"/>
+                      <input value="{{$semillerista->nombre}}" type="text" id="nombre" name="nombre" class="form-control"/>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="email">Correo</label>
                       <div class="input-group input-group-merge">
-                        <input class="form-control" type="email" id="email" name="correo"  aria-label="alguien" aria-describedby="email3" />
+                        <input value="{{$semillerista->correo}}" class="form-control" type="email" id="email" name="correo"  aria-label="alguien" aria-describedby="email3" />
 
                       </div>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="text" id="telefono" name="telefono" class="form-control phone-mask" />
+                      <input value="{{$semillerista->telefono}}" type="text" id="telefono" name="telefono" class="form-control phone-mask" />
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="genero">Género</label>
-                      <select id="genero" name="genero" class="select2 form-select" data-allow-clear="true">
-                        <option value="">Selecciona genero</option>
-                        <option value="femenino">Femenino</option>
-                        <option value="masculino">Masculino</option>
+                      <select id="genero" name="genero" class="select2 form-select" data-allow-clear="true" required>
+                        <option value="">Selecciona género</option>
+                        <option value="femenino" {{$semillerista->genero == 'femenino' ? 'selected' : ''}}>Femenino</option>
+                        <option value="masculino" {{$semillerista->genero == 'masculino' ? 'selected' : ''}}>Masculino</option>
                       </select>
+
                     </div>
                     <div class="col-12">
                       <label class="form-label" for="direccion">Dirección</label>
-                      <textarea name="direccion" class="form-control" id="direccion" rows="1"></textarea>
+                      <textarea name="direccion" class="form-control" id="direccion" rows="1">{{$semillerista->direccion}}"</textarea>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="fecha_nacimiento">Fecha nacimiento</label>
-                      <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" />
+                      <input value="{{$semillerista->fecha_nacimiento}}" type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" />
                     </div>
                   </div>
               </fieldset>
@@ -112,11 +114,11 @@
                   <div class="row g-3">
                       <div class="col-md-6">
                         <label class="form-label" for="programa_academico">Programa académico</label>
-                        <input type="text" id="programa_academico" name="programa_academico" class="form-control" />
+                        <input value="{{$semillerista->programa_academico}}" type="text" id="programa_academico" name="programa_academico" class="form-control"  required/>
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="semestre">Semestre</label>
-                        <input type="number" id="semestre" name="semestre" class="form-control" />
+                        <input value="{{$semillerista->semestre}}" type="number" id="semestre" name="semestre" class="form-control" required/>
                       </div>
                   </div>
               </fieldset>
@@ -133,7 +135,7 @@
                               <small>Semillero</small>
                               <span class="custom-option-title">{{$semillero->nombre}}</span>
                             </span>
-                            <input name="semillero_id" class="form-check-input" type="radio" value="{{$semillero->id}}" id="customRadioIcon{{$index}}" required />
+                            <input name="semillero_id" class="form-check-input" type="radio" value="{{$semillero->id}}" id="customRadioIcon{{$index}}" required {{$semillero->id === $semillerista->semillero->id ? 'checked' : ''}} />
                           </label>
                         </div>
                       </div>
@@ -164,8 +166,9 @@
                   <h5 class="card-header">Reporte matricula</h5>
                   <div class="card-body">
                     <div class="mb-3">
-                      <input  name="reporte_matricula" type="file" class="form-control" accept="application/pdf">
+                      <input value="{{$semillerista->reporte_matricula}}"  name="reporte_matricula" type="file" class="form-control" accept="application/pdf">
                     </div>
+                    <iframe src="{{ asset('assets/docs_semilleristas/' . $semillerista->reporte_matricula) }}" style="width:500px; height:500px;" frameborder="0"></iframe>
                     </div>
                   </div>
                 </div>

@@ -62,7 +62,9 @@
         <!--Nombre--->
         <h5 class="mb-1 card-title">{{$coordinador->nombre}}</h5>
         <!--Semillero--->
-        <span>Semillero asignado</span>
+
+        <span style="color: rgb(123, 179, 39)"><i  style="margin-right: 5px;" class='bx bx-shield'></i><strong>{{$coordinador->semillero->nombre}}</strong></span>
+
 
         <div class="d-flex align-items-center justify-content-center mt-5">
           <a href="{{route('coordinadores.show',$coordinador->identificacion)}}" class="btn btn-primary d-flex align-items-center me-3"><i class="bx bx-user"></i>Ver perfil</a>

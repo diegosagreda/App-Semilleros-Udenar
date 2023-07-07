@@ -47,7 +47,7 @@
               <h4>{{$coordinador->nombre}}</h4>
               <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
                 <li class="list-inline-item fw-semibold">
-                  <i class='bx bx-flag'></i> Semillero
+                  <i class='bx bx-shield'></i> Semillero: <span style="color:rgb(9, 164, 9)">{{$coordinador->semillero->nombre}}</span>
                 </li>
 
                 <li class="list-inline-item fw-semibold">
@@ -76,6 +76,7 @@
         <div>
           <small class="text-muted text-uppercase">Informacion personal</small>
           <ul class="list-unstyled mb-4 mt-3">
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Identificación:</span> <span>{{$coordinador->identificacion}}</span></li>
             <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Nombre completo:</span> <span>{{$coordinador->nombre}}</span></li>
             <li class="d-flex align-items-center mb-3"><i class="bx bx-phone"></i><span class="fw-semibold mx-2">Teléfono:</span> <span>{{$coordinador->telefono}}</span></li>
             <li class="d-flex align-items-center mb-3"><i class="bx bx-envelope"></i><span class="fw-semibold mx-2">Correo:</span> <span>{{$coordinador->correo}}</span></li>

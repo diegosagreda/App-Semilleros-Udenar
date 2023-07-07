@@ -32,6 +32,7 @@ Route::middleware([
     Route::get('/semilleristas/show/{semillerista}',[SemilleristaController::class, 'show'])->name('semilleristas.show');
     Route::get('/semilleristas/edit/{semillerista}', [SemilleristaController::class, 'edit'])->name('semilleristas.edit');
     Route::put('/semilleristas/update/{semillerista}', [SemilleristaController::class,'update'])->name('semilleristas.update');
+    Route::put('/semilleristas/updateState/{semillerista}', [SemilleristaController::class,'changeState'])->name('semilleristas.updateState');
     Route::delete('/semilleristas/destroy/{semillerista}',[SemilleristaController::class,'destroy'])->name('semilleristas.destroy');
 
 

@@ -23,20 +23,6 @@ class CoordinadorController extends Controller
   public function store(Request $request){
     $coordinador =new Coordinador();
     $coordinador->fill($request->all());
-    //Imagennn
-    if($foto = $request->file('foto')){
-      $ruta = public_path('assets/img_coordinadores/');
-      $fotoUsuario = date('YmdHis').".".$foto->getClientOriginalExtension();
-      $foto->move($ruta, $fotoUsuario);
-      $coordinador->foto = "$fotoUsuario";
-    }
-     //Doc acuerdo nombramiento-1
-     if($acuerdo_nombramiento = $request->file('acuerdo_nombramiento')){
-      $ruta = public_path('assets/docs_coordinadores/');
-      $documento = $coordinador->identificacion.".".$acuerdo_nombramiento->getClientOriginalExtension();
-      $acuerdo_nombramiento->move($ruta, $documento);
-      $coordinador->acuerdo_nombramiento = "$documento";
-    }
 
     //De igual manera creamos usuario para el coordinador-----------------------
     $user = new User();
@@ -49,9 +35,25 @@ class CoordinadorController extends Controller
       if (Coordinador::where('identificacion', $coordinador->identificacion)->exists()) {
         return redirect()->back()->with('error','Ya existe un coordinador con la misma identificacion');
       } else {
+          //Imagennn
+          if($foto = $request->file('foto')){
+            $ruta = public_path('assets/img_coordinadores/');
+            $fotoUsuario = date('YmdHis').".".$foto->getClientOriginalExtension();
+            $foto->move($ruta, $fotoUsuario);
+            $coordinador->foto = "$fotoUsuario";
+          }
+          //Doc acuerdo nombramiento-1
+          if($acuerdo_nombramiento = $request->file('acuerdo_nombramiento')){
+            $ruta = public_path('assets/docs_coordinadores/');
+            $documento = $coordinador->identificacion.".".$acuerdo_nombramiento->getClientOriginalExtension();
+            $acuerdo_nombramiento->move($ruta, $documento);
+            $coordinador->acuerdo_nombramiento = "$documento";
+          }
+
           $user->save();
           $coordinador->user_id = $user->id;
           $coordinador->fecha_vinculacion = date('Y-m-d');
+
           $coordinador->save();
 
           //Asiganar rol
@@ -64,7 +66,6 @@ class CoordinadorController extends Controller
       $errorMessage = $th->getMessage();
       return redirect()->back()->with('error', $errorMessage);
     }
-
     //-----------------------------------------------------------------------------
   }
   public function create(){
@@ -75,11 +76,12 @@ class CoordinadorController extends Controller
     return view('content.pages.coordinadores.pages-coordinadores-show', compact('coordinador'));
   }
   public function edit($identificacion){
+    $semilleros = Semillero::all();
     $coordinador = Coordinador::where('identificacion', $identificacion)->first();
-    return view('content.pages.coordinadores.pages-coordinadores-edit', compact('coordinador'));
+    return view('content.pages.coordinadores.pages-coordinadores-edit', compact('coordinador','semilleros'));
   }
   public function update(Request $request, $identificacion)
-{
+  {
     $coordinador = Coordinador::where('identificacion', $identificacion)->firstOrFail();
     $newfoto = "";
     $newDoc = "";
@@ -142,6 +144,26 @@ class CoordinadorController extends Controller
 
     $user->delete();
     $coordinador->delete();
+
+    /*Eliminamos imagen y documentos*/
+    $rutaImg = public_path('assets/img_coordinadores/');
+    $rutaDoc = public_path('assets/docs_coordinadores/');
+
+    // Eliminar foto si existe
+    if ($coordinador->foto) {
+        $rutaFotoAnterior = $rutaImg . $coordinador->foto;
+        if (file_exists($rutaFotoAnterior)) {
+            unlink($rutaFotoAnterior);
+        }
+    }
+    // Eliminar documento si existe
+    if ($coordinador->acuerdo_nombramiento) {
+       $rutaDocAnterior = $rutaDoc . $coordinador->acuerdo_nombramiento;
+    if (file_exists($rutaDocAnterior)) {
+       unlink($rutaDocAnterior);
+    }
+  }
+
     return redirect()->route('pages-coordinadores');
   }
 
