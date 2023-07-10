@@ -10,14 +10,19 @@
 @section('content')
 <h4 class="py-3 breadcrumb-wrapper mb-4">
   <span class="text-muted fw-light">Gestión |</span> Semilleristas
+  @role('coordinador')
+   - {{$semillero->nombre}}
+  @endrole
 </h4>
-@if (count($semilleros) <= 0)
-    <div class="alert alert-warning" role="alert">
-        <p>
-            En el momento no hay <strong>Semilleros</strong> registrados en el sistema.
-        </p>
-    </div>
-@endif
+@role('admin')
+  @if (count($semilleros) <= 0)
+      <div class="alert alert-warning" role="alert">
+          <p>
+              En el momento no hay <strong>Semilleros</strong> registrados en el sistema.
+          </p>
+      </div>
+  @endif
+@endrole
 
 <!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
@@ -29,6 +34,19 @@
       <i class='bx bx-user'></i> Nuevo
     </a>
     @endif
+    @role('coordinador')
+    <a href="{{route('semilleristas.create')}}" class="btn btn-primary text-nowrap">
+      <i class='bx bx-user'></i> Nuevo
+    </a>
+    @endrole
+    <div class="col-md-6">
+      <select id="semillero" name="semillero" class="select2 form-select" data-allow-clear="true">
+        <option value="">Selecciona semillero</option>
+        @foreach ($semilleros as $semillero)
+        <option value="{{$semillero->id}}">{{$semillero->nombre}}</option>
+        @endforeach
+      </select>
+    </div>
   </div>
 </nav>
 <!--/ Header -->
@@ -97,4 +115,31 @@
 
 </div>
 <!--/ Semilleristas Cards -->
+@endsection
+@section('page-script')
+<script>
+  // Manejar el evento de cambio de selección del menú desplegable
+  document.getElementById('semillero').addEventListener('change', function() {
+    const semilleroId = this.value;
+    const url = "{{ route('semilleristas.filterBySemillero') }}";
+
+    // Enviar una solicitud AJAX al servidor
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({ semilleroId })
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Actualizar el contenido de los semilleristas filtrado
+        document.getElementById('semilleristas-container').innerHTML = data;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+  });
+</script>
 @endsection

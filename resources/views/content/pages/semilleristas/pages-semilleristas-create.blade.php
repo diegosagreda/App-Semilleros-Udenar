@@ -120,28 +120,30 @@
                       </div>
                   </div>
               </fieldset>
+              @role('admin')
                  <!--Seccion asignacion semillero-->
                  <fieldset class="border p-4 mb-5">
                   <legend class="w-auto">Asignár a semillero</legend>
-                  <div class="row gy-3">
-                    @forelse ($semilleros as $index => $semillero)
-                      <div class="col-md">
-                        <div class="form-check custom-option custom-option-icon">
-                          <label class="form-check-label custom-option-content" for="customRadioIcon{{$index}}">
-                            <span class="custom-option-body">
-                              <i class='bx bx-crown'></i>
-                              <small>Semillero</small>
-                              <span class="custom-option-title">{{$semillero->nombre}}</span>
-                            </span>
-                            <input name="semillero_id" class="form-check-input" type="radio" value="{{$semillero->id}}" id="customRadioIcon{{$index}}" required />
-                          </label>
+                    <div class="row gy-3">
+                      @forelse ($semilleros as $index => $semillero)
+                        <div class="col-md">
+                          <div class="form-check custom-option custom-option-icon">
+                            <label class="form-check-label custom-option-content" for="customRadioIcon{{$index}}">
+                              <span class="custom-option-body">
+                                <i class='bx bx-crown'></i>
+                                <small>Semillero</small>
+                                <span class="custom-option-title">{{$semillero->nombre}}</span>
+                              </span>
+                              <input name="semillero_id" class="form-check-input" type="radio" value="{{$semillero->id}}" id="customRadioIcon{{$index}}" required />
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                    @empty
+                      @empty
 
-                    @endforelse
-                  </div>
-              </fieldset>
+                      @endforelse
+                    </div>
+                </fieldset>
+                @endrole
               <div class="row g-3" style="display: none">
 
                 <div class="col-12 col-md-10 col-xxl-8">

@@ -74,7 +74,10 @@
     <!-- About User -->
     <div class="card">
       <div class="card-body d-flex  flex-wrap justify-content-around gap-4">
-        <div>
+        <div class="position-relative">
+          <div class="position-absolute top-0 start-0 w-100 h-100"
+            style="background-image: url('{{ asset('assets/img/green-clouds.png')}}'); background-size: 300px 300px; background-repeat: no-repeat; background-position: center; opacity: 0.08;">
+          </div>
           <small class="text-muted text-uppercase">Informacion personal</small>
           <ul class="list-unstyled mb-4 mt-3">
             <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Identificacion:</span> <span>{{$semillerista->identificacion}}</span></li>

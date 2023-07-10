@@ -6,24 +6,44 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Semillerista;
 use App\Models\Semillero;
+use App\Models\Coordinador;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class SemilleristaController extends Controller
 {
-    public function index()
-    {
-      $semilleros = Semillero::All();
-      $semilleristas = Semillerista::all();
-      return view('content.pages.semilleristas.pages-semilleristas', compact('semilleristas','semilleros'));
+    public function index(){
+      //obtener el rol del usuario
+      $role = Auth::user()->roles[0]->name;
+
+      if($role === 'admin'){
+        $semilleros = Semillero::All();
+        $semilleristas = Semillerista::all();
+
+        return view('content.pages.semilleristas.pages-semilleristas', compact('semilleristas','semilleros'));
+      }else if($role === 'coordinador'){
+        $coordinador = Coordinador::where('user_id', Auth::id())->first();
+        $semillero = $coordinador->semillero;
+        $semilleristas = Semillerista::where('semillero_id',$semillero->id)->get();
+        $semilleros = [];
+
+        return view('content.pages.semilleristas.pages-semilleristas', compact('semilleristas','semilleros','semillero'));
+      }
     }
-    public function create()
-    {
+    public function create(){
       $semilleros = Semillero::all();
       return view('content.pages.semilleristas.pages-semilleristas-create', compact('semilleros'));
     }
     public function store(Request $request){
       $semillerista =new Semillerista();
+      //Validamos el tipo de usuario que esta haciendo el registro de un semillerista
+      $role = Auth::user()->roles[0]->name;
+      if($role === 'coordinador'){
+        $coordinador = Coordinador::where('user_id', Auth::id())->first();
+        $semillerista->semillero_id = $coordinador->semillero->id;
+      }
+
       $semillerista->fill($request->all());
       //Por defecto todos los semilleristas se registran en estado activo
       $semillerista->estado = 'activo';
@@ -143,10 +163,39 @@ class SemilleristaController extends Controller
         $semillerista->estado = 'activo';
       }
       $semillerista->save();
-      $semilleristas = Semillerista::all();
-      $semilleros = Semillero::all();
-      return view('content.pages.semilleristas.pages-semilleristas', compact('semilleristas','semilleros'));
+
+      $role = Auth::user()->roles[0]->name;
+
+      if($role === 'admin'){
+        $semilleristas = Semillerista::all();
+        $semilleros = Semillero::all();
+
+        return view('content.pages.semilleristas.pages-semilleristas', compact('semilleristas','semilleros'));
+      }else if($role === 'coordinador'){
+        $coordinador = Coordinador::where('user_id', Auth::id())->first();
+        $semillero = $coordinador->semillero;
+        $semilleristas = Semillerista::where('semillero_id',$semillero->id)->get();
+        $semilleros = [];
+
+        return view('content.pages.semilleristas.pages-semilleristas', compact('semilleristas','semilleros','semillero'));
+      }
     }
+    public function filtrarPorSemillero(Request $request)
+    {
+        $semilleroId = $request->input('semilleroId');
+
+        // Obtener los semilleristas filtrados por el semillero seleccionado
+        $semilleristas = Semillerista::where('semillero_id', $semilleroId)->get();
+
+        dd($semilleristas);
+
+        // Renderizar la vista parcial de los semilleristas filtrados
+        $html = view('partials.semilleristas', compact('semilleristas'))->render();
+
+        // Devolver la vista parcial como respuesta AJAX
+        return response()->json(['html' => $html]);
+    }
+
     public function destroy(Request $request, $identificacion){
       $semillerista = Semillerista::where('identificacion',$identificacion)->firstOrFail();
       $user = User::where('id',$semillerista->user_id)->firstOrFail();
@@ -174,6 +223,8 @@ class SemilleristaController extends Controller
 
       return redirect()->route('pages-semilleristas');
     }
+
+
 
 
 
