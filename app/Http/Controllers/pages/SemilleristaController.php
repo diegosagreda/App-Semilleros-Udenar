@@ -180,20 +180,12 @@ class SemilleristaController extends Controller
         return view('content.pages.semilleristas.pages-semilleristas', compact('semilleristas','semilleros','semillero'));
       }
     }
-    public function filtrarPorSemillero(Request $request)
-    {
-        $semilleroId = $request->input('semilleroId');
+    public function filtrarPorSemillero(Request $request, $semillero){
 
-        // Obtener los semilleristas filtrados por el semillero seleccionado
-        $semilleristas = Semillerista::where('semillero_id', $semilleroId)->get();
+      $semilleristas = Semillerista::where('semillero_id',$semillero)->get();
+      $semilleros = Semillero::all();
 
-        dd($semilleristas);
-
-        // Renderizar la vista parcial de los semilleristas filtrados
-        $html = view('partials.semilleristas', compact('semilleristas'))->render();
-
-        // Devolver la vista parcial como respuesta AJAX
-        return response()->json(['html' => $html]);
+      return view('content.pages.semilleristas.pages-semilleristas', compact('semilleristas','semilleros'));
     }
 
     public function destroy(Request $request, $identificacion){

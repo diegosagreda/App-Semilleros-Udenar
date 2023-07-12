@@ -34,7 +34,7 @@ Route::middleware([
     Route::put('/semilleristas/update/{semillerista}', [SemilleristaController::class,'update'])->name('semilleristas.update');
     Route::put('/semilleristas/updateState/{semillerista}', [SemilleristaController::class,'changeState'])->name('semilleristas.updateState');
     Route::delete('/semilleristas/destroy/{semillerista}',[SemilleristaController::class,'destroy'])->name('semilleristas.destroy');
-    Route::post('/semilleristas/filtrar-por-semillero', 'SemilleristaController@filtrarPorSemillero')->name('semilleristas.filterBySemillero');
+    Route::get('/semilleristas/filtro/{semillero}', [SemilleristaController::class,'filtrarPorSemillero'])->name('semilleristas.filtro');
 
 
 
