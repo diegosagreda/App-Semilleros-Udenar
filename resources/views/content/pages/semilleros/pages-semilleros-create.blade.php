@@ -66,14 +66,15 @@
                         <div class="col-md-6">
                         <label class="form-label" for="genero">Sede</label>
                         <select id="sede" name="sede" class="select2 form-select" data-allow-clear="true" @selected(true) required>
-                              <option value="Pasto">Pasto</option>
+                          <option value="">Selecciona</option>
+                          <option value="Pasto">Pasto</option>
                           <option value="Ipiales">Ipiales</option>
                           <option value="Tumaco">Tumaco</option>
                         </select>
                       </div>
                       <div class="col-md-6">
                         <label for="foto">Logo</label>
-                        <input name="logo" type="file" class="form-control" id="logo" placeholder="Foto" required>
+                        <input name="logo" type="file" class="form-control" id="logo" placeholder="Foto" required accept="image/png, image/jpeg">
                        </div>
                       <div class="col-12">
                         <label class="form-label" for="direccion">Dirección</label>
@@ -93,7 +94,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Archivo resolucion</label>
-                        <input name="arhivo_resolucion" type="file" class="form-control" id="arhivo_resolucion" name="arhivo_resolucion" placeholder="Foto" required>
+                        <input name="arhivo_resolucion" type="file" class="form-control" id="arhivo_resolucion" name="arhivo_resolucion" required accept="application/pdf">
                     </div>
                       <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>

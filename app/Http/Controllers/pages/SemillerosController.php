@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Semillero;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 
 class SemillerosController extends Controller
@@ -40,36 +41,53 @@ class SemillerosController extends Controller
     $semillero->fecha_creacion = now();
     $semillero->numero_resolucion = $request->input('numero_resolucion');
 
-    if ($request->hasFile('logo')) {
-        $logoPath = $request->file('logo')->store('semilleros');
-        $semillero->logo = $logoPath;
-    }
+    try {
+        if ($request->hasFile('logo')) {
+            $ruta = public_path('assets/img_semilleros/');
+            $fotoUsuario = date('YmdHis') . "." . $request->file('logo')->getClientOriginalExtension();
+            $request->file('logo')->move($ruta, $fotoUsuario);
+            $semillero->logo = $fotoUsuario;
+        }
 
-    if ($request->hasFile('arhivo_resolucion')) {
-        $arhivoResolucionPath = $request->file('arhivo_resolucion')->store('semilleros');
-        $semillero->arhivo_resolucion = $arhivoResolucionPath;
+        if ($request->hasFile('arhivo_resolucion')) {
+            $ruta = public_path('assets/docs_semilleros/');
+            $documento = date('YmdHis') . "." . $request->file('arhivo_resolucion')->getClientOriginalExtension();
+            $request->file('arhivo_resolucion')->move($ruta, $documento);
+            $semillero->arhivo_resolucion = $documento;
+        }
+    } catch (\Throwable $th) {
+        $errorMessage = $th->getMessage();
+        // Manejo del error
     }
 
     $semillero->save();
 
     return redirect()->route('pages-semilleros');
 }
-public function destroy(Request $request) {
-  $semilleroId = $request->id;
-  $semillero = Semillero::find($semilleroId);
 
-  if ($semillero) {
-      if ($semillero->logo) {
-          Storage::delete($semillero->logo);
-      }
-      if ($semillero->arhivo_resolucion) {
-          Storage::delete($semillero->arhivo_resolucion);
-      }
+public function destroy(Request $request)
+{
+    $semilleroId = $request->id;
+    $semillero = Semillero::find($semilleroId);
 
-      $semillero->delete();
-  }
+    if ($semillero) {
+        if ($semillero->logo) {
+            $rutaLogo = public_path('assets/img_semilleros/') . $semillero->logo;
+            if (File::exists($rutaLogo)) {
+                File::delete($rutaLogo);
+            }
+        }
+        if ($semillero->archivo_resolucion) {
+            $rutaResolucion = public_path('assets/docs_semilleros/') . $semillero->archivo_resolucion;
+            if (File::exists($rutaResolucion)) {
+                File::delete($rutaResolucion);
+            }
+        }
 
-  return redirect()->route('pages-semilleros');
+        $semillero->delete();
+    }
+
+    return redirect()->route('pages-semilleros');
 }
 
 

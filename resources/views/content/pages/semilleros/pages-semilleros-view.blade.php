@@ -20,7 +20,7 @@
                 <li class="list-inline-item fw-semibold">
                   <i class='bx bx-flag'></i> Semillero
                 </li>
-                
+
                 <li class="list-inline-item fw-semibold">
                   <i class='bx bx-calendar-alt'></i> Fecha vinculación
                 </li>
@@ -44,7 +44,7 @@
     <!-- About User -->
     <div class="card mb-4">
       <div class="card-body">
-        
+
         <small class="text-muted text-uppercase">Informacion personal</small>
         <ul class="list-unstyled mb-4 mt-3">
           <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Nombre completo:</span> </li>
@@ -53,7 +53,7 @@
           <li class="d-flex align-items-center mb-3"><i class="bx bx-map"></i><span class="fw-semibold mx-2">Dirección:</span> </li>
           <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Género:</span> </li>
           <li class="d-flex align-items-center mb-3"><i class="bx bx-calendar-alt"></i><span class="fw-semibold mx-2">Fecha nacimiento:</span> </li>
-     
+
         </ul>
         <small class="text-muted text-uppercase">Informacion academica</small>
         <ul class="list-unstyled mb-4 mt-3">
