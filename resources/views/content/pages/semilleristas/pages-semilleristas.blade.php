@@ -89,19 +89,26 @@
 
         <div class="d-flex align-items-center justify-content-center my-3 gap-2">
           <form method="POST" action="{{route('semilleristas.updateState', $semillerista->identificacion)}}">
-            @csrf
             @method('PUT')
-            <button style="background-color: transparent; border: none" type="submit" class="me-1"><span class="badge  {{$semillerista->estado === 'activo' ? 'bg-label-success' : 'bg-label-danger'}}">{{$semillerista->estado === 'activo' ? 'Activo' : 'Inactivo'}}</span></button>
+            @csrf
+            <button id="cambiar-estado" style="background-color: transparent; border: none" type="submit" class="me-1"><span class="badge  {{$semillerista->estado === 'activo' ? 'bg-label-success' : 'bg-label-danger'}}">{{$semillerista->estado === 'activo' ? 'Activo' : 'Inactivo'}}</span></button>
           </form>
         </div>
 
         <div class="d-flex align-items-center justify-content-around my-4 py-2">
-          <div>
-            <h4 class="mb-1">5</h4>
+          <div class="proyectos">
+            @php
+              $eventos = 0;
+              foreach ($semillerista->proyectos as $proyecto) {
+                  $eventos += count($proyecto->eventos);
+              }
+            @endphp
+
+            <h4 class="mb-1">{{ count( $semillerista->proyectos)}}</h4>
             <span>Projectos</span>
           </div>
           <div>
-            <h4 class="mb-1">12</h4>
+            <h4 class="mb-1">{{ $eventos}}</h4>
             <span>Eventos</span>
           </div>
         </div>
@@ -127,10 +134,25 @@
   const url = "{{ route('semilleristas.filtro', ':semilleroId') }}".replace(':semilleroId', semilleroId);
   if(semilleroId !== '0'){
     window.location.href = url;
+
   }else{
     window.location.href = "{{route('pages-semilleristas')}}"
   }
-});
+
+  });
+
+  document.getElementById('cambiar-estado').addEventListener('click', function() {
+
+    window.location.href = "{{ route('pages-semilleristas') }}";
+
+  });
+
 
 </script>
 @endsection
+
+<style>
+  .proyectos:hover{
+    cursor: pointer;
+  }
+</style>
