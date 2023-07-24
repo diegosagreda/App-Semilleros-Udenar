@@ -83,7 +83,12 @@ class SemilleristaController extends Controller
           //Asiganar rol
           $role = Role::where('name','semillerista')->first();
           $user->assignRole($role);
-          return redirect()->route('pages-semilleristas');
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Los datos se han guardado exitosamente.',
+
+          ]);
         }
 
       } catch (\Throwable $th) {
