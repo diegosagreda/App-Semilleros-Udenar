@@ -119,23 +119,16 @@
               </fieldset>
               <div class="col-md-6">
                 <label class="form-label" for="semillero_id">ID del Semillero</label>
-                <select id="semillero_id" name="semillero_id" class="form-control" >
+                <select id="semillero_id" name="semillero_id" class="form-control">
                   <option value="">Seleccionar semillero</option>
-          
-                  <option value="1"
-                  {{ isset($proyecto) ? ($proyecto->semillero_id == '1' ? 'selected' : '')
-                   : 
-                  (old('semillero_id') == '1' ? 'selected' : '') }}>Semillero 1</option>
-                  <option value="2"
-                  {{ isset($proyecto) ? ($proyecto->semillero_id == '2' ? 'selected' : '')
-                   : 
-                  (old('semillero_id') == '2' ? 'selected' : '') }}>Semillero 2</option>
-                  <option value="3"
-                  {{ isset($proyecto) ? ($proyecto->semillero_id == '3' ? 'selected' : '')
-                   : 
-                  (old('semillero_id') == '3' ? 'selected' : '') }}>Semillero 3</option>
-                
-                </select>
+                  @foreach ($semilleros as $semillero)
+                      <option value="{{ $semillero->id }}"
+                          {{ isset($proyecto) ? ($proyecto->semillero_id == $semillero->id ? 'selected' : '') :
+                          (old('semillero_id') == $semillero->id ? 'selected' : '') }}
+                      >{{ $semillero->nombre }}</option>
+                  @endforeach
+              </select>
+              
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\pages;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Proyecto;
+use App\Models\Semillero;
 
 class ProyectoController extends Controller
 {
@@ -21,7 +22,8 @@ class ProyectoController extends Controller
      */
     public function create()
     {
-        return view('content.pages.proyectos.pages-proyectos-create');
+        $semilleros = Semillero::all();
+        return view('content.pages.proyectos.pages-proyectos-create', compact('semilleros'));
     }
 
     /**
