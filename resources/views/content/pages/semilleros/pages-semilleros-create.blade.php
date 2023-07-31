@@ -62,7 +62,7 @@
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="identificacion">Nombre</label>
-                        <input type="text" id="nombreSemillero" name="nombreSemillero" class="form-control" value="Nuevo semillero" required/>
+                        <input type="text" id="nombre" name="nombre" class="form-control" value="Nuevo semillero" required/>
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="genero">Sede</label>
@@ -125,7 +125,7 @@
                           </div>
                           <div class="col-md-6 mb-3">
                             <label class="form-label" for="arhivo_resolucion">Archivo resolución</label>
-                            <input name="arhivo_resolucion" type="file" class="form-control" id="archivo_resolucion" name="archivo_resolucion" required accept="application/pdf">
+                            <input name="archivo_resolucion" type="file" class="form-control" id="archivo_resolucion" name="archivo_resolucion" required accept="application/pdf">
                           </div>
                         </div>
                       </div>

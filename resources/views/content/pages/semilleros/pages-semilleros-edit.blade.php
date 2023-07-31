@@ -25,8 +25,9 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <form action="{{ route('coordinadores.store') }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ route('semilleros.update',$semillero->id) }}" method="POST" enctype="multipart/form-data">
            @csrf
+           @method("PUT")
           <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
             <h5 class="card-title mb-sm-0 me-2">Actualizar Semillero</h5>
             <div class="action-btns">
@@ -35,7 +36,7 @@
                 <span class="align-middle">Cancelar</span>
               </a>
               <button type="" class="btn btn-primary">
-                Guardar
+                Actualizar
               </button>
             </div>
           </div>
@@ -64,15 +65,15 @@
                       </div>
                     <div class="col-md-6">
                       <label class="form-label" for="identificacion">Nombre</label>
-                      <input type="text" id="nombreSemillero" name="nombreSemillero" class="form-control" value="{{ $semillero->nombre }}" required/>
+                      <input type="text" id="nombre" name="nombre" class="form-control" value="{{ $semillero->nombre }}" required/>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="genero">Sede</label>
                       <select id="sede" name="sede" class="select2 form-select" data-allow-clear="true" @selected(true) required>
                         <option value="">Selecciona</option>
-                        <option value="Pasto">Pasto</option>
-                        <option value="Ipiales">Ipiales</option>
-                        <option value="Tumaco">Tumaco</option>
+                        <option value="Pasto" {{$semillero->sede == 'Pasto' ? 'selected' : ''}}>Pasto</option>
+                        <option value="Ipiales"{{$semillero->sede == 'Ipiales' ? 'selected' : ''}} >Ipiales</option>
+                        <option value="Tumaco" {{$semillero->sede == 'Tumaco' ? 'selected' : ''}}>Tumaco</option>
                       </select>
                     </div>
                             <div class="col-md-12">
@@ -97,27 +98,27 @@
                   </div>  --}}
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>
-                      <textarea class="form-control" id="descripcion" name="descripcion" rows="3" value="{{ $semillero->descripcion }}">Descripcion</textarea>
+                      <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ $semillero->descripcion }}</textarea>
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Presentacion</label>
-                    <textarea class="form-control" id="presentacion" name="presentacion" rows="3" value="{{ $semillero->presentacion}}">Presentacion</textarea>
+                    <textarea class="form-control" id="presentacion" name="presentacion" rows="3">{{ $semillero->presentacion}}</textarea>
                 </div>
                   <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Misión</label>
-                      <textarea class="form-control" id="mision" name="mision" rows="3" value="{{ $semillero->mision }}">Mision</textarea>
+                      <textarea class="form-control" id="mision" name="mision" rows="3" >{{ $semillero->mision }}</textarea>
                   </div>
                   <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Visión</label>
-                      <textarea class="form-control" id="vision" name="vision" rows="3" value="{{ $semillero->vision }}">Vision</textarea>
+                      <textarea class="form-control" id="vision" name="vision" rows="3">{{ $semillero->vision }}</textarea>
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Valores</label>
-                    <textarea class="form-control" id="valores" name="valores" value="{{ $semillero->valores }}" rows="3">Valores</textarea>
+                    <textarea class="form-control" id="valores" name="valores" rows="3">{{ $semillero->valores }}</textarea>
                 </div>
                   <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Objetivos</label>
-                      <textarea class="form-control" id="objetivos" name="objetivos" value="{{ $semillero->objetivos }}" rows="3">Objetivos</textarea>
+                      <textarea class="form-control" id="objetivos" name="objetivos" rows="3">{{ $semillero->objetivos }}</textarea>
                   </div>
                   <!--Input load file-->
                   </div>
@@ -133,10 +134,10 @@
                         </div>
                         <div class="col-md-6 mb-3">
                           <label class="form-label" for="arhivo_resolucion">Archivo resolución</label>
-                          <input value="{{$semillero->arhivo_resolucion}}" name="arhivo_resolucion" type="file" class="form-control" accept="application/pdf" required/>
+                          <input value="{{$semillero->archivo_resolucion}}" name="archivo_resolucion" type="file" class="form-control" accept="application/pdf"/>
                         </div>
                       </div>
-                      <iframe src="{{ asset('assets/docs_semilleros/' . $semillero->arhivo_resolucion) }}" style="width:500px; height:500px;" frameborder="0"></iframe>
+                      <iframe src="{{ asset('assets/docs_semilleros/' . $semillero->archivo_resolucion) }}" style="width:500px; height:500px;" frameborder="0"></iframe>
                       </div>
                     </div>
                   </div>

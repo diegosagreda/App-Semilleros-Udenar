@@ -20,18 +20,16 @@ class SemillerosController extends Controller
   public function create(){
     return view('content.pages.semilleros.pages-semilleros-create');
   }
-  public function edit($id){
-    $semillero=Semillero::where('id',$id)->first();
-    return view('content.pages.semilleros.pages-semilleros-edit', compact('semillero'));
-  }
   public function view(){
     return view('content.pages.semilleros.pages-semilleros-view');
   }
   public function store(Request $request)
 {
     $semillero = new Semillero();
-    $semillero->nombre = $request->input('nombreSemillero');
+    // $semillero->fill($request->all());
+    $semillero->nombre = $request->input('nombre');
     $semillero->correo = $request->input('correo');
+    $semillero->sede= $request->input('sede');
     $semillero->descripcion = $request->input('descripcion');
     $semillero->mision = $request->input('mision');
     $semillero->vision = $request->input('vision');
@@ -50,11 +48,11 @@ class SemillerosController extends Controller
             $semillero->logo = $fotoUsuario;
         }
 
-        if ($request->hasFile('arhivo_resolucion')) {
+        if ($request->hasFile('archivo_resolucion')) {
             $ruta = public_path('assets/docs_semilleros/');
-            $documento = date('YmdHis') . "." . $request->file('arhivo_resolucion')->getClientOriginalExtension();
-            $request->file('arhivo_resolucion')->move($ruta, $documento);
-            $semillero->arhivo_resolucion = $documento;
+            $documento = date('YmdHis') . "." . $request->file('archivo_resolucion')->getClientOriginalExtension();
+            $request->file('archivo_resolucion')->move($ruta, $documento);
+            $semillero->archivo_resolucion = $documento;
         }
     } catch (\Throwable $th) {
         $errorMessage = $th->getMessage();
@@ -65,6 +63,60 @@ class SemillerosController extends Controller
 
     return redirect()->route('pages-semilleros');
 }
+public function edit($id){
+  $semillero=Semillero::where('id',$id)->first();
+  return view('content.pages.semilleros.pages-semilleros-edit', compact('semillero'));
+}
+public function update(Request $request, $id){
+  $semillero=Semillero::where('id',$id)->first();
+  $newLogo = "";
+  $newDoc = "";
+  if ($request->hasFile('logo')) {
+    $ruta = public_path('assets/img_semilleros/');
+    // Eliminar foto anterior si existe
+    if ($semillero->logo) {
+        $rutaFotoAnterior = $ruta . $semillero->logo;
+        if (file_exists($rutaFotoAnterior)) {
+            unlink($rutaFotoAnterior);
+        }
+    }
+
+    $foto = $request->file('logo');
+    $fotoUsuario = date('YmdHis') . "." . $foto->getClientOriginalExtension();
+    $foto->move($ruta, $fotoUsuario);
+    $newLogo = $fotoUsuario;
+
+}else{
+  $newLogo = $semillero->logo;
+}
+// Documento archivo de resolucion
+if ($request->hasFile('archivo_resolucion')) {
+  $ruta = public_path('assets/docs_semilleros/');
+
+  if ($semillero->archivo_resolucion) {
+    $rutaDocumentoAnterior = $ruta . $semillero->archivo_resolucion;
+    if (file_exists($rutaDocumentoAnterior)) {
+        unlink($rutaDocumentoAnterior);
+    }
+}
+
+$documento = $request->file('archivo_resolucion');
+$nombreDocumento = date('YmdHis') . "." . $documento->getClientOriginalExtension();
+$documento->move($ruta, $nombreDocumento);
+$newDoc = $nombreDocumento;
+
+}else{
+$newDoc = $semillero->archivo_resolucion;
+}
+$semillero->fill($request->all());
+$semillero->logo = $newLogo;
+$semillero->archivo_resolucion = $newDoc;
+$semillero->save();
+
+return redirect()->route('pages-semilleros');
+
+}
+
 
 public function destroy(Request $request)
 {
