@@ -20,8 +20,9 @@ class SemillerosController extends Controller
   public function create(){
     return view('content.pages.semilleros.pages-semilleros-create');
   }
-  public function edit(){
-    return view('content.pages.semilleros.pages-semilleros-edit');
+  public function edit($id){
+    $semillero=Semillero::where('id',$id)->first();
+    return view('content.pages.semilleros.pages-semilleros-edit', compact('semillero'));
   }
   public function view(){
     return view('content.pages.semilleros.pages-semilleros-view');
