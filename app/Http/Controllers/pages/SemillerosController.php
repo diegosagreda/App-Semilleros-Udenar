@@ -20,8 +20,8 @@ class SemillerosController extends Controller
   public function create(){
     return view('content.pages.semilleros.pages-semilleros-create');
   }
-  public function view(){
-    return view('content.pages.semilleros.pages-semilleros-view');
+  public function view(Semillero $semillero){
+    return view('content.pages.semilleros.pages-semilleros-view', compact('semillero'));
   }
   public function store(Request $request)
 {

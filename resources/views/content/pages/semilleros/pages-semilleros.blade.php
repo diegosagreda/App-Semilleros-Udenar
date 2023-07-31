@@ -59,7 +59,7 @@
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"></button>
                 {{--  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>  --}}
                 <div class="dropdown @if(count($semilleros) < 3) show-all-options @endif">
-                  <a class="dropdown-item" href="{{route('semilleros.view')}}"><i class="bx bx-search-alt me-1"></i> Ver</a>
+                  <a class="dropdown-item" href="{{route('semilleros.view',$semillero->id)}}"><i class="bx bx-search-alt me-1"></i> Ver</a>
                   <a class="dropdown-item" href="{{route('semilleros.edit',$semillero->id)}}"><i class="bx bx-edit-alt me-1"></i> Editar</a>
                   <a class="dropdown-item" href="{{ route('semilleros.destroy', $semillero->id) }}"
                     onclick="event.preventDefault(); document.getElementById('delete-form-{{ $semillero->id }}').submit();">
