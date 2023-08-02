@@ -36,7 +36,7 @@
                     <h2 class="text-primary">Detalles del Proyecto</h2>
                 </div>
                 <div class="card-body">
-                    <h4 class="card-title" style="color: #ff9900;">{{ $proyecto->nomProyecto }}</h4>
+                    <h4 class="card-title" style="color: #ff9900;">Nombre: {{ $proyecto->nomProyecto }}</h4>
                     <h6 class="card-title" style="color: #d19c4e;">Codigo: {{ $proyecto->codProyecto }}</h6>
                     <!-- <p class="card-text">{{ $proyecto->descripcion }}</p> -->
                     

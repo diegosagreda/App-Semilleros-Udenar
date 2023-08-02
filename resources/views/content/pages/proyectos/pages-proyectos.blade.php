@@ -45,410 +45,304 @@
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 </head>
-
+@if(Session::has('mensaje'))
+{{ Session::get('mensaje')}}
+@endif
 <body>
     <div class="container">
-        <header class="codrops-header">
+        <header class="header">
             <h1>Proyectos</h1>
-            
-            <span>--------------------------------------</span>
-            <span>
-
-
-            </span>
             <a class="btn btn-outline-light" href="/proyectos/create">Agregar Proyecto</a>
-           
         </header>
-        <section class="pricing-section bg-1">
-			<div class="pricing pricing--sonam">
-				@if(count($proyectos) > 0)
-					@foreach($proyectos as $proyecto)
-					<div class="pricing__item">
-						<h3 class="pricing__title">{{$proyecto->nomProyecto}}</h3>
-						<div class="pricing__details">
-							<div class="pricing__price">
-								<span class="pricing__highlight">{{$proyecto->tipoProyecto}}</span>
-							</div>
-							<p class="pricing__description">{{$proyecto->estProyecto}}</p>
-							<div class="pricing__dates">
-								<p class="pricing__date"><span class="pricing__label">Inicio:</span> <span class="pricing__date-value">{{$proyecto->fecha_inicioPro}}</span></p>
-								<p class="pricing__date"><span class="pricing__label">Fin:</span> <span class="pricing__date-value">{{$proyecto->fecha_finPro}}</span></p>
-							</div>
-						</div>
-						<div class="pricing__actions">
-							<a href="{{ route('proyectos.show', $proyecto->codProyecto) }}" class="btn btn-outline-primary btn-shine text-white">Ver detalles</a>
-							<form action="{{ url('proyectos/'.$proyecto->codProyecto)}}" method="POST" class="d-inline">
-								@csrf
-								@method('DELETE')
-								<button type="submit" onclick="return confirm('¿Quieres borrar?')" class="btn btn-outline-danger btn-shine">Eliminar</button>
-							</form>
-						</div>
-					</div>
-					
-					@endforeach
-				@else
-				<div class="no-proyectos-message">
-					<p style="font-size: 50px; color: #555; text-align: center;">No hay proyectos registrados</p>
-				</div>
-				@endif
-			</div>
-		</section>
-		
-        
-        <!-- Related demos -->
-        <section class="content content--related">
-            <h3 class="media-item__title">Universidad de Nariño</h3>
-            <h3 class="media-item__title">San juan de Pasto</h3>
-            <h3 class="media-item__title">&copy;2023</h3>
-           
+        <section class="projects-section">
+            <div class="projects-grid">
+                @if(count($proyectos) > 0)
+
+					@php
+					// Definimos un diccionario con los nombres de las imágenes asociados a cada tipo de proyecto (en minúsculas)
+					$imagenesPorTipoProyecto = [
+						'innovacion y desarrollo' => 'innovacion.png',
+						'investigacion' => 'investigacion.png',
+						'emprendimiento' => 'emprendimiento.png',
+					];
+					@endphp
+                    @foreach($proyectos as $proyecto)
+                        <div class="project-card">
+                            <h3 class="project-title">{{$proyecto->nomProyecto}}</h3>
+							@php
+							// Convertimos el tipo de proyecto a minúsculas para que coincida con las claves del diccionario
+							$tipoProyecto = strtolower($proyecto->tipoProyecto);
+							
+							// Verificamos si el tipo de proyecto existe en el diccionario antes de acceder a la imagen
+							$imagen = $imagenesPorTipoProyecto[$tipoProyecto] ?? 'default.jpg'; // Usamos 'default.jpg' si no hay imagen para ese tipo de proyecto
+							@endphp
+							<img src="{{ asset('proyecto/' . $imagen) }}" alt="{{$proyecto->tipoProyecto}}" class="project-image">
+							<p class="project-type">{{$proyecto->tipoProyecto}}</p>
+                            <p class="project-status @if($proyecto->estProyecto === 'Propuesta') en-progreso @elseif($proyecto->estProyecto === 'En curso') terminado @else pendiente @endif">{{$proyecto->estProyecto}}</p>
+                            <div class="project-actions">
+                                <a href="{{ route('proyectos.show', $proyecto->codProyecto) }}" class="btn btn-primary">Ver detalles</a>
+                                <form action="{{ url('proyectos/'.$proyecto->codProyecto)}}" method="POST" class="delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('¿Quieres borrar?')" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="no-projects-message show">
+						<img src="proyecto/giphy.gif" alt="No hay proyectos registrados">
+                        <p>No hay proyectos registrados</p>
+                    </div>
+                @endif
+            </div>
         </section>
+        <footer class="footer">
+            <p>Universidad de Nariño</p>
+            <p>San juan de Pasto</p>
+            <p>&copy;2023</p>
+        </footer>
     </div>
-    <!-- /container -->
 </body>
 
 </html>
 
 <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+}
 
-.btn-shine {
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+}
+
+.no-projects-message {
+  text-align: center; /* Centrar el texto en el contenedor */
+  opacity: 0;
+  transform: translateY(-20px); /* Desplazar el texto hacia arriba */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.no-projects-message.show {
+  opacity: 1;
+  transform: translateY(0); /* Volver a la posición original */
+}
+
+.btn {
+    padding: 10px 20px;
+    border: 2px solid #333;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
 }
 
-.btn-shine:hover,
-.btn-shine:focus {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+.project-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-title {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+    font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.project-image {
+  max-width: 200px; /* Ajusta el tamaño según lo desees */
+  height: auto;
+  border: 2px solid #ddd; /* Borde con color gris claro */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  transition: all 0.3s ease; /* Transición suave para animaciones */
+  opacity: 0.8; /* Opacidad inicial de la imagen */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Transiciones para opacity y transform */
+}
+
+.project-image:hover {
+  transform: scale(1.05); /* Efecto de aumento de tamaño al pasar el cursor */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el cursor */
+  opacity: 1; /* Opacidad completa al pasar el cursor */
+  transform: translateY(-5px); /* Desplazamiento hacia arriba al pasar el cursor */
+}
+
+.project-card {
+  /* Ajusta el tamaño y el espacio entre tarjetas según tus preferencias */
+  width: 350px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center; /* Centra el contenido en el contenedor */
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.project-image {
+  max-width: 150px; /* Ajusta el tamaño de la imagen según lo desees */
+  height: auto;
+  border: 2px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-card .project-title {
+	font-size: 1.2rem; /* Tamaño del título ajustado según tus preferencias */
+  	font-weight: bold; /* Texto en negrita para resaltar el título */
+ 	 margin-top: 15px; /* Espacio entre el título y la imagen */
+}
+
+.project-card .project-type {
+  font-style: italic;
+  color: #666;
+  margin: 5px 0; /* Espacio entre el tipo de proyecto y la imagen */
+}
+
+.project-card .project-status {
+  font-weight: bold;
+  margin-bottom: 15px; /* Espacio entre el estado del proyecto y la imagen */
+}
+
+.project-card .project-actions {
+  display: flex;
+  justify-content: center; /* Centra los botones */
+}
+
+.project-card .btn {
+  margin: 5px;
+}
+
+/* Asegúrate de que las imágenes estén centradas verticalmente */
+.project-card .project-image {
+  display: block;
+  margin: 0 auto;
+}
+
+.project-card .project-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px; /* Espacio entre los botones y el resto del contenido */
+}
+
+.project-card .btn {
+  padding: 8px 15px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #fff; /* Fondo blanco por defecto */
+  color: #007bff; /* Texto en color azul por defecto */
+  transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
+}
+
+.project-card .btn:hover {
+  background-color: #007bff; /* Color de fondo al pasar el cursor por el botón */
+  color: #fff; /* Texto en color blanco al pasar el cursor por el botón */
 }
 
 
-.pricing__item {
-	position: relative;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-direction: column;
-	flex-direction: column;
-	-webkit-align-items: stretch;
-	align-items: stretch;
-	text-align: center;
-	-webkit-flex: 0 1 330px;
-	flex: 0 1 330px;
+.project-type {
+    font-size: 18px;
+    margin: 5px 0;
+    color: #666;
 }
 
-.pricing__feature-list {
-	text-align: left;
+.project-status {
+    font-size: 18px;
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
-.pricing__action {
-	color: inherit;
-	border: none;
-	background: none;
-}
-
-.pricing__action:focus {
-	outline: none;
-}
-
-/* Individual styles */
-
-/* Sonam */
-.pricing--sonam .pricing__item {
-	margin: 1em;
-	padding: 2em;
-	cursor: default;
-	border-radius: 10px;
-	background: #1F1F1F;
-	box-shadow: 0 5px 20px rgba(0,0,0,0.05), 0 15px 30px -10px rgba(0,0,0,0.3);
-	-webkit-transition: background 0.3s;
-	transition: background 0.3s;
-}
-
-.pricing--sonam .pricing__item:hover {
-	background: #141315;
-}
-
-.pricing--sonam .pricing__title {
-	font-size: 2em;
-	width: 100%;
-	margin: 0 0 0.25em;
-	padding: 0 0 0.5em;
-	border-bottom: 3px solid rgb(27, 26, 28);
-}
-
-.pricing--sonam .pricing__price {
-	color: #E06060;
-	font-size: 1.75em;
-	padding: 1em 0 0.75em;
-}
-
-.pricing--sonam .pricing__sentence {
-	font-weight: bold;
-}
-
-.pricing--sonam .pricing__feature-list {
-	margin: 0;
-	padding: 1em 1.25em 2em;
-}
-
-.pricing--sonam .pricing__action {
-	font-weight: bold;
-	margin-top: auto;
-	padding: 0.75em 2em;
-	border-radius: 5px;
-	background: #E06060;
-	-webkit-transition: background 0.3s;
-	transition: background 0.3s;
-}
-
-.pricing--sonam .pricing__action:hover,
-.pricing--sonam .pricing__action:focus {
-	background: #BD3C3C;
-}
-
-
-
-@font-face {
-	font-weight: normal;
-	font-style: normal;
-	font-family: 'codropsicons';
-	src:url('../fonts/codropsicons/codropsicons.eot');
-	src:url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
-		url('../fonts/codropsicons/codropsicons.ttf') format('truetype'),
-		url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
-}
-
-*, *:after, *:before { -webkit-box-sizing: border-box; box-sizing: border-box; }
-.clearfix:before, .clearfix:after {display: table;  content: ''; }
-.clearfix:after { clear: both; }
-
-body {
-	font-family: "Avenir Next", Avenir, 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
-	color: #444;
-	background: #fff;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-a {
-	outline: none;
-	color: #63f8d3;
-	text-decoration: none;
-}
-
-a:hover, a:focus {
-	color: #57d8b8;
-}
-
-.hidden {
-	position: absolute;
-	overflow: hidden;
-	width: 0;
-	height: 0;
-	pointer-events: none;
-}
-
-/* Content */
-.content {
-	padding: 3em 0;
-}
-
-.intro {
-	padding: 1em;
-	max-width: 1000px;
-	text-align: center;
-	font-size: 2em;
-}
-
-.codrops-header,
-.pricing-section {
-	min-height: 100vh;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-direction: column;
-	flex-direction: column;
-	-webkit-justify-content: center;
-	justify-content: center;
-	-webkit-align-items: center;
-	align-items: center;
-}
-
-.pricing-section {
-	padding: 2em 0 8em;
-	min-height: 100vh;
-	position: relative;
-}
-
-.pricing-section__title {
-	font-size: 1.4em;
-	font-weight: 700;
-	margin: 3em 0 5em;
-	flex: none;
-}
-
-.pricing-section a {
-	color: #333;
-}
-
-.pricing-section a:hover, 
-.pricing-section a:focus {
-	color: #000;
-}
-
-/* Header */
-.codrops-header {
-    padding: 2em 1em 4em;
+.en-progreso {
+    background-color: #28a745;
+    
     color: #fff;
-    height: 20vh;
-    min-height: 300px;
+}
+
+.terminado {
+    background-color: #ffcd56;
+    color: #fff;
+}
+
+.pendiente {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.project-actions {
+    margin-top: 20px;
+    display: flex;
+}
+
+.project-actions .btn {
+    margin-right: 10px;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.no-projects-message {
     text-align: center;
-    background: #292727 url(../img/mouse.svg) no-repeat left 50% bottom 40px;
-    transition: background 0.5s ease; /* Agrega la transición con duración de 0.5 segundos y una función de aceleración */
+    font-size: 24px;
+    color: #555;
+    margin: 50px 0;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 12px;
+    color: #999;
 }
 
 
-.codrops-header h1 {
-	margin: 0.5em 0 0;
-	letter-spacing: -1px;
-	font-size: 4em;
-	line-height: 1;
-}
-
-.codrops-header h1 span {
-	font-weight: normal;
-	display: block;
-	margin: 0.5em 0;
-	font-size: 50%;
-	letter-spacing: 0;
-	color: #d2d5d4;
-}
-
-/* Top Navigation Style */
-.codrops-links {
-	position: relative;
-	display: inline-block;
-	text-align: center;
-	white-space: nowrap;
-}
-
-.codrops-links::after {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: 1px;
-	height: 100%;
-	background: rgba(255,255,255,0.2);
-	content: '';
-	-webkit-transform: rotate3d(0,0,1,22.5deg);
-	transform: rotate3d(0,0,1,22.5deg);
-}
-
-.codrops-icon {
-	display: inline-block;
-	margin: 0.5em;
-	padding: 0em 0;
-	width: 1.5em;
-	text-decoration: none;
-}
-
-.codrops-icon span {
-	display: none;
-}
-
-.codrops-icon:before {
-	margin: 0 5px;
-	text-transform: none;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-	font-family: 'codropsicons';
-	line-height: 1;
-	speak: none;
-	-webkit-font-smoothing: antialiased;
-}
-
-.codrops-icon--drop:before {
-	content: "\e001";
-}
-
-.codrops-icon--prev:before {
-	content: "\e004";
-}
-
-/* Demo links */
-.codrops-demos {
-	margin: 2em 0 0;
-}
-
-.codrops-demos a {
-	display: inline-block;
-	margin: 0 0.5em;
-}
-
-.codrops-demos a.current-demo {
-	color: #333;
-}
-
-.bg-1 {
-  background: linear-gradient(45deg, #ece9ee, #a8a4a9);
-    background-size: cover;
-    color: #fff;
-    transition: background 0.5s ease;
-}
-
-.bg-2 {
-	background: #333 url(../img/blackboard.jpg) no-repeat center center;
-	background-size: cover;
-	color: #b1b1b1;
-  
-}
-
-
-/* Related demos */
-.content--related {
-	text-align: center;
-	font-weight: bold;
-	padding: 3em 1em;
-	background: #080808;
-  border-top: solid thin #5f6d7e;
-  margin-bottom: -4px!important; /* Fix for IE bug with negative margins and fixed positioning (see http://stackoverflow.com/questions/1170364)*/
-}
-
-.media-item {
-	display: inline-block;
-	padding: 1em;
-	vertical-align: top;
-	-webkit-transition: color 0.3s;
-	transition: color 0.3s;
-}
-
-.media-item__img {
-	max-width: 100%;
-	opacity: 0.6;
-	-webkit-transition: opacity 0.3s;
-	transition: opacity 0.3s;
-}
-
-.media-item:hover .media-item__img,
-.media-item:focus .media-item__img {
-	opacity: 1;
-}
-
-.media-item__title {
-	margin: 0;
-	padding: 0.5em;
-	font-size: 1em;
-}
-
-@media screen and (max-width: 50em) {
-	.codrops-header {
-		padding: 3em 10% 4em;
-	}
-}
-
-@media screen and (max-width: 40em) {
-	.codrops-header h1 {
-		font-size: 2.8em;
-	}
-}
 </style>
+
 
 @endsection
