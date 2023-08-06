@@ -7,15 +7,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Proyecto;
 use App\Models\Semillero;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Redirect;
 
 
 class ProyectoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-      
-        $proyectos = Proyecto::paginate(5);
-        return view('content.pages.proyectos.pages-proyectos', compact('proyectos'));
+        $tipo = $request->get('tipoProyecto');
+        $fecha = $request->get('fecha_inicioPro');
+        $estado = $request->get('estProyecto');
+
+        $proyectos = Proyecto::orderBy('estProyecto', 'DESC')
+            ->tipo($tipo)
+            ->fecha($fecha)
+            ->estado($estado)
+            ->paginate(20);
+
+        return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado'));
     }
     /**
      * Show the form for creating the resource.
@@ -46,6 +56,7 @@ class ProyectoController extends Controller
             'fecha_finPro'=>'required',
             'PropProyecto'=>'required|file',
             'Proyecto_final'=>'required|file',
+            'numero_integrantes' => 'required|integer|min:1|max:5',
             'semillero_id' => 'required|exists:semilleros,id',
 
         ];
@@ -61,6 +72,7 @@ class ProyectoController extends Controller
             'fecha_finPro.required'=>'La fecha de finalizacion del proyecto es requerida',
             'PropProyecto.required'=>'La propuesta del proyecto es requerida',
             'Proyecto_final.required'=>'El proyecto final es requerido',
+            'numero_integrantes.required' => 'Selecciona el numero de integrantes',
             'semillero_id.required'=>'Asegurate de que el semillero exista',
             'semillero_id.exists' => 'El semillero seleccionado no existe.',
             
@@ -70,6 +82,8 @@ class ProyectoController extends Controller
         $this->validate($request, $campos,$mensaje);
 
         $datosProyecto = request()->except('_token');
+
+        
 
 
         
@@ -93,6 +107,7 @@ class ProyectoController extends Controller
 
 
         Proyecto::insert($datosProyecto);
+
         //return response()->json($datosProyecto);
         return redirect('/proyectos')->with('mensaje','Proyecto agregado con exito');
     }
@@ -159,40 +174,44 @@ class ProyectoController extends Controller
             
         ];
 
+        if($request->hasFile('PropProyecto')){
+            $campos=['PropProyecto'=>'required|file',];
+            $mensaje=[ 'PropProyecto.required'=>'La propuesta del proyecto es requerida',];
+        }
+
+        if($request->hasFile('Proyecto_final')){
+            $campos=['Proyecto_final'=>'required|file',];
+            $mensaje=[ 'Proyecto_final.required'=>'El proyecto final es requerido',];
+        }
       
             // Validar los campos que no son archivos
         $this->validate($request, $campos, $mensaje);
 
         // Obtener el proyecto existente
-        $proyecto = Proyecto::findOrFail($id);
+       
+        // Almacenar el valor original del codProyecto
+        $proyectoAntiguo = Proyecto::findOrFail($id);
+        $codProyectoAntiguo = $proyectoAntiguo->codProyecto;
 
         // Si la validación es exitosa, actualizamos los campos del proyecto (excepto archivos)
-        $datosProyecto = $request->except('_token', '_method', 'PropProyecto', 'Proyecto_final');
+        $datosProyecto = $request->except('_token', '_method');
+         // Actualizar el proyecto en la base de datos
+        Proyecto::where('codProyecto','=',$id)->update($datosProyecto);
 
-        // Procesar y guardar el archivo "PropProyecto" si se proporciona
-        if ($request->hasFile('PropProyecto')) {
-            // Eliminar el archivo actual si existe
-            if ($proyecto->PropProyecto) {
-                Storage::delete('public/' . $proyecto->PropProyecto);
-            }
-            // Procesar y guardar el nuevo archivo
-            $datosProyecto['PropProyecto'] = $request->file('PropProyecto')->store('propuesta', 'public');
+        try {
+            // Buscar el proyecto utilizando el nuevo valor actualizado del codProyecto
+            $proyectoActualizado = Proyecto::where('codProyecto', '=', $datosProyecto['codProyecto'])->firstOrFail();
+        } catch (ModelNotFoundException $exception) {
+            // Si no se encuentra el proyecto con el nuevo valor, redireccionar con un mensaje de error
+            return redirect()->back()->with('error', 'No se pudo actualizar el proyecto. El proyecto anterior ya no existe.');
         }
+    
+        // Redireccionar a la página del proyecto actualizado con el nuevo valor de codProyecto
+        return redirect('/proyectos/' . $datosProyecto['codProyecto'])->with('mensaje', 'Proyecto actualizado con éxito');
 
-        // Procesar y guardar el archivo "Proyecto_final" si se proporciona
-        if ($request->hasFile('Proyecto_final')) {
-            // Eliminar el archivo actual si existe
-            if ($proyecto->Proyecto_final) {
-                Storage::delete('public/' . $proyecto->Proyecto_final);
-            }
-            // Procesar y guardar el nuevo archivo
-            $datosProyecto['Proyecto_final'] = $request->file('Proyecto_final')->store('proyectoFinal', 'public');
-        }
-
+        //$proyecto = Proyecto::findOrFail($id);
         // Actualizar el proyecto en la base de datos
-        $proyecto->update($datosProyecto);
-
-        return redirect('/proyectos')->with('mensaje', 'Proyecto actualizado con éxito');
+        //return redirect('/proyectos')->with('mensaje', 'Proyecto actualizado con éxito');
     }
 
     /**
@@ -213,4 +232,5 @@ class ProyectoController extends Controller
         Proyecto::destroy($id);
         return redirect('/proyectos')->with('mensaje','Proyecto eliminado con exito');
     }
+
 }

@@ -4,6 +4,13 @@
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1@5.3.0-alpha1/dist/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.25.0/dist/js/bootstrap-icons.min.js"></script>
+<link rel="stylesheet" href="{{ asset('proyecto/estilos/indexBotones.css') }}">
+<link rel="stylesheet" href="{{ asset('proyecto/estilos/index.css') }}">
+
 @endsection
 
 @section('vendor-script')
@@ -15,6 +22,8 @@
 
 @section('page-script')
 <script src="{{asset('assets/js/form-layouts.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
 @endsection
 
 
@@ -27,37 +36,125 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Proyectos</title>
-    <meta name="description" content="Various styles and inspiration for responsive, flexbox-based HTML pricing tables" />
-    <meta name="keywords" content="pricing table, inspiration, ui, modern, responsive, flexbox, html, component" />
-    <meta name="author" content="Codrops" />
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href='https://fonts.googleapis.com/css?family=Homemade+Apple' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Sahitya:400,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Playfair+Display:900' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+    <title>Proyectos</title>   
     
     <!--[if IE]>
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 </head>
-@if(Session::has('mensaje'))
-{{ Session::get('mensaje')}}
-@endif
+@if(session('mensaje'))
+    <div class="alert alert-success">
+        {{ session('mensaje') }}
+    </div>
+    @endif
 <body>
+    
     <div class="container">
+        <div class="container">
+            <div class="botones-container">
+                <button type="button" class="btn btn-primary custom-btn" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
+                  Buscar Proyectos
+                </button>
+                <a href="{{ route('proyectos.index') }}" class="btn btn-primary custom-btn">Ver todos los proyectos</a>
+              </div>
+            <div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="modalBusquedaLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modalBusquedaLabel">Busqueda de proyectos:</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+            <form id="form_busqueda" action="{{ route('proyectos.buscar') }}" method="GET">
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="tipoProyecto">Tipo:</label>
+                            <select name="tipoProyecto" id="tipoProyecto" class="form-control">
+                                <option value="">Seleccione tipo</option>
+                                <option value="Investigacion">Investigacion</option>
+                                <option value="Innovacion y Desarrollo" >Innovacion y Desarrollo</option>
+                                <option value="Emprendimiento">Emprendimiento</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                            <label for="tipoProyecto">Ultima búsqueda:</label>
+                            <label for="tipoProyecto">
+                                @if(request('tipoProyecto') === 'Investigacion')
+                                    Investigación
+                                @elseif(request('tipoProyecto') === 'Innovacion y Desarrollo')
+                                    Innovación y Desarrollo
+                                @elseif(request('tipoProyecto') === 'Emprendimiento')
+                                    Emprendimiento
+                                @else
+                                    <!-- Texto predeterminado cuando no se ha seleccionado nada -->
+                                    No se ha seleccionado ningún tipo de proyecto
+                                @endif
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="fecha_inicioPro">Fecha:</label>
+                            <input type="date" name="fecha_inicioPro" id="fecha_inicioPro" class="form-control" >
+                            <label for="fecha_inicioPro">Ultima fecha seleccionada:</label>
+                            <label for="fecha_inicioPro">
+                                @if(request('fecha_inicioPro'))
+                                    {{ request('fecha_inicioPro') }}
+                                @else
+                                    <!-- Texto predeterminado cuando no se ha seleccionado ninguna fecha -->
+                                    No se ha seleccionado ninguna fecha
+                                @endif
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="estProyecto">Estado:</label>
+                            <select name="estProyecto" id="estProyecto" class="form-control">
+                                <option value="">Seleccione estado</option>
+                                <option value="Propuesta" >Propuesta</option>
+                                <option value="En curso" >En curso</option>
+                                <option value="Finalizado">Finalizado</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                            <label for="estProyecto">Ultima búsqueda:</label>
+                            <label for="estProyecto">
+                                @if(request('estProyecto') === 'Propuesta')
+                                    Propuesta
+                                @elseif(request('estProyecto') === 'En curso')
+                                    En curso
+                                @elseif(request('estProyecto') === 'Finalizado')
+                                    Finalizado
+                                @else
+                                    <!-- Texto predeterminado cuando no se ha seleccionado nada -->
+                                    No se ha seleccionado ningún estado
+                                @endif
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary close-btn" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" form="form_busqueda" class="boton custom-btn">
+                <span class="bi bi-search fa-solid fa-magnifying-glass"></span> Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
         <header class="header">
             <h1>Proyectos</h1>
-            <a class="btn btn-outline-light" href="/proyectos/create">Agregar Proyecto</a>
+            <a class="btnA btn-outline-light" href="/proyectos/create">Agregar Proyecto</a>
         </header>
         <section class="projects-section">
             <div class="projects-grid">
                 @if(count($proyectos) > 0)
-
 					@php
 					// Definimos un diccionario con los nombres de las imágenes asociados a cada tipo de proyecto (en minúsculas)
 					$imagenesPorTipoProyecto = [
@@ -89,10 +186,15 @@
                             </div>
                         </div>
                     @endforeach
+                    
                 @else
                     <div class="no-projects-message show">
-						<img src="proyecto/giphy.gif" alt="No hay proyectos registrados">
-                        <p>No hay proyectos registrados</p>
+                        <img src="{{ asset('proyecto/giphy.gif') }}">
+                        @if($tipo || $fecha || $estado)
+                            <p>No se encontraron resultados para los filtros seleccionados.</p>
+                        @else
+                            <p>No hay proyectos registrados</p>
+                        @endif
                     </div>
                 @endif
             </div>
@@ -103,16 +205,13 @@
             <p>&copy;2023</p>
         </footer>
     </div>
+    <!-- Scripts -->
+    
 </body>
 
 </html>
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-}
 
 .container {
     max-width: 1200px;
@@ -120,32 +219,50 @@ body {
     padding: 20px;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+.botones-container {
+    text-align: center;
+}
+  
+.custom-btn {
+    font-size: 1rem;
+    text-align: center;
+    background-color: transparent; /* Fondo transparente */
+    border: 1px solid #007bff; /* Borde con color alrededor del botón */
+    color: #007bff; /* Color del texto del botón */
+  }
+  
+.custom-btn:hover {
+    background-color: #007bff; /* Fondo del botón al pasar el mouse por encima */
+    color: #fff; /* Color del texto al pasar el mouse por encima */
+  }
+  
+.custom-btn:focus {
+    background-color: #0056b3; /* Fondo del botón al hacer clic */
+    border-color: #0056b3; /* Color del borde al hacer clic */
+    color: #fff; /* Color del texto al hacer clic */
 }
 
-.header h1 {
-    font-size: 24px;
-    margin: 0;
-    color: #333;
-}
 
-.no-projects-message {
-  text-align: center; /* Centrar el texto en el contenedor */
-  opacity: 0;
-  transform: translateY(-20px); /* Desplazar el texto hacia arriba */
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
+.close-btn {
+    font-size: 1.5rem;
+    color: #141111; /* Color del icono del botón */
+    opacity: 0.5; /* Opacidad inicial del botón */
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    outline: none; /* Sin contorno al hacer clic */
+  }
+  
+  .close-btn:hover {
+    opacity: 1; /* Opacidad al pasar el mouse por encima */
+  }
+  
+  .close-btn:focus {
+    opacity: 1; /* Opacidad al hacer clic */
+  }
+  
+  /* Estilos personalizados para el botón "Buscar Proyectos" */
 
-.no-projects-message.show {
-  opacity: 1;
-  transform: translateY(0); /* Volver a la posición original */
-}
-
-.btn {
+  .btnA {
     padding: 10px 20px;
     border: 2px solid #333;
     text-decoration: none;
@@ -155,194 +272,9 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn:hover {
+.btnA:hover {
     background-color: #333;
     color: #fff;
 }
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.project-card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-}
-
-.project-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.project-title {
-    font-size: 24px;
-    margin: 0;
-    color: #333;
-    font-weight: bold;
-	margin-bottom: 20px;
-}
-
-.project-image {
-  max-width: 200px; /* Ajusta el tamaño según lo desees */
-  height: auto;
-  border: 2px solid #ddd; /* Borde con color gris claro */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  transition: all 0.3s ease; /* Transición suave para animaciones */
-  opacity: 0.8; /* Opacidad inicial de la imagen */
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Transiciones para opacity y transform */
-}
-
-.project-image:hover {
-  transform: scale(1.05); /* Efecto de aumento de tamaño al pasar el cursor */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el cursor */
-  opacity: 1; /* Opacidad completa al pasar el cursor */
-  transform: translateY(-5px); /* Desplazamiento hacia arriba al pasar el cursor */
-}
-
-.project-card {
-  /* Ajusta el tamaño y el espacio entre tarjetas según tus preferencias */
-  width: 350px;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  text-align: center; /* Centra el contenido en el contenedor */
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.project-image {
-  max-width: 150px; /* Ajusta el tamaño de la imagen según lo desees */
-  height: auto;
-  border: 2px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.project-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.project-card .project-title {
-	font-size: 1.2rem; /* Tamaño del título ajustado según tus preferencias */
-  	font-weight: bold; /* Texto en negrita para resaltar el título */
- 	 margin-top: 15px; /* Espacio entre el título y la imagen */
-}
-
-.project-card .project-type {
-  font-style: italic;
-  color: #666;
-  margin: 5px 0; /* Espacio entre el tipo de proyecto y la imagen */
-}
-
-.project-card .project-status {
-  font-weight: bold;
-  margin-bottom: 15px; /* Espacio entre el estado del proyecto y la imagen */
-}
-
-.project-card .project-actions {
-  display: flex;
-  justify-content: center; /* Centra los botones */
-}
-
-.project-card .btn {
-  margin: 5px;
-}
-
-/* Asegúrate de que las imágenes estén centradas verticalmente */
-.project-card .project-image {
-  display: block;
-  margin: 0 auto;
-}
-
-.project-card .project-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px; /* Espacio entre los botones y el resto del contenido */
-}
-
-.project-card .btn {
-  padding: 8px 15px;
-  margin: 0 5px;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  background-color: #fff; /* Fondo blanco por defecto */
-  color: #007bff; /* Texto en color azul por defecto */
-  transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
-}
-
-.project-card .btn:hover {
-  background-color: #007bff; /* Color de fondo al pasar el cursor por el botón */
-  color: #fff; /* Texto en color blanco al pasar el cursor por el botón */
-}
-
-
-.project-type {
-    font-size: 18px;
-    margin: 5px 0;
-    color: #666;
-}
-
-.project-status {
-    font-size: 18px;
-    margin: 5px 0;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.en-progreso {
-    background-color: #28a745;
-    
-    color: #fff;
-}
-
-.terminado {
-    background-color: #ffcd56;
-    color: #fff;
-}
-
-.pendiente {
-    background-color: #dc3545;
-    color: #fff;
-}
-
-.project-actions {
-    margin-top: 20px;
-    display: flex;
-}
-
-.project-actions .btn {
-    margin-right: 10px;
-}
-
-.delete-form {
-    display: inline;
-}
-
-.no-projects-message {
-    text-align: center;
-    font-size: 24px;
-    color: #555;
-    margin: 50px 0;
-}
-
-.footer {
-    text-align: center;
-    padding: 20px 0;
-    font-size: 12px;
-    color: #999;
-}
-
-
 </style>
-
-
 @endsection

@@ -47,42 +47,7 @@
         @csrf
         <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
           <h5 class="card-title mb-sm-0 me-2">Registro de Proyecto</h5>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectPersonasModal">
-            Seleccionar número de integrantes
-        </button>
-
-        
-        
-        <!-- Modal para seleccionar el número de integrantes -->
-        <div class="modal fade" id="selectPersonasModal" tabindex="-1" role="dialog" aria-labelledby="selectPersonasModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="selectPersonasModalLabel">Seleccionar número de integrantes</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Selecciona el número de integrantes (máximo 5):</p>
-                        <select id="numeroIntegrantes" class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="seleccionarIntegrantesBtn" data-dismiss="modal">Seleccionar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-          <input type="hidden" name="numero_integrantes" id="numeroIntegrantesInput">
-        </div>
-          
+        </div>  
         <div class="card-body">
           
           <div class="row">
@@ -90,13 +55,31 @@
             <div class="col-lg-8 mx-auto">
               
               <fieldset class="border p-4 mb-5">
-                
-                
                 <legend class="w-auto">Información del Proyecto</legend>
-                <div>
-                  <p id="numeroSeleccionado" ></p>
-                </div>
                 <div class="row g-3">
+                  <input type="hidden" name="numero_integrantes" id="numero_integrantes"
+                 value="{{ isset($proyecto) ? old('numero_integrantes', $proyecto->numero_integrantes) : old('numero_integrantes') }}">
+
+                  <div class="mb-3">
+                    <h5>Seleccione el número de integrantes:</h5>
+                    <div class="row">
+                        <div class="col-2">
+                            <button type="button" class="btn btn-primary btn-lg btn-block numero-btn" data-value="1">1</button>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-primary btn-lg btn-block numero-btn" data-value="2">2</button>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-primary btn-lg btn-block numero-btn" data-value="3">3</button>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-primary btn-lg btn-block numero-btn" data-value="4">4</button>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-primary btn-lg btn-block numero-btn" data-value="5">5</button>
+                        </div>
+                    </div>
+                  </div>
                   <div class="col-md-6">
                     <label class="form-label" for="codProyecto">Código</label>
                     <input type="text" id="codProyecto" name="codProyecto" class="form-control" 
@@ -209,13 +192,31 @@
   </div>
 </div>
 <script>
-  // Cuando se haga clic en el botón "Seleccionar" del modal
-  document.getElementById('seleccionarIntegrantesBtn').addEventListener('click', function () {
-      const numeroIntegrantes = document.getElementById('numeroIntegrantes').value;
-      document.getElementById('numeroIntegrantesInput').value = numeroIntegrantes;
-      $('#selectPersonasModal').modal('hide'); // Ocultar el modal
-      $('#formularioPrincipal').show(); // Mostrar el formulario principal
-      document.getElementById('numeroSeleccionado').innerText = `Número Integrantes: ${numeroIntegrantes}`;
+  document.addEventListener('DOMContentLoaded', function() {
+      const numeroButtons = document.querySelectorAll('.numero-btn');
+      const numeroInput = document.getElementById('numero_integrantes');
+
+      // Al cargar la página, asignar la clase 'selected' al botón correspondiente al valor del campo oculto
+      const selectedValue = numeroInput.value;
+      if (selectedValue) {
+          numeroButtons.forEach(button => {
+              if (button.getAttribute('data-value') === selectedValue) {
+                  button.classList.add('selected');
+              }
+          });
+      }
+
+      numeroButtons.forEach(button => {
+          button.addEventListener('click', function() {
+              const selectedValue = this.getAttribute('data-value');
+              numeroInput.value = selectedValue;
+
+              // Remover la clase 'selected' de todos los botones
+              numeroButtons.forEach(btn => btn.classList.remove('selected'));
+              // Agregar la clase 'selected' solo al botón seleccionado
+              this.classList.add('selected');
+          });
+      });
   });
 </script>
 <script>
@@ -318,6 +319,28 @@
       margin-bottom: 5px;
   }
 
+   /* Estilos para los botones */
+   .numero-btn {
+        font-size: 18px;
+        border-radius: 50px;
+        padding: 15px 20px;
+        margin: 5px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    /* Estilo para el botón seleccionado */
+    .numero-btn.selected {
+        background-color: #28a745; /* Color del botón seleccionado */
+        border: 2px solid #fff; /* Borde blanco para resaltar el botón seleccionado */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra para resaltar el botón seleccionado */
+    }
+
+    /* Efecto hover */
+    .numero-btn:hover {
+        background-color: #007bff; /* Cambiar al color deseado */
+    }
   </style>
   <!-- /Sticky Actions -->
 @endsection

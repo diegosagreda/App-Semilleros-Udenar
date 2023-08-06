@@ -52,6 +52,7 @@ Route::middleware([
 
     /*RUTAS PROYECTOS ----------------------------------------------------------------------*/
     //Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');
+    Route::get('/proyectos/buscar', [ProyectoController::class, 'index'])->name('proyectos.buscar');
     Route::resource('/proyectos', ProyectoController::class);
 
     /*Ruta test elements template*/
