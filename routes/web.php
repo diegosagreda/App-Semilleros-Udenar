@@ -21,9 +21,10 @@ Route::middleware([
     /*RUTAS SEMILLEROS -------------------------------------------------------------------------------------- */
     Route::get('/semilleros', [SemillerosController::class, 'index'])->name('pages-semilleros');
     Route::get('/semilleros/create', [SemillerosController::class, 'create'])->name('semilleros.create');
-    Route::get('/semilleros/edit', [SemillerosController::class, 'edit'])->name('semilleros.edit');
+    Route::get('/semilleros/edit/{semillero}', [SemillerosController::class, 'edit'])->name('semilleros.edit');
+    Route::put('/semilleros/update/{semillero}', [SemillerosController::class,'update'])->name('semilleros.update');
     Route::post('/semilleros/store', [SemillerosController::class, 'store'])->name('semilleros.store');
-    Route::get('/semilleros/view', [SemillerosController::class, 'view'])->name('semilleros.view');
+    Route::get('/semilleros/view/{semillero}', [SemillerosController::class, 'view'])->name('semilleros.view');
     Route::delete('/semilleros/destroy/{id}',[SemillerosController::class,'destroy'])->name('semilleros.destroy');
     /*RUTAS SEMILLERISTAS ------------------------------------------------------------------------------------*/
     Route::get('/semilleristas', [SemilleristaController::class, 'index'])->name('pages-semilleristas');

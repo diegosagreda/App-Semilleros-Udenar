@@ -28,6 +28,9 @@ return new class extends Migration
             $table->string('acuerdo_nombramiento')->nullable();
             //Releacion apuntando al modelo semillero
             $table->unsignedBigInteger('semillero_id')->nullable();
+            $table->foreign('semillero_id')
+            ->references('id')->on('semilleros')
+            ->onDelete('cascade');
             //Releacion apuntando al modelo usuario
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')

@@ -35,27 +35,32 @@
           @forelse ($semilleros as $semillero)
           <tr>
             <td><strong>{{ $semillero->nombre }}</strong></td>
-            <td>Sandra Marcela Guerrero Calvache</td>
+            <td>{{ $semillero->coordinador ? $semillero->coordinador->nombre : 'Sin asignar'  }}</td>
             <td>
               <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Lilian Fuller">
-                  <img src="{{asset('assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                </li>
-                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                  <img src="{{asset('assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                </li>
-                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Christina Parker">
-                  <img src="{{asset('assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                </li>
+                @if(count($semillero->semilleristas) > 0)
+                  @foreach ($semillero->semilleristas as $semillerista)
+
+                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="{{ $semillerista->nombre }}">
+                      <img src="{{ asset('assets/img_semilleristas/' . $semillerista->foto) }}" alt="Avatar" class="rounded-circle">
+
+                    </li>
+                  @endforeach
+                @else
+                  <li>No hay personas</li>
+                @endif
               </ul>
             </td>
+
             <td><span class="badge bg-label-primary me-1">{{ $semillero->correo }}</span></td>
             <td>
               <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{{route('semilleros.view')}}"><i class="bx bx-search-alt me-1"></i> Ver</a>
-                  <a class="dropdown-item" href="{{route('semilleros.edit')}}"><i class="bx bx-edit-alt me-1"></i> Editar</a>
+
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"></button>
+                {{--  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>  --}}
+                <div class="dropdown @if(count($semilleros) < 3) show-all-options @endif">
+                  <a class="dropdown-item" href="{{route('semilleros.view',$semillero->id)}}"><i class="bx bx-search-alt me-1"></i> Ver</a>
+                  <a class="dropdown-item" href="{{route('semilleros.edit',$semillero->id)}}"><i class="bx bx-edit-alt me-1"></i> Editar</a>
                   <a class="dropdown-item" href="{{ route('semilleros.destroy', $semillero->id) }}"
                     onclick="event.preventDefault(); document.getElementById('delete-form-{{ $semillero->id }}').submit();">
                      <i class="bx bx-trash me-1"></i> Eliminar

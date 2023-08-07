@@ -21,3 +21,4 @@ yarn-error.log
 /public/assets/css
 /public/assets/vendor
 composer.lock
+.env
