@@ -28,7 +28,7 @@
       <div class="col-xl-4 col-lg-6 col-md-6">
         <div class="card">
           <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
-            <!-- Opciones editar y eliminar (botón de tres puntos) -->
+            <!-- Opciones editar y eliminar -->
             <div class="dropdown btn-pinned">
               <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bx bx-dots-vertical-rounded"></i>
@@ -46,7 +46,7 @@
             </div>
             <!-- Foto -->
             <div class="mx-auto mb-3">
-              <img alt="Foto del evento" class="rounded-circle h-px-100 w-px-100" src="{{ asset('assets/eventos/' . $evento->foto) }}" alt="Foto del evento">
+              <img alt="Foto del evento" class=" h-px-100 w-px-111" src="{{ asset('assets/eventos/' . $evento->foto) }}" alt="Foto del evento">
             </div>
             <!-- Nombre del evento -->
             <h5 class="mb-1 card-title">{{ $evento->nombre }}</h5>
@@ -57,7 +57,7 @@
 
             <div class="d-flex align-items-center justify-content-center mt-5">
               <a href="{{ route('eventos.show', $evento->codigo) }}" class="btn btn-primary d-flex align-items-center me-3">
-                <i class="bx bx-calendar-event"></i> Ver detalles
+                 Ver detalles
               </a>
             </div>
           </div>

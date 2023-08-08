@@ -58,6 +58,7 @@ Route::middleware([
     Route::get('/eventos/show/{evento}', [EventoController::class, 'show'])->name('eventos.show');
     Route::get('/eventos/edit/{evento}', [EventoController::class, 'edit'])->name('eventos.edit');
     Route::delete('/evento/destroy/{evento}',[EventoController::class,'destroy'])->name('eventos.destroy');
+    Route::put('/eventos/update/{evento}', [EventoController::class, 'update'])->name('eventos.update');
 
     /*RUTAS PROYECTOS ----------------------------------------------------------------------*/
     //Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');

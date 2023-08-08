@@ -94,8 +94,9 @@ class EventoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($evento){
-        return view('content.pages.eventos.pages-eventos-edit');
+    public function edit($id){
+        $evento = Evento::find($id);
+        return view('content.pages.eventos.pages-eventos-edit', ['evento' => $evento]);
       }
     /**
      * Update the resource in storage.
@@ -103,10 +104,19 @@ class EventoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        //
+        $datos_evento = $request->except('_token', '_method');
+        $evento = Evento::find($id);
+    
+        if ($evento) {
+            $evento->update($datos_evento);
+            return redirect('/eventos')->with('success', 'Evento actualizado correctamente');
+        } else {
+            return redirect('/eventos')->with('error', 'Evento no encontrado');
+        }
     }
+    
 
     /**
      * Remove the resource from storage.
