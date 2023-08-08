@@ -1,0 +1,76 @@
+ 
+    /* Estilos personalizados */
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        margin-top: 30px;
+    }
+
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #6c757d;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-body {
+        padding: 30px;
+        position: relative; /* Agregamos posicionamiento relativo para el card-body */
+    }
+
+    .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            margin-left: 150px; /* Agregamos un pequeño margen izquierdo */
+        }
+
+        .card-text {
+            font-size: 18px;
+            color: #333;
+            margin-left: 150px; /* Agregamos un pequeño margen izquierdo */
+        }
+
+    .details {
+        margin-bottom: 10px;
+    }
+
+    .details strong {
+        font-weight: bold;
+    }
+
+    .edit-cancel {
+            display: flex;
+            justify-content: center; /* Centrar los botones horizontalmente */
+            margin-top: 20px;
+        }
+        
+
+    /* Estilos para el GIF */
+    .gif-container {
+            position: absolute;
+            top: 50px;
+            right: 250px;
+            width: 300px; /* Ajusta el tamaño del contenedor del GIF */
+            height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Para que el contenido del GIF no se desborde */
+        }
+
+        .gif {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Para ajustar el tamaño del GIF al contenedor */
+        }
+        
