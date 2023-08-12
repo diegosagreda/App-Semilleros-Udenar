@@ -93,7 +93,7 @@
       Swal.fire({
         icon: 'warning',
         title: '¿Estás seguro?',
-        text: 'Esta acción no se puede deshacer',
+        text: '¿Deseas eliminar al coordinador?',
         showCancelButton: true,
         confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar',

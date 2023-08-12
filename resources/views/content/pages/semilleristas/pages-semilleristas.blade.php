@@ -171,19 +171,7 @@
 
   }else{
     window.location.href = "{{route('pages-semilleristas')}}"
-<<<<<<< HEAD
-  }
-
-  });
-
-  document.getElementById('cambiar-estado').addEventListener('click', function() {
-
-    window.location.href = "{{ route('pages-semilleristas') }}";
-
-  });
-=======
 });*/
->>>>>>> diego
 
 
 </script>

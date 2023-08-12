@@ -231,6 +231,7 @@
     .then(response => response.json()) // Parsear la respuesta JSON
     .then(data => {
         if (data.success) {
+
           Swal.fire({
             icon: 'success',
             title: '¡Éxito!',
