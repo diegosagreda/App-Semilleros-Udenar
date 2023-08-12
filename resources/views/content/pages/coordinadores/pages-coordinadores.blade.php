@@ -46,10 +46,10 @@
           <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item text-info" href="{{route('coordinadores.edit',$coordinador->identificacion)}}">Editar</a></li>
             <li>
-              <form method="POST" action="{{route('coordinadores.destroy',$coordinador->identificacion)}}">
+              <form id="delete-form-{{ $coordinador->identificacion }}" method="POST" action="{{ route('coordinadores.destroy', $coordinador->identificacion) }}">
                 @csrf
                 @method('DELETE')
-                <input type="submit" class="dropdown-item text-danger" value="Eliminar" />
+                <input type="submit" class="dropdown-item text-danger delete-button" value="Eliminar" data-id="{{ $coordinador->identificacion }}" />
               </form>
             </li>
           </ul>
@@ -77,4 +77,44 @@
   @endforelse
 </div>
 <!--/ Semilleristas Cards -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+
+<script>
+
+  document.querySelectorAll('.delete-button').forEach(button => {
+    button.addEventListener('click', function (event) {
+      event.preventDefault(); // Prevenir el envío del formulario por defecto
+
+      const coordinadorId = event.target.getAttribute('data-id'); // Obtener el ID del coordinador
+      const form = document.getElementById(`delete-form-${coordinadorId}`); // Obtener el formulario de eliminación
+
+      Swal.fire({
+        icon: 'warning',
+        title: '¿Estás seguro?',
+        text: 'Esta acción no se puede deshacer',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Si el usuario confirma, enviar el formulario
+          form.submit();
+        } else {
+          // Si el usuario cancela, no sucede nada
+          // Puedes agregar un mensaje adicional si lo deseas
+          Swal.fire({
+            icon: 'info',
+            title: 'Cancelado',
+            text: 'La eliminación ha sido cancelada',
+            showConfirmButton: false, // Ocultar el botón de confirmación
+            timer: 1500,
+          });
+        }
+      });
+    });
+  });
+</script>
+
 @endsection
