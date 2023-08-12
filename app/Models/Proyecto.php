@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Semillerista;
+use App\Models\Evento;
+
 
 class Proyecto extends Model
 {
@@ -15,6 +18,16 @@ class Proyecto extends Model
     ];
     public $timestamps = true;
 
+
+     /**Relacion muchos a muchos con semilleristas*/
+     public function semilleristas (){
+      return $this->belongsToMany(Semillerista::class);
+    }
+
+     /**Relacion muchos a muchos con eventos*/
+     public function eventos (){
+      return $this->belongsToMany(Evento::class);
+    }
     public function scopeTipo($query, $tipo){
 
         if($tipo)
@@ -36,8 +49,4 @@ class Proyecto extends Model
         return $this->belongsTo(Semillero::class);
     }
 
-
-
-
-    
 }

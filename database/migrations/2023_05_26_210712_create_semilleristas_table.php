@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('semilleristas', function (Blueprint $table) {
-            $table->string('identificacion')->primaryKey();
+            $table->id('identificacion')->primaryKey();
             $table->string('nombre');
             $table->string('codigo');
             $table->string('direccion');

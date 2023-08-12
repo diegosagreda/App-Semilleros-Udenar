@@ -37,7 +37,7 @@
           </div>
       @endif
 
-      <form action="{{ route('coordinadores.update', $coordinador->identificacion) }}" method="POST" enctype="multipart/form-data">
+      <form id="coordinador-form" action="{{ route('coordinadores.update', $coordinador->identificacion) }}" method="POST" enctype="multipart/form-data">
            @csrf
            @method("PUT")
           <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
@@ -187,7 +187,9 @@
     </div>
   </div>
 </div>
-
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
 <script>
   document.getElementById('btn-reset').addEventListener('click', ()=>{
     document.getElementById('uploadedAvatar').src = "{{ url('assets/img/avatars/avatar.png') }}";
@@ -205,6 +207,44 @@
   document.getElementById('upload').addEventListener('change', handleFileSelect);
 
 
+  //Formulario
+  document.getElementById('coordinador-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const formElement = event.target;
+    const formData = new FormData(formElement); // Serialize form data
+
+    fetch(formElement.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        // Include CSRF token in the request headers
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      },
+    })
+    .then(response => response.json()) // Parsear la respuesta JSON
+    .then(data => {
+        if (data.success) {
+          console.log('success edit');
+          Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'Actualización exitosa', // El mensaje de éxito desde la respuesta JSON
+            showConfirmButton: false, // Ocultar el botón de confirmación
+            timer: 3000, // Cerrar la ventana emergente después de 3 segundos
+          }).then(() => {
+            window.location.href = "{{ route('pages-coordinadores') }}";
+          });
+        } else {
+          console.log('Form submitted successfully');
+        }
+        console.error('Form submission failed');
+    })
+    .catch(error => {
+
+        console.error('Network error occurred', error);
+    });
+  });
 
 </script>
 <!-- /Sticky Actions -->

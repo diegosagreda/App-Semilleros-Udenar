@@ -59,7 +59,12 @@ class CoordinadorController extends Controller
           //Asiganar rol
           $role = Role::where('name','coordinador')->first();
           $user->assignRole($role);
-          return redirect()->route('pages-coordinadores');
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Los datos se han guardado exitosamente.',
+            'coordinador_id' => $coordinador->id,
+          ]);
       }
 
     } catch (\Throwable $th) {
@@ -134,8 +139,13 @@ class CoordinadorController extends Controller
     $coordinador->acuerdo_nombramiento = $newDoc;
 
     $coordinador->save();
+    return response()->json([
+      'success' => true,
+      'message' => 'Los datos se han guardado exitosamente.',
+      'coordinador_id' => $coordinador->id,
+    ]);
 
-    return redirect()->route('pages-coordinadores');
+    //return redirect()->route('pages-coordinadores');
 }
 
   public function destroy(Request $request, $identificacion){

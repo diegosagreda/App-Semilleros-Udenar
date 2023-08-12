@@ -83,7 +83,12 @@ class SemilleristaController extends Controller
           //Asiganar rol
           $role = Role::where('name','semillerista')->first();
           $user->assignRole($role);
-          return redirect()->route('pages-semilleristas');
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Los datos se han guardado exitosamente.',
+
+          ]);
         }
 
       } catch (\Throwable $th) {
@@ -153,7 +158,12 @@ class SemilleristaController extends Controller
       $semillerista->reporte_matricula = $newDoc;
 
       $semillerista->save();
-      return redirect()->route('pages-semilleristas');
+      //return redirect()->route('pages-semilleristas');
+      return response()->json([
+        'success' => true,
+        'message' => 'Los datos se han guardado exitosamente.',
+
+      ]);
     }
     public function changeState($identificacion){
       $semillerista = Semillerista::where('identificacion', $identificacion)->first();
