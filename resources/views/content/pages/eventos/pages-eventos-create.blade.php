@@ -25,21 +25,14 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <form action="{{ route('eventos.store') }}" method="POST" enctype="multipart/form-data">>
-        @csrf
-        <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
+        <form action="{{ route('eventos.store') }}" method="POST" enctype="multipart/form-data">
+         @csrf
+          <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
           <h5 class="card-title mb-sm-0 me-2">Registrar Evento</h5>
-          <div class="action-btns">
-            <a href="{{ route('eventos.index')}}" class="btn btn-danger">
-              <span class="align-middle">Cancelar</span>
-            </a>
-            <button type="submit" class="btn btn-primary">
-              Guardar
-            </button>
-          </div>
-        </div>
-        <br>
-        <div class="card-body">
+         </div>
+       
+          <br>
+          <div class="card-body">
           <div class="row">
             <div class="col-lg-8 mx-auto">
               <fieldset class="border p-4 mb-5">
@@ -47,73 +40,93 @@
                   <div class="row g-3">
                     <div class="col-md-6">
                       <label class="form-label" for="codigo">Codigo</label>
-                      <input type="text" id="codigo" name="codigo" class="form-control" />
+                      <input type="text" id="codigo" name="codigo" class="form-control" required/>
                     </div> 
                     <div class="col-md-6">
                       <label class="form-label" for="nombre">Nombre Evento</label>
-                      <input type="text" id="nombre" name="nombre" class="form-control"/>
+                      <input type="text" id="nombre" name="nombre" class="form-control" required/>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="descripcion">Descripcion</label>
                       <div class="input-group input-group-merge">
-                        <textarea name="descripcion" class="form-control" id="descripcion" rows="1"></textarea>
+                        <textarea name="descripcion" class="form-control" id="descripcion" rows="1" required></textarea>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="tipo">Tipo Evento</label>
                       <select id="tipo" name="tipo" class="select2 form-select" data-allow-clear="true">
                         <option value="">Selecciona Tipo evento</option>
-                        <option value="congreso">Congreso</option>
-                        <option value="encuentro">Encuentro</option>
-                        <option value="seminario">Seminario</option>
-                        <option value="taller">Taller</option>
+                        <option value="Congreso">Congreso</option>
+                        <option value="Encuentro">Encuentro</option>
+                        <option value="Seminario">Seminario</option>
+                        <option value="Taller">Taller</option>
                       </select>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="modalidad">Modalidad</label>
                       <select id="modalidad" name="modalidad" class="select2 form-select" data-allow-clear="true">
                         <option value="">Selecciona Modalidad</option>
-                        <option value="virtual">Virtual</option>
-                        <option value="presencial">Presencial</option>
-                        <option value="hibrida">Híbrida</option>
+                        <option value="Virtual">Virtual</option>
+                        <option value="Presencial">Presencial</option>
+                        <option value="Hibrida">Híbrida</option>
                       </select>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="clasificacion">Clasificación</label>
                       <select id="clasificacion" name="clasificacion" class="select2 form-select" data-allow-clear="true">
                         <option value="">Selecciona Clasificación</option>
-                        <option value="local">Local</option>
-                        <option value="regional">Regional</option>
-                        <option value="nacional">Nacional</option>
+                        <option value="Local">Local</option>
+                        <option value="Regional">Regional</option>
+                        <option value="Nacional">Nacional</option>
                       </select>
                     </div>
                     <div class="col-12">
                       <label class="form-label" for="direccion">Lugar Evento</label>
-                      <textarea name="lugar" class="form-control" id="lugar" rows="1"></textarea>
+                      <textarea name="lugar" class="form-control" id="lugar" rows="1" required></textarea>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="fecha_inicio">Fecha Inicio del evento</label>
-                      <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" />
+                      <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" required/>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="fecha_fin">Fecha Fin del Evento</label>
-                      <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" />
+                      <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required/>
                     </div>
                   </div>
                   <br>
                   <div class="col-md-6">
                     <label class="form-label" for="observaciones">Observaciones</label>
                     <div class="input-group input-group-merge">
-                      <textarea name="observaciones" class="form-control" id="observaciones" rows="1"></textarea>
+                      <textarea name="observaciones" class="form-control" id="observaciones" rows="1" required></textarea>
                     </div>
                   </div>
                   <br>
                   <div class="col-12">
                     <label class="form-label" for="foto">Foto del Evento</label>
-                    <input type="file" id="foto" name="foto" class="form-control" />
+                    <input type="file" id="foto" name="foto" class="form-control" required />
+                  </div>
+              </div>
+                </div>
+                <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
+                  <h5 class="card-title mb-sm-0 me-2">Eventos</h5>
+                  <div class="action-btns">
+                    <a href="{{ route('eventos.index')}}" class="btn btn-danger">
+                      <span class="align-middle">Cancelar</span>
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                      Guardar
+                    </button>
                   </div>
                 </div>
+          </form>
 
               
 <!-- /Sticky Actions -->
 @endsection
+<style>
+  .form-label {
+    font-style: italic;
+
+  }
+  
+</style>

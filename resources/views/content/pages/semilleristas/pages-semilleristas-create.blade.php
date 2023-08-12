@@ -25,7 +25,12 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <form action="{{ route('semilleristas.store') }}" method="POST" enctype="multipart/form-data">
+      @if (session('error'))
+      <div class="alert alert-danger">
+          {{ session('error') }}
+      </div>
+      @endif
+      <form id="semillerista-form" action="{{ route('semilleristas.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
           <h5 class="card-title mb-sm-0 me-2">Registro semillerista</h5>
@@ -44,14 +49,31 @@
               <fieldset class="border p-4 mb-5">
                   <legend class="w-auto">Información Personal</legend>
                   <div class="row g-3">
+                    <!--Foto-->
+                    <div class="col-md-12 mb-3">
+                        <div class="d-flex flex-column align-items-center align-items-sm-center gap-4">
+                          <img src="{{ asset('assets/img/avatars/avatar.png')}}" alt="user-avatar" class="rounded-circle h-px-100 w-px-100" height="100" width="100" id="uploadedAvatar" />
+                          <div class="button-wrapper">
+                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                              <i class="bx bx-upload d-block "></i>
+                              <input name="foto" type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg"/>
+                            </label>
+                            <button id="btn-reset" type="button" class="btn btn-label-secondary account-image-reset mb-4">
+                              <i class="bx bx-reset d-block"></i>
+                            </button>
+                            <p class="mb-0">Permitido JPG o PNG</p>
+                          </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-6">
                       <label class="form-label" for="identificacion">Identificacion</label>
                       <input type="text" id="identificacion" name="identificacion" class="form-control" />
-                    </div> 
+                    </div>
                     <div class="col-md-6">
                       <label class="form-label" for="codigo">Código</label>
                       <input type="text" id="codigo" name="codigo" class="form-control" />
-                    </div> 
+                    </div>
                     <div class="col-md-6">
                       <label class="form-label" for="nombre">Nombre completo</label>
                       <input type="text" id="nombre" name="nombre" class="form-control"/>
@@ -59,8 +81,8 @@
                     <div class="col-md-6">
                       <label class="form-label" for="email">Correo</label>
                       <div class="input-group input-group-merge">
-                        <input class="form-control" type="email" id="email" name="correo" placeholder="alguien" aria-label="alguien" aria-describedby="email3" />
-                        <span class="input-group-text" id="email3">@example.com</span>
+                        <input class="form-control" type="email" id="email" name="correo"  aria-label="alguien" aria-describedby="email3" />
+
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -91,57 +113,40 @@
                       <div class="col-md-6">
                         <label class="form-label" for="programa_academico">Programa académico</label>
                         <input type="text" id="programa_academico" name="programa_academico" class="form-control" />
-                      </div> 
+                      </div>
                       <div class="col-md-6">
                         <label class="form-label" for="semestre">Semestre</label>
                         <input type="number" id="semestre" name="semestre" class="form-control" />
-                      </div>  
+                      </div>
                   </div>
               </fieldset>
-              <fieldset class="border p-4 mb-5">
+              @role('admin')
+                 <!--Seccion asignacion semillero-->
+                 <fieldset class="border p-4 mb-5">
                   <legend class="w-auto">Asignár a semillero</legend>
-                  <div class="row gy-3">
-                    <div class="col-md">
-                      <div class="form-check custom-option custom-option-icon">
-                        <label class="form-check-label custom-option-content" for="customRadioIcon1">
-                          <span class="custom-option-body">
-                            <i class='bx bx-crown'></i>
-                            <span class="custom-option-title"> Semillero 1 </span>
-                            <small>Pasto</small>
-                          </span>
-                          <input name="semillero_id" class="form-check-input" type="radio" value="" id="customRadioIcon1" checked />
-                        </label>
-                      </div>
+                    <div class="row gy-3">
+                      @forelse ($semilleros as $index => $semillero)
+                        <div class="col-md">
+                          <div class="form-check custom-option custom-option-icon">
+                            <label class="form-check-label custom-option-content" for="customRadioIcon{{$index}}">
+                              <span class="custom-option-body">
+                                <i class='bx bx-crown'></i>
+                                <small>Semillero</small>
+                                <span class="custom-option-title">{{$semillero->nombre}}</span>
+                              </span>
+                              <input name="semillero_id" class="form-check-input" type="radio" value="{{$semillero->id}}" id="customRadioIcon{{$index}}" required />
+                            </label>
+                          </div>
+                        </div>
+                      @empty
+
+                      @endforelse
                     </div>
-                    <div class="col-md">
-                      <div class="form-check custom-option custom-option-icon">
-                        <label class="form-check-label custom-option-content" for="customRadioIcon2">
-                          <span class="custom-option-body">
-                            <i class='bx bx-crown'></i>
-                            <span class="custom-option-title">Semillero 2 </span>
-                            <small>Ipiales</small>
-                          </span>
-                          <input name="semillero_id" class="form-check-input" type="radio" value="" id="customRadioIcon2" />
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-md">
-                      <div class="form-check custom-option custom-option-icon">
-                        <label class="form-check-label custom-option-content" for="customRadioIcon3">
-                          <span class="custom-option-body">
-                            <i class='bx bx-crown'></i>
-                            <span class="custom-option-title"> Semillero 3 </span>
-                            <small> Tumaco </small>
-                          </span>
-                          <input name="semillero_id" class="form-check-input" type="radio" value="" id="customRadioIcon3" />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-              </fieldset>
+                </fieldset>
+                @endrole
               <div class="row g-3" style="display: none">
-                
-                <div class="col-12 col-md-10 col-xxl-8">  
+
+                <div class="col-12 col-md-10 col-xxl-8">
                   <div class="row">
                     <div class="col-6 col-md-3">
                       <div class="mb-3">
@@ -155,6 +160,17 @@
                   </div>
                 </div>
               </div>
+              <!--Input load file-->
+              <div class="col-12">
+                <div class="card mb-4">
+                  <h5 class="card-header">Reporte matricula</h5>
+                  <div class="card-body">
+                    <div class="mb-3">
+                      <input  name="reporte_matricula" type="file" class="form-control" accept="application/pdf">
+                    </div>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
@@ -162,5 +178,65 @@
     </div>
   </div>
 </div>
+
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+
+<script>
+  document.getElementById('btn-reset').addEventListener('click', ()=>{
+    document.getElementById('uploadedAvatar').src = "{{ url('assets/img/avatars/avatar.png') }}";
+  })
+
+  //Funcion para hacer el preview de la foto subida para el semillerista
+  function handleFileSelect(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById('uploadedAvatar').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  document.getElementById('upload').addEventListener('change', handleFileSelect);
+
+   //Formulario
+   document.getElementById('semillerista-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const formElement = event.target;
+    const formData = new FormData(formElement); // Serialize form data
+
+    fetch(formElement.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        // Include CSRF token in the request headers
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      },
+    })
+    .then(response => response.json()) // Parsear la respuesta JSON
+    .then(data => {
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: data.message, // El mensaje de éxito desde la respuesta JSON
+            showConfirmButton: false, // Ocultar el botón de confirmación
+            timer: 3000, // Cerrar la ventana emergente después de 3 segundos
+          }).then(() => {
+            window.location.href = "{{ route('pages-semilleristas') }}";
+          });
+        } else {
+          console.log('Form submitted successfully');
+        }
+        console.error('Form submission failed');
+    })
+    .catch(error => {
+
+        console.error('Network error occurred', error);
+    });
+  });
+
+</script>
 <!-- /Sticky Actions -->
 @endsection
