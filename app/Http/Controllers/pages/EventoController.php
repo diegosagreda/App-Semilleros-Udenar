@@ -5,6 +5,7 @@ namespace App\Http\Controllers\pages;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Evento;
+use App\Models\Proyecto;
 
 class EventoController extends Controller
 {
@@ -96,7 +97,8 @@ class EventoController extends Controller
      */
     public function edit($id){
         $evento = Evento::find($id);
-        return view('content.pages.eventos.pages-eventos-edit', ['evento' => $evento]);
+        
+        return view('content.pages.eventos.pages-eventos-edit',['evento' => $evento]);
       }
     /**
      * Update the resource in storage.
@@ -129,4 +131,6 @@ class EventoController extends Controller
     
         return redirect()->route('eventos.index')->with('success', 'El evento ha sido eliminado exitosamente');
     }
+
+    
 }

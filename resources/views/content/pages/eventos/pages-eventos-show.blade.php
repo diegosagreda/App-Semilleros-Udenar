@@ -94,10 +94,22 @@
         <ul class="list-unstyled mt-3 mb-0">
           <li class="d-flex align-items-center mb-3"><i class="bx bx-file"></i><span>{{$evento->observaciones}}</span></li>
         </ul>
+
+        
+         
+          <button type="submit">Agregar Proyectos</button>
+     
+        
+        <!--/ Project List -->
+        
+
+
+        
       </div>
     </div>
     <!--/ Event Details -->
   </div>
+  
 </div>
 <!--/ Event Profile Content -->
 @endsection

@@ -35,5 +35,9 @@ class Proyecto extends Model
     {
         return $this->belongsTo(Semillero::class);
     }
+
+
+
+
     
 }
