@@ -48,10 +48,10 @@
               <h4>{{$evento->nombre}}</h4>
               <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
                 <li class="list-inline-item fw-semibold">
-                  <i class='bx bx-calendar-alt'></i> Fecha
+                  <i class='bx bx-calendar-alt'></i> Fecha:   <span>{{$evento->fecha_inicio}}</span></li>
                 </li>
                 <li class="list-inline-item fw-semibold">
-                  <i class='bx bx-flag'></i> Lugar
+                  <i class='bx bx-flag'></i> Lugar:  <span>{{$evento->lugar}}</span></li>
                 </li>
               </ul>
             </div>
@@ -85,7 +85,7 @@
 
         <small class="text-muted text-uppercase">Detalles adicionales</small>
         <ul class="list-unstyled mb-4 mt-3">
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-group"></i><span class="fw-semibold mx-2">Tipo de evento:</span> <span>{{$evento->tipo_evento}}</span></li>
+          <li class="d-flex align-items-center mb-3"><i class="bx bx-group"></i><span class="fw-semibold mx-2">Tipo de evento:</span> <span>{{$evento->tipo}}</span></li>
           <li class="d-flex align-items-center mb-3"><i class="bx bx-group"></i><span class="fw-semibold mx-2">Modalidad:</span> <span>{{$evento->modalidad}}</span></li>
           <li class="d-flex align-items-center mb-3"><i class="bx bx-group"></i><span class="fw-semibold mx-2">Clasificación:</span> <span>{{$evento->clasificacion}}</span></li>
         </ul>
