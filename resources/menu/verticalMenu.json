@@ -5,7 +5,7 @@
       "name": "Inicio",
       "icon": "menu-icon tf-icons bx bx-home-circle",
       "slug": "pages-home",
-      "role": ["admin","coordinador","semilleristas"]
+      "role": ["admin","coordinador","semillerista"]
     },
     {
       "url": "/semilleros",
@@ -40,14 +40,14 @@
       "icon": "menu-icon tf-icons bx bx-purchase-tag",
       "name": "Eventos",
       "slug": "pages-eventos",
-      "role": ["admin","coordinador","semilleristas"]
+      "role": ["admin","coordinador","semillerista"]
     },
     {
       "url": "/test",
       "icon": "menu-icon tf-icons bx bx-test-tube",
       "name": "Test Elements",
       "slug": "pages-test",
-      "role": ["admin","coordinador","semilleristas"]
+      "role": ["admin","coordinador","semillerista"]
     }
   ]
 }

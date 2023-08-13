@@ -64,7 +64,7 @@ $configData = Helper::appClasses();
         </div>
       </div>
       @endrole
-
+      @role('admin')
       <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-6 mb-4">
         <div class="card">
           <div class="card-body text-center">
@@ -79,6 +79,23 @@ $configData = Helper::appClasses();
           <a href="{{route('pages-semilleristas')}}" class="btn btn-label-warning" href="">  <strong>Ver</strong></a>
         </div>
       </div>
+      @endrole
+      @role('coordinador')
+      <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <div class="avatar avatar-md mx-auto mb-3">
+              <span class="avatar-initial rounded-circle bg-label-warning"><i class='bx bx-group fs-3'></i></span>
+            </div>
+            <span class="d-block mb-1 text-nowrap">Semilleristas</span>
+            <h2 class="mb-0">
+              {{count($semilleristas)}}
+            </h2>
+          </div>
+          <a href="{{route('pages-semilleristas')}}" class="btn btn-label-warning" href="">  <strong>Ver</strong></a>
+        </div>
+      </div>
+      @endrole
 
       <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-6 mb-4">
         <div class="card">
@@ -87,9 +104,9 @@ $configData = Helper::appClasses();
               <span class="avatar-initial rounded-circle bg-label-primary"><i class='bx bx-cube fs-3'></i></span>
             </div>
             <span class="d-block mb-1 text-nowrap">Proyectos</span>
-            <h2 class="mb-0">72</h2>
+            <h2 class="mb-0">{{count($proyectos)}}</h2>
           </div>
-          <a class="btn btn-label-info" href="">  <strong>Ver</strong></a>
+          <a href="/proyectos" class="btn btn-label-info" href="">  <strong>Ver</strong></a>
         </div>
       </div>
       <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-6 mb-4">
@@ -99,9 +116,9 @@ $configData = Helper::appClasses();
               <span class="avatar-initial rounded-circle bg-label-success"><i class='bx bx-purchase-tag fs-3'></i></span>
             </div>
             <span class="d-block mb-1 text-nowrap">Eventos</span>
-            <h2 class="mb-0">65</h2>
+            <h2 class="mb-0">{{count($eventos)}}</h2>
           </div>
-          <a class="btn btn-label-success" href="">  <strong>Ver</strong></a>
+          <a href="{{route('eventos.index')}}" class="btn btn-label-success" href="">  <strong>Ver</strong></a>
         </div>
       </div>
 
