@@ -4,6 +4,7 @@
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
+<!--Input upload file-->
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/dropzone/dropzone.css')}}" />
 @endsection
 
@@ -12,31 +13,40 @@
 <script src="{{asset('assets/vendor/libs/cleavejs/cleave.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/cleavejs/cleave-phone.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
+<!--Input upload file-->
+<script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
 @endsection
 
 @section('page-script')
 <script src="{{asset('assets/js/form-layouts.js')}}"></script>
+<!--Input upload file-->
+<script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
 @endsection
+
 
 @section('content')
 
+
+@section('content')
 <!-- Sticky Actions -->
 <div class="row">
   <div class="col-12">
     <div class="card">
       <form action="{{ route('semilleros.store') }}" method="POST" enctype="multipart/form-data">
            @csrf
-          <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row" >
+            <div class="botones card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
             <h5 class="card-title mb-sm-0 me-2">Registro Semilleros</h5>
             <div class="action-btns">
+
               <a href="{{ route('pages-semilleros')}}" class="btn btn-danger">
                 <span class="align-middle">Cancelar</span>
               </a>
-              <button type="submit" class="btn btn-primary" >
+              <button type="submit" class="btn btn-primary" onclick="mostrarConfirmacion()">
                 Guardar
               </button>
             </div>
           </div>
+
           <div class="card-body">
             <div class="row">
               <div class="col-lg-8 mx-auto">
@@ -45,6 +55,7 @@
                     <legend class="w-auto">Datos de contacto</legend>
                     <div class="row g-3">
                       <!--Logo-->
+
                       <div class="col-md-12 mb-3">
                         <div class="d-flex flex-column align-items-center align-items-sm-center gap-4">
                           <img src="{{ asset('assets/img/avatars/avatar.png')}}" alt="user-avatar" class="rounded-circle h-px-100 w-px-100" height="100" width="100" id="uploadedAvatar" />
@@ -60,6 +71,8 @@
                           </div>
                         </div>
                       </div>
+
+                      <!--Identificacion-->
                       <div class="col-md-6">
                         <label class="form-label" for="identificacion">Nombre</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" value="Nuevo semillero" required/>
@@ -114,6 +127,7 @@
                     </div>
                     </div>
                   </fieldset>
+                  <!--Sticky form-->
                   <div class="col-12">
                     <div class="card mb-4">
                       <h5 class="card-header">Acuerdo de nombramiento</h5>
@@ -136,8 +150,9 @@
           </div>
       </form>
     </div>
+ 
   </div>
-</div>
+
 <script>
   document.getElementById('btn-reset').addEventListener('click', ()=>{
     document.getElementById('uploadedAvatar').src = "{{ url('assets/img/avatars/avatar.png') }}";
@@ -154,7 +169,28 @@
   }
   document.getElementById('upload').addEventListener('change', handleFileSelect);
 
+  function mostrarConfirmacion() {
+    if (confirm("¿Estás seguro de que deseas guardar los datos?")) {
+      // Si el usuario hace clic en "Aceptar", envía el formulario
+      document.querySelector('form').submit();
+    } else {
+      // Si el usuario hace clic en "Cancelar", no hace nada
+    }
+  }
 
 </script>
 <!-- /Sticky Actions -->
 @endsection
+
+<style>
+  .botones{
+    position: sticky;
+    top:0;
+    background-color: white; /* Asegura que el fondo sea opaco */
+    z-index: 100;
+    background-color: blue;
+  }
+  .divs{
+    background-color: bisque
+  }
+</style>

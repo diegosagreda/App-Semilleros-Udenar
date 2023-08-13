@@ -185,7 +185,6 @@
     </div>
   </div>
 </div>
-
 <script>
   document.getElementById('btn-reset').addEventListener('click', ()=>{
     document.getElementById('uploadedAvatar').src = "{{ url('assets/img/avatars/avatar.png') }}";
