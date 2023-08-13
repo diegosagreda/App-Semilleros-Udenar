@@ -31,6 +31,11 @@
 
 
 @section('content')
+@if(session('mensaje'))
+    <div class="alert alert-success">
+        {{ session('mensaje') }}
+    </div>
+    @endif
 <div class="container">
     @if(session('mensaje'))
     <div class="alert alert-success">
@@ -51,10 +56,20 @@
                         </div>
                         <div  class="col-md-3">
                             <p class="card-title">Semillero:</p>
-                            <p class="card-text">{{ $proyecto->semillero->nombre }}</p>
+                            @if ($proyecto->semillero)
+                                <p class="card-text">{{ $proyecto->semillero->nombre }}</p>
+                            @endif
                         </div>
                     </div>
-
+                    <div>
+                        <ul>
+                            @forelse($proyecto->eventos as $evento)
+                                <li>{{ $evento->nombre }}</li>
+                            @empty
+                                <li>No hay proyectos disponibles.</li>
+                            @endforelse
+                        </ul>
+                    </div>
                     <div class="details">
                         <p class="card-title">Código:</p>
                         <p class="card-text">{{ $proyecto->codProyecto }}</p>
@@ -85,9 +100,19 @@
                             <p class="card-text">{{ $proyecto->fecha_finPro }}</p>
                         </div>
                     </div>
-                    <div class="gif-container">
-                        <img src="{{ asset('proyecto/paloma.gif') }}" alt="GIF" class="gif"> <!-- Cambiar la URL del GIF aquí -->
+                    <div>
+                          
+                        <form action="{{ route('proyectos.semilleristas', $proyecto->codProyecto)  }}" method="POST">
+                            @csrf
+                            @foreach ($semilleristas as $semillerista)
+                            <label>
+                                <input type="checkbox" name="seleccionados[]" value="{{$semillerista->identificacion}}"> {{$semillerista->nombre}}
+                            </label>
+                            @endforeach
+                            <input type="submit" value="Registrar"> 
+                        </form>     
                     </div>
+
                     <div class="edit-cancel">
                         <a href="{{ route('proyectos.edit', $proyecto->codProyecto) }}" class="btn btn-success mr-2"><i class="fas fa-edit"></i>Editar</a>
                         <a href="/proyectos" class="btn btn-danger ml-2"><i class="fas fa-times"></i>Cancelar</a>

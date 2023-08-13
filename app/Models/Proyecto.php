@@ -20,12 +20,13 @@ class Proyecto extends Model
 
 
      /**Relacion muchos a muchos con semilleristas*/
-     public function semilleristas (){
+    public function semilleristas (){
+
       return $this->belongsToMany(Semillerista::class);
     }
 
      /**Relacion muchos a muchos con eventos*/
-     public function eventos (){
+    public function eventos (){
       return $this->belongsToMany(Evento::class);
     }
     public function scopeTipo($query, $tipo){

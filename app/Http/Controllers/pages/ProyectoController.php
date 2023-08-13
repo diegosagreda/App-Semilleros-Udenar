@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Proyecto;
 use App\Models\Semillero;
+use App\Models\Semillerista;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Coordinador;
 
 
 class ProyectoController extends Controller
@@ -35,7 +38,8 @@ class ProyectoController extends Controller
     public function create()
     {
         $semilleros = Semillero::all();
-        return view('content.pages.proyectos.pages-proyectos-create', compact('semilleros'));
+        $semilleristas = Semillerista::all();
+        return view('content.pages.proyectos.pages-proyectos-create', compact('semilleros','semilleristas'));
     }
 
     /**
@@ -46,7 +50,6 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
-
         $campos=[
             'codProyecto' => 'required|integer|unique:proyectos', // Agregamos la regla 'unique' para asegurar que no haya duplicados
             'nomProyecto'=>'required',
@@ -57,7 +60,6 @@ class ProyectoController extends Controller
             'PropProyecto'=>'required|file',
             'Proyecto_final'=>'required|file',
             'numero_integrantes' => 'required|integer|min:1|max:5',
-            'semillero_id' => 'required|exists:semilleros,id',
 
         ];
 
@@ -73,20 +75,21 @@ class ProyectoController extends Controller
             'PropProyecto.required'=>'La propuesta del proyecto es requerida',
             'Proyecto_final.required'=>'El proyecto final es requerido',
             'numero_integrantes.required' => 'Selecciona el numero de integrantes',
-            'semillero_id.required'=>'Asegurate de que el semillero exista',
-            'semillero_id.exists' => 'El semillero seleccionado no existe.',
+        
             
         ];
 
       
         $this->validate($request, $campos,$mensaje);
 
-        $datosProyecto = request()->except('_token');
+        $datosProyecto = request()->except('_token','seleccionados');
 
-        
+        $role = Auth::user()->roles[0]->name;
+        if($role === 'coordinador'){
+            $coordinador = Coordinador::where('user_id', Auth::id())->first();
+            $request->merge(['semillero_id' => $coordinador->semillero_id]);
+        }
 
-
-        
         if ($request->hasFile('PropProyecto')) {
             $archivoPropProyecto = $request->file('PropProyecto');
             $nombreArchivoOriginalPropProyecto = $archivoPropProyecto->getClientOriginalName();
@@ -107,6 +110,14 @@ class ProyectoController extends Controller
 
 
         Proyecto::insert($datosProyecto);
+        
+        //relacionar con semilleristas
+        $proyecto = Proyecto::find($request->input('codProyecto'));
+        $seleccionados = $request->input('seleccionados', []);
+        foreach ($seleccionados as $seleccionado){
+            $proyecto->semilleristas()->attach($seleccionado);
+        }
+
 
         //return response()->json($datosProyecto);
         return redirect('/proyectos')->with('mensaje','Proyecto agregado con exito');
@@ -120,8 +131,9 @@ class ProyectoController extends Controller
     public function show($id)
     {
         //
+        $semilleristas = Semillerista::all();
         $proyecto = Proyecto::find($id);
-        return view('content.pages.proyectos.pages-proyectos-show', compact('proyecto'));
+        return view('content.pages.proyectos.pages-proyectos-show', compact('proyecto','semilleristas'));
     }
 
     /**
@@ -233,4 +245,14 @@ class ProyectoController extends Controller
         return redirect('/proyectos')->with('mensaje','Proyecto eliminado con exito');
     }
 
+    public function registrarSemilleristas(Request $request, $codProyecto){
+        $proyecto = Proyecto::find($codProyecto);
+        $seleccionados = $request->input('seleccionados', []);
+        foreach ($seleccionados as $seleccionado){
+            $proyecto->semilleristas()->attach($seleccionado);
+        }
+
+        $semilleristas = Semillerista::all();
+        return view('content.pages.proyectos.pages-proyectos-show', compact('proyecto','semilleristas'))->with('mensaje','Semillerista asignado con exito');
+    }
 }

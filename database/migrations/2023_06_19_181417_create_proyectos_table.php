@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('nombre_archivo_original_propuesta');
             $table->string('nombre_archivo_original_proyecto_final');
             $table->string('numero_integrantes');
-            $table->unsignedBigInteger('semillero_id'); // Columna de clave foránea
+            $table->unsignedBigInteger('semillero_id')->nullable(); // Columna de clave foránea
             
             $table->foreign('semillero_id')->references('id')->on('semilleros')->onDelete('cascade');
 
