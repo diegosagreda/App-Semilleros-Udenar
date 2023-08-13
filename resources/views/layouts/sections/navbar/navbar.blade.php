@@ -76,6 +76,9 @@ $containerNav = $containerNav ?? 'container-fluid';
                     @role('coordinador')
                     <small class="text-muted">Coordinador</small>
                     @endrole
+                    @role('semillerista')
+                    <small class="text-muted">Semillerista</small>
+                    @endrole
                   </div>
                 </div>
               </a>

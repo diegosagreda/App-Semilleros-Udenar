@@ -30,7 +30,7 @@
     <a class="navbar-brand" href="javascript:void(0)">Semilleristas</a>
     @role('admin')
     <div class="col-md-4">
-      <select id="semillero" name="semillero" class="select2 form-select" data-allow-clear="true">
+      <select id="semillero-filter" name="semillero" class="select2 form-select" data-allow-clear="true">
         <option value="">Selecciona semillero</option>
         <option value="0">Mostrar todos</option>
         @foreach ($semilleros as $semillero)
@@ -67,10 +67,10 @@
           <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item text-info" href="{{route('semilleristas.edit',$semillerista->identificacion)}}">Editar</a></li>
             <li>
-              <form method="POST" action="{{route('semilleristas.destroy',$semillerista->identificacion)}}">
+              <form id="delete-form-{{ $semillerista->identificacion }}" method="POST" action="{{ route('semilleristas.destroy', $semillerista->identificacion) }}">
                 @csrf
                 @method('DELETE')
-                <input type="submit" class="dropdown-item text-danger" value="Eliminar" />
+                <input type="submit" class="dropdown-item text-danger delete-button" value="Eliminar" data-id="{{ $semillerista->identificacion }}" />
               </form>
             </li>
           </ul>
@@ -89,19 +89,26 @@
 
         <div class="d-flex align-items-center justify-content-center my-3 gap-2">
           <form method="POST" action="{{route('semilleristas.updateState', $semillerista->identificacion)}}">
-            @csrf
             @method('PUT')
-            <button style="background-color: transparent; border: none" type="submit" class="me-1"><span class="badge  {{$semillerista->estado === 'activo' ? 'bg-label-success' : 'bg-label-danger'}}">{{$semillerista->estado === 'activo' ? 'Activo' : 'Inactivo'}}</span></button>
+            @csrf
+            <button id="cambiar-estado" style="background-color: transparent; border: none" type="submit" class="me-1"><span class="badge  {{$semillerista->estado === 'activo' ? 'bg-label-success' : 'bg-label-danger'}}">{{$semillerista->estado === 'activo' ? 'Activo' : 'Inactivo'}}</span></button>
           </form>
         </div>
 
         <div class="d-flex align-items-center justify-content-around my-4 py-2">
-          <div>
-            <h4 class="mb-1">5</h4>
+          <div class="proyectos">
+            @php
+              $eventos = 0;
+              foreach ($semillerista->proyectos as $proyecto) {
+                  $eventos += count($proyecto->eventos);
+              }
+            @endphp
+
+            <h4 class="mb-1">{{ count( $semillerista->proyectos)}}</h4>
             <span>Projectos</span>
           </div>
           <div>
-            <h4 class="mb-1">12</h4>
+            <h4 class="mb-1">{{ $eventos}}</h4>
             <span>Eventos</span>
           </div>
         </div>
@@ -114,23 +121,64 @@
   @empty
 
   @endforelse
-
-
 </div>
 <!--/ Semilleristas Cards -->
-@endsection
-@section('page-script')
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+
 <script>
+
+  document.querySelectorAll('.delete-button').forEach(button => {
+    button.addEventListener('click', function (event) {
+      event.preventDefault(); // Prevenir el envío del formulario por defecto
+
+      const semilleristaId = event.target.getAttribute('data-id'); // Obtener el ID del semillerista
+      const form = document.getElementById(`delete-form-${semilleristaId}`); // Obtener el formulario de eliminación
+
+      Swal.fire({
+        icon: 'warning',
+        title: '¿Estás seguro?',
+        text: '¿Deseas eliminar al semillerista?',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Si el usuario confirma, enviar el formulario
+          form.submit();
+        } else {
+          // Si el usuario cancela, no sucede nada
+          // Puedes agregar un mensaje adicional si lo deseas
+          Swal.fire({
+            icon: 'info',
+            title: 'Cancelado',
+            text: 'La eliminación ha sido cancelada',
+            showConfirmButton: false, // Ocultar el botón de confirmación
+            timer: 1500
+          });
+        }
+      });
+    });
+  });
+
   // Manejar el evento de cambio de selección del menú desplegable
-  document.getElementById('semillero').addEventListener('change', function() {
+ /*document.getElementById('semillero-filter').addEventListener('change', function() {
   let semilleroId = this.value;
   const url = "{{ route('semilleristas.filtro', ':semilleroId') }}".replace(':semilleroId', semilleroId);
   if(semilleroId !== '0'){
     window.location.href = url;
+
   }else{
     window.location.href = "{{route('pages-semilleristas')}}"
-  }
-});
+});*/
+
 
 </script>
 @endsection
+
+<style>
+  .proyectos:hover{
+    cursor: pointer;
+  }
+</style>

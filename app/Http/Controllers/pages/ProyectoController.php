@@ -7,14 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Proyecto;
 use App\Models\Semillero;
+use App\Models\Coordinador;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProyectoController extends Controller
 {
     public function index(Request $request)
     {
+      //obtener el rol del usuario
+      $role = Auth::user()->roles[0]->name;
+      if($role === 'admin'){
+
         $tipo = $request->get('tipoProyecto');
         $fecha = $request->get('fecha_inicioPro');
         $estado = $request->get('estProyecto');
@@ -26,6 +32,23 @@ class ProyectoController extends Controller
             ->paginate(20);
 
         return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado'));
+      }else if($role === 'coordinador'){
+        $coordinador = Coordinador::where('user_id', Auth::id())->first();
+        $semillero = $coordinador->semillero;
+
+        $tipo = $request->get('tipoProyecto');
+        $fecha = $request->get('fecha_inicioPro');
+        $estado = $request->get('estProyecto');
+
+        $proyectos = Proyecto::where('semillero_id', $semillero->id)->orderBy('estProyecto', 'DESC')
+            ->tipo($tipo)
+            ->fecha($fecha)
+            ->estado($estado)
+            ->paginate(20);
+
+        return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado'));
+
+      }
     }
     /**
      * Show the form for creating the resource.
@@ -75,32 +98,32 @@ class ProyectoController extends Controller
             'numero_integrantes.required' => 'Selecciona el numero de integrantes',
             'semillero_id.required'=>'Asegurate de que el semillero exista',
             'semillero_id.exists' => 'El semillero seleccionado no existe.',
-            
+
         ];
 
-      
+
         $this->validate($request, $campos,$mensaje);
 
         $datosProyecto = request()->except('_token');
 
-        
 
 
-        
+
+
         if ($request->hasFile('PropProyecto')) {
             $archivoPropProyecto = $request->file('PropProyecto');
             $nombreArchivoOriginalPropProyecto = $archivoPropProyecto->getClientOriginalName();
             $rutaArchivoPropProyecto = $archivoPropProyecto->store('propuesta', 'public');
-    
+
             $datosProyecto['PropProyecto'] = $rutaArchivoPropProyecto; // Guardar el nombre único en la base de datos
             $datosProyecto['nombre_archivo_original_propuesta'] = $nombreArchivoOriginalPropProyecto; // Guardar el nombre original en la base de datos
         }
-    
+
         if ($request->hasFile('Proyecto_final')) {
             $archivoProyectoFinal = $request->file('Proyecto_final');
             $nombreArchivoOriginalProyectoFinal = $archivoProyectoFinal->getClientOriginalName();
             $rutaArchivoProyectoFinal = $archivoProyectoFinal->store('proyectoFinal', 'public');
-    
+
             $datosProyecto['Proyecto_final'] = $rutaArchivoProyectoFinal; // Guardar el nombre único en la base de datos
             $datosProyecto['nombre_archivo_original_proyecto_final'] = $nombreArchivoOriginalProyectoFinal; // Guardar el nombre original en la base de datos
         }
@@ -136,7 +159,7 @@ class ProyectoController extends Controller
         $proyecto = Proyecto::findOrfail($id);
         $semilleros = Semillero::all();
 
-        
+
         //return view('programas.edit',compact('programa'));
         return view('content.pages.proyectos.pages-proyectos-edit',compact('proyecto','semilleros'));
     }
@@ -171,7 +194,7 @@ class ProyectoController extends Controller
             'fecha_finPro.required'=>'La fecha de finalizacion del proyecto es requerida',
             'semillero_id.required'=>'Asegurate de que el semillero exista',
             'semillero_id.exists' => 'El semillero seleccionado no existe.',
-            
+
         ];
 
         if($request->hasFile('PropProyecto')){
@@ -183,12 +206,12 @@ class ProyectoController extends Controller
             $campos=['Proyecto_final'=>'required|file',];
             $mensaje=[ 'Proyecto_final.required'=>'El proyecto final es requerido',];
         }
-      
+
             // Validar los campos que no son archivos
         $this->validate($request, $campos, $mensaje);
 
         // Obtener el proyecto existente
-       
+
         // Almacenar el valor original del codProyecto
         $proyectoAntiguo = Proyecto::findOrFail($id);
         $codProyectoAntiguo = $proyectoAntiguo->codProyecto;
@@ -205,7 +228,7 @@ class ProyectoController extends Controller
             // Si no se encuentra el proyecto con el nuevo valor, redireccionar con un mensaje de error
             return redirect()->back()->with('error', 'No se pudo actualizar el proyecto. El proyecto anterior ya no existe.');
         }
-    
+
         // Redireccionar a la página del proyecto actualizado con el nuevo valor de codProyecto
         return redirect('/proyectos/' . $datosProyecto['codProyecto'])->with('mensaje', 'Proyecto actualizado con éxito');
 
