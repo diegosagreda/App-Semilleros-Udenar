@@ -20,12 +20,12 @@
 <script src="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.js') }}"></script>
 @endsection
 @section('content')
-<h4 class="py-3 breadcrumb-wrapper mb-5">
+<div class="text-center py-3 breadcrumb-wrapper mb-5">
   <span class="text-muted fw-light">Informacion /</span> Semillero
-</h4>
+</div>
 
 <!-- Header -->
-<div class="row">
+<div class="row justify-content-center">
   <div class="col-12">
     <div class="card mb-4">
       <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
@@ -144,10 +144,10 @@
     width: 100%;
     height: 100%;
   }
-  .contenido{
-    width: fit-content;
+  /* Ajusta los márgenes para el contenedor principal */
+  .contenido {
     text-align: left;
-    padding: 1%
+    padding: 1% 10%; /* Ajusta el espaciado superior e inferior según tus preferencias */
   }
   .card {
     margin: 10px;

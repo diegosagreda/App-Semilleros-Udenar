@@ -53,7 +53,7 @@
                     @if(count($semillero->semilleristas) > 0)
                         @foreach ($semillero->semilleristas as $semillerista)
                             <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="{{ $semillerista->nombre }}">
-                                <a href="{{ route('semilleristas.show', $semillerista->identificacion) }}" class="d-flex align-items-center me-3">
+                                <a href="{{ route('semilleristas.show', $semillerista->identificacion) }}" class="d-flex align-items-center me-6">
                                     <img src="{{ asset('assets/img_semilleristas/' . $semillerista->foto) }}" alt="Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
                                 </a>
                             </li>
