@@ -49,8 +49,13 @@ class InicioController extends Controller
 
       $semilleristas = Semillerista::where('semillero_id',$semillero->id)->get();
 
+      $proyectos = Proyecto::where('semillero_id',$semillerista->semillero_id)->get();;
+      $eventos = Evento::All();
+      
 
-      return view('content.pages.pages-home',compact('semilleristas','semillero'));
+
+
+      return view('content.pages.pages-home',compact('semilleristas','semillero','proyectos', 'eventos'));
     }
 
   }

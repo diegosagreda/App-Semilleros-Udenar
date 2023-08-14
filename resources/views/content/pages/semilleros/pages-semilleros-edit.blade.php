@@ -28,7 +28,7 @@
       <form action="{{ route('semilleros.update',$semillero->id) }}" method="POST" enctype="multipart/form-data">
            @csrf
            @method("PUT")
-          <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
+          <div class="botones card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
             <h5 class="card-title mb-sm-0 me-2">Actualizar Semillero</h5>
             <div class="action-btns">
 
@@ -169,3 +169,15 @@ document.getElementById('upload').addEventListener('change', handleFileSelect);
 </script>
 <!-- /Sticky Actions -->
 @endsection
+<style>
+  .botones{
+    position: sticky;
+    top:0;
+    background-color: white; /* Asegura que el fondo sea opaco */
+    z-index: 100;
+    background-color: blue;
+  }
+  .divs{
+    background-color: bisque
+  }
+</style>

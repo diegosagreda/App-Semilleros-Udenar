@@ -101,7 +101,7 @@
     width: 30px;
     height: 30px;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto;}
 </style>
 @endsection
 

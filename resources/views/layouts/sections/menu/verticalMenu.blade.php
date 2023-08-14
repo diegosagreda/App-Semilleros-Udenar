@@ -36,19 +36,29 @@ $configData = Helper::appClasses();
   </div>
   @endif
 
+
+
   @role('coordinador')
   @php
   $role = Auth::user()->roles[0]->name;
   $coordinador = \App\Models\Coordinador::where('user_id', Auth::id())->first();
   $semillero = \App\Models\Semillero::where('id', $coordinador->semillero_id)->first();
-
-  echo '<p>Semilleros</p>';
-
   @endphp
+
   <div class="d-flex justify-content-center align-items-center mb-5">
-    <img src="{{ asset('assets/img/green-clouds.png')}}" alt="" class="img-fluid">
+    @if ($semillero && $semillero->logo)
+      <img src="{{ asset('assets/img_semilleros/' . $semillero->logo) }}" alt="" class="img-fluid rounded-circle"  style="width: 200px; height: 200px;">
+    @else
+      <img src="{{ asset('assets/img/green-clouds.png')}}" alt="" class="img-fluid">
+    @endif
   </div>
-  @endrole
+
+@endrole
+
+
+
+
+
   @role('semillerista')
   <div class="d-flex justify-content-center align-items-center mb-5">
     <img src="{{ asset('assets/img/green-clouds.png')}}" alt="" class="img-fluid">

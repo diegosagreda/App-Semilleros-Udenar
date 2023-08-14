@@ -41,7 +41,7 @@
               <a href="{{ route('pages-semilleros')}}" class="btn btn-danger">
                 <span class="align-middle">Cancelar</span>
               </a>
-              <button type="submit" class="btn btn-primary" onclick="mostrarConfirmacion()">
+              <button type="submit" class="btn btn-primary" >
                 Guardar
               </button>
             </div>
@@ -75,7 +75,7 @@
                       <!--Identificacion-->
                       <div class="col-md-6">
                         <label class="form-label" for="identificacion">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" value="Nuevo semillero" required/>
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre semillero" required/>
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="genero">Sede</label>
@@ -89,7 +89,7 @@
                       <div class="col-md-12">
                         <label class="form-label" for="email">Correo</label>
                         <div class="input-group input-group-merge">
-                          <input class="form-control" type="email" id="correo" name="correo" placeholder="alguien" value="semilleros@udenar.edu.co" aria-label="alguien" aria-describedby="email3" required/>
+                          <input class="form-control" type="email" id="correo" name="correo" placeholder="semilleros@udenar.edu.co" aria-label="alguien" aria-describedby="email3" required/>
                           <span class="input-group-text" id="email3">@example.com</span>
                         </div>
                       </div>
@@ -98,32 +98,32 @@
                     <legend class="w-auto">Información del semillero</legend>
                     <div class="row g-3">
                       <div class="col-md-12">
-                        <label class="form-label" for="genero">lineas de investigación</label>
-                        <input type="text" id="lineas_investigacion" name="lineas_investigacion" class="form-control" value="lineas de investigacion" required/>
+                        <label class="form-label" for="genero"></label>
+                        <input type="text" id="lineas_investigacion" name="lineas_investigacion" class="form-control" placeholder="lineas de investigacion" required/>
                       </div>
                       <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>
-                        <textarea class="form-control" id="descripcion" name="descripcion" rows="3">Descripcion</textarea>
+                        <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Presentacion</label>
-                      <textarea class="form-control" id="presentacion" name="presentacion" rows="3">Presentacion</textarea>
+                      <textarea class="form-control" id="presentacion" name="presentacion" rows="3"></textarea>
                   </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Misión</label>
-                        <textarea class="form-control" id="mision" name="mision" rows="3">Mision</textarea>
+                        <textarea class="form-control" id="mision" name="mision" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Visión</label>
-                        <textarea class="form-control" id="vision" name="vision" rows="3">Vision</textarea>
+                        <textarea class="form-control" id="vision" name="vision" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Valores</label>
-                      <textarea class="form-control" id="valores" name="valores" rows="3">Valores</textarea>
+                      <textarea class="form-control" id="valores" name="valores" rows="3"></textarea>
                   </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Objetivos</label>
-                        <textarea class="form-control" id="objetivos" name="objetivos" rows="3">Objetivos</textarea>
+                        <textarea class="form-control" id="objetivos" name="objetivos" rows="3"></textarea>
                     </div>
                     </div>
                   </fieldset>
@@ -135,7 +135,7 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <label class="form-label" for="numero_resolucion">Número de resolución</label>
-                            <input type="number" id="numero_resolucion" name="numero_resolucion" class="form-control" min="0" value="1" required />
+                            <input type="number" id="numero_resolucion" name="numero_resolucion" class="form-control" min="0" placeholder="0" required />
                           </div>
                           <div class="col-md-6 mb-3">
                             <label class="form-label" for="arhivo_resolucion">Archivo resolución</label>
