@@ -11,7 +11,7 @@ class EventoController extends Controller
 {
     public function index()
     {
-      
+
         $eventos = Evento::all(); // Obtener todos los eventos
 
         return view('content.pages.eventos.pages-eventos', compact('eventos'));
@@ -26,7 +26,7 @@ class EventoController extends Controller
         $proyectos = Proyecto::all();
         return view('content.pages.eventos.pages-eventos-create') ->with('mensaje','El evento a sido creado con exito');;
       }
-    
+
 
     /**
      * Store the newly created resource in storage.
@@ -100,7 +100,7 @@ class EventoController extends Controller
      */
     public function edit($id){
         $evento = Evento::find($id);
-        
+
         return view('content.pages.eventos.pages-eventos-edit',['evento' => $evento])  ->with('mensaje','El evento ha sido actualizado con exito');
       }
     /**
@@ -113,7 +113,7 @@ class EventoController extends Controller
     {
         $datos_evento = $request->except('_token', '_method');
         $evento = Evento::find($id);
-    
+
         if ($evento) {
             $evento->update($datos_evento);
             return redirect('/eventos')->with('mensaje','El evento ha sido actualizado con exito');
@@ -121,7 +121,7 @@ class EventoController extends Controller
             return redirect('/eventos')->with('mensaje','Error');
         }
     }
-    
+
 
     /**
      * Remove the resource from storage.
@@ -131,7 +131,7 @@ class EventoController extends Controller
     public function destroy(Evento $evento)
     {
         $evento->delete();
-    
+
         return redirect()->route('eventos.index')->with('mensaje','El evento ha sido eliminado');
     }
     public function registrarProyectos(Request $request, $evento)
@@ -140,33 +140,36 @@ class EventoController extends Controller
         $seleccionados = $request->input('seleccionados', []);
         foreach ($seleccionados as $seleccionado) {
             $evento->proyectos()->attach($seleccionado);
-           
+
         }
         $proyectos=Proyecto::all();
-        return view('content.pages.eventos.pages-eventos-show', compact('evento', 'proyectos')) ->with('mensaje','Proyecto agregado con exito');
-       
+        return redirect()->route('eventos.show', ['evento' => $evento]);
 
     }
-    
-    public function eliminarProyecto(Request $request, $evento)
+
+    public function eliminarProyecto(Request $request, $proyecto,$evento)
 {
+
     // Obtén los IDs de los proyectos seleccionados desde el formulario
     $evento = Evento::find($evento);
     $seleccionados = $request->input('seleccionados', []);
 
     // Elimina los proyectos seleccionados de la tabla 'proyectos'
-    Proyecto::whereIn('id', $seleccionados)->delete();
+    //Proyecto::whereIn('id', $seleccionados)->delete();
+    $evento->proyectos()->detach($proyecto);
 
     // Recarga los proyectos después de la eliminación
     $proyectos = Proyecto::all();
 
-    return view('content.pages.eventos.pages-eventos-show', compact('evento', 'proyectos'));
+   // return view('content.pages.eventos.pages-eventos-show', compact('evento', 'proyectos'));
+   return redirect()->route('eventos.show', ['evento' => $evento]);
+
 }
 //     public function eliminarProyecto(Request $request, $evento)
 // {
 //     // Encuentra el evento por su ID
 //     $evento= Evento::find($evento);
-    
+
 //     if (!$evento) {
 //         return redirect()->back()->with('error', 'El evento no existe.');
 //     }
@@ -177,7 +180,7 @@ class EventoController extends Controller
 //     $evento->proyectos()->detach($seleccionados);
 
 //     $evento->delete();
-    
+
 //     return redirect()->route('eventos.show', ['evento' => $evento])->with('success', 'El evento ha sido eliminado exitosamente');
 
 // }
@@ -185,5 +188,5 @@ class EventoController extends Controller
 
     // ... otros métodos del controlador ...
 
-    
+
 }

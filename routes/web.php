@@ -60,9 +60,9 @@ Route::middleware([
     Route::delete('/evento/destroy/{evento}',[EventoController::class,'destroy'])->name('eventos.destroy');
     Route::put('/eventos/update/{evento}', [EventoController::class, 'update'])->name('eventos.update');
     Route::post('/eventos/proyecto/{evento}', [EventoController::class, 'registrarProyectos'])->name('eventos.proyecto');
-    Route::delete('/eventos/proyecto/{evento}', [EventoController::class, 'eliminarProyecto'])->name('eventos.proyectos-eliminar');
+    Route::delete('/eventos/proyecto/{evento}/{proyecto}', [EventoController::class, 'eliminarProyecto'])->name('eventos.proyectos-eliminar');
 
-   
+
     /*RUTAS PROYECTOS ----------------------------------------------------------------------*/
     //Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');
     Route::get('/proyectos/buscar', [ProyectoController::class, 'index'])->name('proyectos.buscar');
