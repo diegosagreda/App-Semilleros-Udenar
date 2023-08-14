@@ -19,7 +19,7 @@ $configData = Helper::appClasses();
             if ($role === 'admin') {
                 echo '<p>Semilleros</p>';
             } else {
-
+              // echo '<p>' . $coordinador->nombre . '</p>';
             }
         @endphp
       </span>
@@ -36,7 +36,30 @@ $configData = Helper::appClasses();
   </div>
   @endif
 
+
+
   @role('coordinador')
+  @php
+  $role = Auth::user()->roles[0]->name;
+  $coordinador = \App\Models\Coordinador::where('user_id', Auth::id())->first();
+  $semillero = \App\Models\Semillero::where('id', $coordinador->semillero_id)->first();
+  @endphp
+
+  <div class="d-flex justify-content-center align-items-center mb-5">
+    @if ($semillero && $semillero->logo)
+      <img src="{{ asset('assets/img_semilleros/' . $semillero->logo) }}" alt="" class="img-fluid rounded-circle"  style="width: 200px; height: 200px;">
+    @else
+      <img src="{{ asset('assets/img/green-clouds.png')}}" alt="" class="img-fluid">
+    @endif
+  </div>
+
+@endrole
+
+
+
+
+
+  @role('semillerista')
   <div class="d-flex justify-content-center align-items-center mb-5">
     <img src="{{ asset('assets/img/green-clouds.png')}}" alt="" class="img-fluid">
   </div>

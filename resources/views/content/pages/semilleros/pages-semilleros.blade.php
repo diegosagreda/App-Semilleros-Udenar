@@ -24,7 +24,8 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Proyecto</th>
+            <th>Logo</th>
+            <th>Nombre</th>
             <th>Coordinador</th>
             <th>Semilleristas</th>
             <th>Correo</th>
@@ -34,23 +35,35 @@
         <tbody class="table-border-bottom-0">
           @forelse ($semilleros as $semillero)
           <tr>
+            <td style="text-align: center;">
+              <img src="{{ asset('assets/img_semilleros/' . $semillero->logo ) }}" alt="Avatar" class="rounded-circle" style="width: 100px; height: 100px; display: block; margin: 0 auto;">
+          </td>
             <td><strong>{{ $semillero->nombre }}</strong></td>
-            <td>{{ $semillero->coordinador ? $semillero->coordinador->nombre : 'Sin asignar'  }}</td>
             <td>
-              <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                @if(count($semillero->semilleristas) > 0)
-                  @foreach ($semillero->semilleristas as $semillerista)
-
-                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="{{ $semillerista->nombre }}">
-                      <img src="{{ asset('assets/img_semilleristas/' . $semillerista->foto) }}" alt="Avatar" class="rounded-circle">
-
-                    </li>
-                  @endforeach
-                @else
-                  <li>No hay personas</li>
-                @endif
-              </ul>
+              @if ($semillero->coordinador)
+        <a href="{{ route('coordinadores.show', $semillero->coordinador->identificacion) }}" class="d-flex align-items-center me-3">
+            {{ $semillero->coordinador->nombre }}
+        </a>
+        @else
+          Sin asignar
+        @endif
+              </td>
+              <td>
+                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                    @if(count($semillero->semilleristas) > 0)
+                        @foreach ($semillero->semilleristas as $semillerista)
+                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="{{ $semillerista->nombre }}">
+                                <a href="{{ route('semilleristas.show', $semillerista->identificacion) }}" class="d-flex align-items-center me-3">
+                                    <img src="{{ asset('assets/img_semilleristas/' . $semillerista->foto) }}" alt="Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
+                                </a>
+                            </li>
+                        @endforeach
+                    @else
+                        <li>No hay personas</li>
+                    @endif
+                </ul>
             </td>
+            
 
             <td><span class="badge bg-label-primary me-1">{{ $semillero->correo }}</span></td>
             <td>
@@ -83,4 +96,13 @@
     </div>
   </div>
 </div>
+<style>
+  .centered-avatar {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: 0 auto;}
+</style>
 @endsection
+
+

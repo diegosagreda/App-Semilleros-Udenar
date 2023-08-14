@@ -1,5 +1,24 @@
-@extends('layouts.layoutMaster') <!-- Asegúrate de que el archivo layoutMaster.blade.php esté en la carpeta 'layouts' -->
+@extends('layouts.layoutMaster')
 
+@section('title', 'Perfil')
+
+@section('vendor-style')
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}">
+@endsection
+
+@section('page-style')
+<link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-profile.css') }}">
+@endsection
+
+@section('vendor-script')
+<script src="{{ asset('assets/vendor/libs/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/datatables-responsive/datatables.responsive.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.js') }}"></script>
+@endsection
 @section('content')
 <h4 class="py-3 breadcrumb-wrapper mb-5">
   <span class="text-muted fw-light">Informacion /</span> Semillero
@@ -39,7 +58,7 @@
 <!--/ Header -->
 
 <!-- User Profile Content -->
-<div class="row justify-content-center">
+<div class="row justify-content-center contenido">
   <div class="col-md-12">
     <!-- About User -->
     <div class="card">
@@ -94,13 +113,16 @@
   <!--/ About User -->
 
   <!-- Adjuntos -->
-  <div class="card mt-4">
+  <div class="card mt-4 adjunto">
     <div class="card-body">
       <small class="text-muted text-uppercase">Adjuntos</small>
       <ul class="list-unstyled mt-3 mb-0">
         <li class="d-flex align-items-center mb-3"><i class="bx bx-detail"></i><span> Acuerdo nombramiento</span></li>
       </ul>
-      <iframe src="{{ asset('assets/docs_semilleros/' . $semillero->archivo_resolucion) }}" style="width:100%; min-height: 500px; border: 1px solid #ccc;"></iframe>
+      <div class="responsive-iframe-container">
+        <iframe src="{{ asset('assets/docs_semilleros/' . $semillero->archivo_resolucion) }}" style="width:100%; min-height: 500px; border: 1px solid #ccc;"></iframe>
+        </div> 
+      
     </div>
   </div>
   <!--/ Adjuntos -->
@@ -108,3 +130,31 @@
 </div>
 <!--/ User Profile Content -->
 @endsection
+
+<style>
+  .responsive-iframe-container {
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%;
+  }
+  .responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .contenido{
+    width: fit-content;
+    text-align: left;
+    padding: 1%
+  }
+  .card {
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+</style>
+
+
+
