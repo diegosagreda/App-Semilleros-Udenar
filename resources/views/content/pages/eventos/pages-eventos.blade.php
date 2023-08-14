@@ -46,14 +46,20 @@
             </div>
             <!-- Foto -->
             <div class="mx-auto mb-3">
-              <img alt="Foto del evento" class=" h-px-100 w-px-111" src="{{ asset('assets/eventos/' . $evento->foto) }}" alt="Foto del evento">
+              <img alt="Foto del evento" class=" h-px-100 w-px-111; rounded h-px-0 w-px-111 img-fluid" src="{{ asset('assets/eventos/' . $evento->foto) }}" alt="Foto del evento">
             </div>
             <!-- Nombre del evento -->
-            <h5 class="mb-1 card-title">{{ $evento->nombre }}</h5>
+            <h5 class="mb-1 card-title" style="color: rgb(0, 0, 0); font-size: 30px;">{{ $evento->nombre }}</h5>
             <!-- Descripción del evento -->
-            <p>{{ $evento->descripcion }}</p>
+            <br>
+            <div class="div1">
+              
+              <span class="icon bx bx-book " style="color: rgb(234, 88, 25);"></span><h5 >{{ $evento->descripcion }}</h5>
+              
+              
+          </div>
             <!-- Tipo de evento -->
-            <span>Tipo: {{ $evento->tipo }}</span>
+            <span  class="bx bx-group" style="color: rgb(0, 192, 42)" style=" font-weight: bold; "></span><span> {{ $evento->tipo }}</span>
 
             <div class="d-flex align-items-center justify-content-center mt-5">
               <a href="{{ route('eventos.show', $evento->codigo) }}" class="btn btn-primary d-flex align-items-center me-3">
@@ -71,3 +77,6 @@
     </div>
     <!--/ Cards Eventos -->
     @endsection
+
+    
+    

@@ -99,9 +99,11 @@ $configData = Helper::appClasses();
               <span class="avatar-initial rounded-circle bg-label-success"><i class='bx bx-purchase-tag fs-3'></i></span>
             </div>
             <span class="d-block mb-1 text-nowrap">Eventos</span>
-            <h2 class="mb-0">65</h2>
+            <h2 class="mb-0">
+              <h2 class="mb-0">0</h2>
+            </h2>
           </div>
-          <a class="btn btn-label-success" href="">  <strong>Ver</strong></a>
+          <a href="{{route('eventos.index')}}" class="btn btn-label-warning" href="">  <strong>Ver</strong></a>
         </div>
       </div>
 

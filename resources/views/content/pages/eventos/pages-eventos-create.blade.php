@@ -21,6 +21,12 @@
 
 @section('content')
 
+@if(session('mensaje'))
+<div class="alert alert-success">
+    {{ session('mensaje') }}
+</div>
+@endif
+
 <!-- Sticky Actions -->
 <div class="row">
   <div class="col-12">
@@ -102,11 +108,14 @@
                   </div>
                   <br>
                   <div class="col-12">
+                   
                     <label class="form-label" for="foto">Foto del Evento</label>
                     <input type="file" id="foto" name="foto" class="form-control" required />
+                    <p class="mb-0">Permitido JPG o PNG</p>
                   </div>
               </div>
                 </div>
+                
                 <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
                   <h5 class="card-title mb-sm-0 me-2">Eventos</h5>
                   <div class="action-btns">

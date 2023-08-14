@@ -18,6 +18,11 @@
 @endsection
 
 @section('content')
+@if(session('mensaje'))
+    <div class="alert alert-success">
+        {{ session('mensaje') }}
+    </div>
+    @endif
 
 <!-- Sticky Actions -->
 <div class="row">

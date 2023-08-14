@@ -22,7 +22,9 @@ class EventoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        return view('content.pages.eventos.pages-eventos-create');
+
+        $proyectos = Proyecto::all();
+        return view('content.pages.eventos.pages-eventos-create') ->with('mensaje','El evento a sido creado con exito');;
       }
     
 
@@ -34,6 +36,7 @@ class EventoController extends Controller
      */
     public function store(Request $request)
 {
+    //dd(request)
    // Validar los datos del formulario
    $validatedData = $request->validate([
     // Agrega aquí las reglas de validación para cada campo del formulario
@@ -85,8 +88,8 @@ class EventoController extends Controller
     public function show($id)
 {
     $evento = Evento::find($id); // Obtener el evento por su ID
-
-    return view('content.pages.eventos.pages-eventos-show', compact('evento'));
+    $proyectos=Proyecto::all();
+    return view('content.pages.eventos.pages-eventos-show', compact('evento', 'proyectos'))->with('mensaje','Proyecto agregado con exito');
 }
 
 
@@ -98,7 +101,7 @@ class EventoController extends Controller
     public function edit($id){
         $evento = Evento::find($id);
         
-        return view('content.pages.eventos.pages-eventos-edit',['evento' => $evento]);
+        return view('content.pages.eventos.pages-eventos-edit',['evento' => $evento])  ->with('mensaje','El evento ha sido actualizado con exito');
       }
     /**
      * Update the resource in storage.
@@ -113,9 +116,9 @@ class EventoController extends Controller
     
         if ($evento) {
             $evento->update($datos_evento);
-            return redirect('/eventos')->with('success', 'Evento actualizado correctamente');
+            return redirect('/eventos')->with('mensaje','El evento ha sido actualizado con exito');
         } else {
-            return redirect('/eventos')->with('error', 'Evento no encontrado');
+            return redirect('/eventos')->with('mensaje','Error');
         }
     }
     
@@ -129,8 +132,58 @@ class EventoController extends Controller
     {
         $evento->delete();
     
-        return redirect()->route('eventos.index')->with('success', 'El evento ha sido eliminado exitosamente');
+        return redirect()->route('eventos.index')->with('mensaje','El evento ha sido eliminado');
     }
+    public function registrarProyectos(Request $request, $evento)
+    {
+        $evento = Evento::find($evento);
+        $seleccionados = $request->input('seleccionados', []);
+        foreach ($seleccionados as $seleccionado) {
+            $evento->proyectos()->attach($seleccionado);
+           
+        }
+        $proyectos=Proyecto::all();
+        return view('content.pages.eventos.pages-eventos-show', compact('evento', 'proyectos')) ->with('mensaje','Proyecto agregado con exito');
+       
+
+    }
+    
+    public function eliminarProyecto(Request $request, $evento)
+{
+    // Obtén los IDs de los proyectos seleccionados desde el formulario
+    $evento = Evento::find($evento);
+    $seleccionados = $request->input('seleccionados', []);
+
+    // Elimina los proyectos seleccionados de la tabla 'proyectos'
+    Proyecto::whereIn('id', $seleccionados)->delete();
+
+    // Recarga los proyectos después de la eliminación
+    $proyectos = Proyecto::all();
+
+    return view('content.pages.eventos.pages-eventos-show', compact('evento', 'proyectos'));
+}
+//     public function eliminarProyecto(Request $request, $evento)
+// {
+//     // Encuentra el evento por su ID
+//     $evento= Evento::find($evento);
+    
+//     if (!$evento) {
+//         return redirect()->back()->with('error', 'El evento no existe.');
+//     }
+
+//     $seleccionados = $request->input('seleccionados', []);
+
+//     // Desvincula los proyectos seleccionados del evento
+//     $evento->proyectos()->detach($seleccionados);
+
+//     $evento->delete();
+    
+//     return redirect()->route('eventos.show', ['evento' => $evento])->with('success', 'El evento ha sido eliminado exitosamente');
+
+// }
+
+
+    // ... otros métodos del controlador ...
 
     
 }
