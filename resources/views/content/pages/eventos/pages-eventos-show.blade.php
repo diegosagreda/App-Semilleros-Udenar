@@ -158,7 +158,7 @@
                           <td>{{ $proyecto->nomProyecto }}</td>
                           @role('admin')
                           <td>
-                            <form action="{{ route('eventos.proyectos-eliminar', ['evento' => $proyecto->codProyecto, 'proyecto' => $proyecto->codProyecto]) }}" method="POST">
+                            <form action="{{ route('eventos.proyectos-eliminar', [ 'proyecto' => $proyecto->codProyecto,'evento' => $evento->codigo]) }}" method="POST">
                                   @csrf
                                   @method('DELETE')
                                   <button type="submit" class="btn btn-danger btn-sm">
@@ -169,7 +169,7 @@
                           @endrole
                           @role('coordinador')
                           <td>
-                            <form action="{{ route('eventos.proyectos-eliminar', ['evento' => $proyecto->codProyecto]) }}" method="POST">
+                            <form action="{{ route('eventos.proyectos-eliminar', ['proyecto' => $proyecto->codProyecto,'evento' => $evento->codigo]) }}" method="POST">
                                   @csrf
                                   @method('DELETE')
                                   <button type="submit" class="btn btn-danger btn-sm">

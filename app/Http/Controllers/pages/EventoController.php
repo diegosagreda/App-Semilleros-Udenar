@@ -151,18 +151,17 @@ class EventoController extends Controller
 {
 
     // Obtén los IDs de los proyectos seleccionados desde el formulario
-    $evento = Evento::find($evento);
-    $seleccionados = $request->input('seleccionados', []);
-
+    $eventocompleto = Evento::find($proyecto);
     // Elimina los proyectos seleccionados de la tabla 'proyectos'
     //Proyecto::whereIn('id', $seleccionados)->delete();
-    $evento->proyectos()->detach($proyecto);
+    if ($eventocompleto !== null) {
+        $eventocompleto->proyectos()->detach($evento);
+    } else {
+        // Manejo de errores, como mostrar un mensaje o registrar el problema
+    }
 
-    // Recarga los proyectos después de la eliminación
-    $proyectos = Proyecto::all();
 
-   // return view('content.pages.eventos.pages-eventos-show', compact('evento', 'proyectos'));
-   return redirect()->route('eventos.show', ['evento' => $evento]);
+   return redirect()->route('eventos.show', ['evento' => $eventocompleto]);
 
 }
 //     public function eliminarProyecto(Request $request, $evento)
