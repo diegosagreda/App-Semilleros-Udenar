@@ -36,7 +36,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Proyectos</title>   
+    <title>Proyectos</title>
+  
     
     <!--[if IE]>
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -48,15 +49,28 @@
     </div>
     @endif
 <body>
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light">Gestión |</span> Proyectos
+      </h4>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="javascript:void(0)"><strong>Proyectos</strong></a>
+          <div class="header">
+            <div class="search-box">
+              <button class="btn-search" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <a href="{{ route('proyectos.index') }}" class="verPro-btn verPro-icon-btn">
+                <i class="fas fa-folder-open"></i>
+              </a>
+          </div>
+        </div>
+    </nav>
     
     <div class="container">
         <div class="container">
-            <div class="botones-container">
-                <button type="button" class="btn btn-primary custom-btn" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
-                  Buscar Proyectos
-                </button>
-                <a href="{{ route('proyectos.index') }}" class="btn btn-primary custom-btn">Ver todos los proyectos</a>
-              </div>
+            
             <div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="modalBusquedaLabel" aria-hidden="true">
                 <div class="modal-dialog  modal-xl">
                   <div class="modal-content">
@@ -149,7 +163,6 @@
     <br>
     <br>
         <header class="header">
-            <h1>Proyectos</h1>
             <a class="btnA btn-outline-light" href="/proyectos/create">Agregar Proyecto</a>
         </header>
         <section class="projects-section">
@@ -222,27 +235,85 @@
 .botones-container {
     text-align: center;
 }
-  
-.custom-btn {
-    font-size: 1rem;
-    text-align: center;
-    background-color: transparent; /* Fondo transparente */
-    border: 1px solid #007bff; /* Borde con color alrededor del botón */
-    color: #007bff; /* Color del texto del botón */
-  }
-  
-.custom-btn:hover {
-    background-color: #007bff; /* Fondo del botón al pasar el mouse por encima */
-    color: #fff; /* Color del texto al pasar el mouse por encima */
-  }
-  
-.custom-btn:focus {
-    background-color: #0056b3; /* Fondo del botón al hacer clic */
-    border-color: #0056b3; /* Color del borde al hacer clic */
-    color: #fff; /* Color del texto al hacer clic */
+.header {
+  display: flex; /* Utilizamos flexbox para alinear elementos en línea */
+  align-items: center; /* Centramos verticalmente los elementos */
 }
 
+.verPro-icon-btn:hover {
+  background-color: #7597bb;
+  transform: translateY(-2px);
+}
 
+.search-box {
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+  margin-right: 10px; /* Espacio entre los elementos */
+}
+
+.verPro-btn,
+.verPro-icon-btn {
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: 0px; /* Agregamos la propiedad top para ajustar la posición */
+  color: #ffffff;
+  background-color: #22a6b3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-search{
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: -15px; /* Agregamos la propiedad top para ajustar la posición */
+  color: #ffffff;
+  background-color: #22a6b3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-search:focus {
+  width: 50px;
+  color: #ffffff;
+  background-color: transparent;
+}
+
+.btn-search:focus i {
+  transform: scale(1.5);
+}
+
+.verPro-btn:focus {
+  width: 50px;
+  color: #e6e2e2;
+  background-color: transparent;
+}
+
+.verPro-btn:focus i {
+  transform: scale(1.5);
+}
+
+  
 .close-btn {
     font-size: 1.5rem;
     color: #141111; /* Color del icono del botón */

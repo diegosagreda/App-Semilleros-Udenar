@@ -57,12 +57,12 @@
                 <legend class="w-auto">Información del Proyecto</legend>
                 <div class="row g-3">
                   <input type="hidden" name="numero_integrantes" id="numero_integrantes"
-                 value="{{ isset($proyecto) ? old('numero_integrantes', $proyecto->numero_integrantes) : old('numero_integrantes') }}">
+                  value="{{ isset($proyecto) ? old('numero_integrantes', $proyecto->numero_integrantes) : old('numero_integrantes') }}">
 
                   <div class="mb-3">
                     <h5>Seleccione el número de integrantes:</h5>
-                    <div class="row">
-                        <div class="col-2">
+                      <div class="row">
+                          <div class="col-2">
                             <button type="button" class="btn btn-primary btn-lg btn-block numero-btn" data-value="1">1</button>
                         </div>
                         <div class="col-2">
@@ -77,7 +77,14 @@
                         <div class="col-2">
                             <button type="button" class="btn btn-primary btn-lg btn-block numero-btn" data-value="5">5</button>
                         </div>
-                    </div>
+                      </div>
+                  </div>
+                  <div>
+                    @foreach ($semilleristas as $semillerista)
+                    <label>
+                        <input type="checkbox" class="checkbox-semillerista" name="seleccionados[]" value="{{$semillerista->identificacion}}"> {{$semillerista->nombre}}
+                    </label>
+                    @endforeach        
                   </div>
                   <div class="col-md-6">
                     <label class="form-label" for="codProyecto">Código</label>
@@ -162,19 +169,22 @@
                 </div>
 
               </fieldset>
+              @role('admin')
               <div class="col-md-6">
                 <label class="form-label" for="semillero_id">ID del Semillero</label>
                 <select id="semillero_id" name="semillero_id" class="form-control">
-                  <option value="">Seleccionar semillero</option>
-                  @foreach ($semilleros as $semillero)
-                      <option value="{{ $semillero->id }}"
-                          {{ isset($proyecto) ? ($proyecto->semillero_id == $semillero->id ? 'selected' : '') :
-                          (old('semillero_id') == $semillero->id ? 'selected' : '') }}
-                      >{{ $semillero->nombre }}</option>
-                  @endforeach
-              </select>
+                    <option value="">Seleccionar semillero</option>
+                    @foreach ($semilleros as $semillero)
+                        <option value="{{ $semillero->id }}"
+                            {{ isset($proyecto) ? ($proyecto->semillero_id == $semillero->id ? 'selected' : '') :
+                            (old('semillero_id') == $semillero->id ? 'selected' : '') }}
+                        >{{ $semillero->nombre }}</option>
+                    @endforeach
+                </select>
 
               </div>
+              @endrole
+              
             </div>
           </div>
         </div>
@@ -190,6 +200,31 @@
     </div>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    var numSeleccionados = 0;
+  
+    $('.numero-btn').click(function() {
+      numSeleccionados = parseInt($(this).attr('data-value'));
+      
+      // Habilitar todas las casillas de verificación y reiniciar su estado
+      $('input[type="checkbox"]').prop('disabled', false).prop('checked', false);
+    });
+  
+    $('input[type="checkbox"]').click(function() {
+      var checkboxesSeleccionados = $('input[type="checkbox"]:checked').length;
+  
+      // Deshabilitar las casillas no seleccionadas si se alcanza el número seleccionado
+      if (checkboxesSeleccionados >= numSeleccionados) {
+        $('input[type="checkbox"]').not(':checked').prop('disabled', true);
+      } else {
+        // Habilitar todas las casillas de verificación si no se ha alcanzado el número seleccionado
+        $('input[type="checkbox"]').prop('disabled', false);
+      }
+    });
+  });
+  </script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
       const numeroButtons = document.querySelectorAll('.numero-btn');
