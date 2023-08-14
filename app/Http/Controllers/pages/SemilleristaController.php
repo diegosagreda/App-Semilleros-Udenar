@@ -100,7 +100,8 @@ class SemilleristaController extends Controller
 
     public function show($identificacion) {
       $semillerista = Semillerista::where('identificacion', $identificacion)->first();
-      return view('content.pages.semilleristas.pages-semilleristas-show', compact('semillerista'));
+      $semillero = $semillerista->semillero;
+      return view('content.pages.semilleristas.pages-semilleristas-show', compact('semillerista','semillero'));
     }
     public function edit($identificacion){
       $semilleros = Semillero::all();

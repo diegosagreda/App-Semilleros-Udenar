@@ -37,8 +37,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Proyectos</title>
-  
-    
+
+
     <!--[if IE]>
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -67,10 +67,10 @@
           </div>
         </div>
     </nav>
-    
+
     <div class="container">
         <div class="container">
-            
+
             <div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="modalBusquedaLabel" aria-hidden="true">
                 <div class="modal-dialog  modal-xl">
                   <div class="modal-content">
@@ -80,7 +80,7 @@
                     </div>
                     <div class="modal-body">
             <form id="form_busqueda" action="{{ route('proyectos.buscar') }}" method="GET">
-                
+
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -163,7 +163,13 @@
     <br>
     <br>
         <header class="header">
+            @role('admin')
             <a class="btnA btn-outline-light" href="/proyectos/create">Agregar Proyecto</a>
+            @endrole
+            @role('coordinador')
+            <a class="btnA btn-outline-light" href="/proyectos/create">Agregar Proyecto</a>
+            @endrole
+
         </header>
         <section class="projects-section">
             <div class="projects-grid">
@@ -182,7 +188,7 @@
 							@php
 							// Convertimos el tipo de proyecto a minúsculas para que coincida con las claves del diccionario
 							$tipoProyecto = strtolower($proyecto->tipoProyecto);
-							
+
 							// Verificamos si el tipo de proyecto existe en el diccionario antes de acceder a la imagen
 							$imagen = $imagenesPorTipoProyecto[$tipoProyecto] ?? 'default.jpg'; // Usamos 'default.jpg' si no hay imagen para ese tipo de proyecto
 							@endphp
@@ -194,12 +200,17 @@
                                 <form action="{{ url('proyectos/'.$proyecto->codProyecto)}}" method="POST" class="delete-form">
                                     @csrf
                                     @method('DELETE')
+                                    @role('admin')
                                     <button type="submit" onclick="return confirm('¿Quieres borrar?')" class="btn btn-danger">Eliminar</button>
-                                </form>
+                                    @endrole
+                                    @role('coordinador')
+                                    <button type="submit" onclick="return confirm('¿Quieres borrar?')" class="btn btn-danger">Eliminar</button>
+                                    @endrole
+                                  </form>
                             </div>
                         </div>
                     @endforeach
-                    
+
                 @else
                     <div class="no-projects-message show">
                         <img src="{{ asset('proyecto/giphy.gif') }}">
@@ -219,7 +230,7 @@
         </footer>
     </div>
     <!-- Scripts -->
-    
+
 </body>
 
 </html>
@@ -313,7 +324,7 @@
   transform: scale(1.5);
 }
 
-  
+
 .close-btn {
     font-size: 1.5rem;
     color: #141111; /* Color del icono del botón */
@@ -322,15 +333,15 @@
     border: none; /* Sin borde */
     outline: none; /* Sin contorno al hacer clic */
   }
-  
+
   .close-btn:hover {
     opacity: 1; /* Opacidad al pasar el mouse por encima */
   }
-  
+
   .close-btn:focus {
     opacity: 1; /* Opacidad al hacer clic */
   }
-  
+
   /* Estilos personalizados para el botón "Buscar Proyectos" */
 
   .btnA {

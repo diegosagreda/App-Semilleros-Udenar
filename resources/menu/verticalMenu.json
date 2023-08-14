@@ -47,7 +47,7 @@
       "icon": "menu-icon tf-icons bx bx-test-tube",
       "name": "Test Elements",
       "slug": "pages-test",
-      "role": ["admin","coordinador","semillerista"]
+      "role": ["master"]
     }
   ]
 }

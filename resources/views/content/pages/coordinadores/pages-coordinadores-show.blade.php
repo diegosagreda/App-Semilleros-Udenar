@@ -55,9 +55,9 @@
                 </li>
               </ul>
             </div>
-            <a href="{{route('pages-coordinadores')}}" class="btn btn-primary text-nowrap">
-              <i></i> Cerrar
-            </a>
+            <button onclick="handleBack()" class="btn btn-primary text-nowrap">
+              Cerrar
+            </button>
           </div>
         </div>
       </div>
@@ -109,3 +109,8 @@
 <!--/ User Profile Content -->
 
 @endsection
+<script>
+  const handleBack = () => {
+  window.history.back()
+  }
+</script>

@@ -49,6 +49,18 @@ class ProyectoController extends Controller
 
         return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado'));
 
+      }else if($role === 'semillerista'){
+        $semillerista = Semillerista::where('user_id', Auth::id())->first();
+        $semillero = $semillerista->semillero;
+
+        $tipo = $request->get('tipoProyecto');
+        $fecha = $request->get('fecha_inicioPro');
+        $estado = $request->get('estProyecto');
+
+        $proyectos = $semillerista->proyectos;
+
+        return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado'));
+
       }
     }
     /**
@@ -96,14 +108,8 @@ class ProyectoController extends Controller
             'PropProyecto.required'=>'La propuesta del proyecto es requerida',
             'Proyecto_final.required'=>'El proyecto final es requerido',
             'numero_integrantes.required' => 'Selecciona el numero de integrantes',
-<<<<<<< HEAD
-            'semillero_id.required'=>'Asegurate de que el semillero exista',
-            'semillero_id.exists' => 'El semillero seleccionado no existe.',
-
-=======
 
 
->>>>>>> main
         ];
 
 
@@ -111,19 +117,12 @@ class ProyectoController extends Controller
 
         $datosProyecto = request()->except('_token','seleccionados');
 
-<<<<<<< HEAD
-
-
-
-
-=======
         $role = Auth::user()->roles[0]->name;
         if($role === 'coordinador'){
             $coordinador = Coordinador::where('user_id', Auth::id())->first();
             $request->merge(['semillero_id' => $coordinador->semillero_id]);
         }
 
->>>>>>> main
         if ($request->hasFile('PropProyecto')) {
             $archivoPropProyecto = $request->file('PropProyecto');
             $nombreArchivoOriginalPropProyecto = $archivoPropProyecto->getClientOriginalName();

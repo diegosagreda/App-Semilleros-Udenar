@@ -116,10 +116,11 @@
               </style>
             <!--/ Event Details -->
         </div>
-        
+
         <div class="col-md-6">
           <div class="container mt-5">
               <div class="row">
+                @role('admin')
                   <div class="col-md-12 text-right">
                       <h6>Añadir Proyectos</h6>
                       <!-- Botón para abrir el modal -->
@@ -127,19 +128,35 @@
                           Proyectos
                       </button>
                   </div>
+                  @endrole
+                  @role('coordinador')
+                  <div class="col-md-12 text-right">
+                      <h6>Añadir Proyectos</h6>
+                      <!-- Botón para abrir el modal -->
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                          Proyectos
+                      </button>
+                  </div>
+                  @endrole
               </div>
               <br>
               <table class="table table-bordered table-striped">
                   <thead>
                       <tr>
                           <th>Proyectos Participantes</th>
+                          @role('admin')
                           <th>Eliminar</th>
+                          @endrole
+                          @role('coordinador')
+                          <th>Eliminar</th>
+                          @endrole
                       </tr>
                   </thead>
                   <tbody>
                       @forelse($evento->proyectos as $proyecto)
                       <tr id="proyecto-{{ $proyecto->id }}">
                           <td>{{ $proyecto->nomProyecto }}</td>
+                          @role('admin')
                           <td>
                             <form action="{{ route('eventos.proyectos-eliminar', ['evento' => $evento->codigo]) }}" method="POST">
                                   @csrf
@@ -149,6 +166,18 @@
                                   </button>
                               </form>
                           </td>
+                          @endrole
+                          @role('coordinador')
+                          <td>
+                            <form action="{{ route('eventos.proyectos-eliminar', ['evento' => $evento->codigo]) }}" method="POST">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit" class="btn btn-danger btn-sm">
+                                      <i class="bx bx-trash"></i>
+                                  </button>
+                              </form>
+                          </td>
+                          @endrole
                       </tr>
                       @empty
                       <tr>
@@ -159,7 +188,7 @@
               </table>
           </div>
       </div>
-      
+
       <!-- Modal -->
       <div class="modal" id="myModal">
           <div class="modal-dialog">
@@ -187,8 +216,8 @@
       </div>
       </div>
       </div>
-    
-      
+
+
 
     <!-- Incluir los scripts JavaScript necesarios -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -15,12 +15,19 @@
 
 <!-- Header -->
 <div class="d-flex justify-content-between">
+  @role('admin')
   <a href="{{route('eventos.create')}}" class="btn btn-primary text-nowrap">
     <i class='bx bx-calendar text-info display-6'></i> Crear Evento
   </a>
+  @endrole
+  @role('coordinador')
+  <a href="{{route('eventos.create')}}" class="btn btn-primary text-nowrap">
+    <i class='bx bx-calendar text-info display-6'></i> Crear Evento
+  </a>
+  @endrole
 </div>
 <!--/ Header -->
-  
+
 <br>
     <!-- Cards Eventos -->
     <div class="row g-4">
@@ -53,10 +60,10 @@
             <!-- Descripción del evento -->
             <br>
             <div class="div1">
-              
+
               <span class="icon bx bx-book " style="color: rgb(234, 88, 25);"></span><h5 >{{ $evento->descripcion }}</h5>
-              
-              
+
+
           </div>
             <!-- Tipo de evento -->
             <span  class="bx bx-group" style="color: rgb(0, 192, 42)" style=" font-weight: bold; "></span><span> {{ $evento->tipo }}</span>
@@ -78,5 +85,4 @@
     <!--/ Cards Eventos -->
     @endsection
 
-    
-    
+
