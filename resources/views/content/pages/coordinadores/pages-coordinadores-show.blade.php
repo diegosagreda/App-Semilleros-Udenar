@@ -31,15 +31,14 @@
   <span class="text-muted fw-light">Informacion /</span> Coordinador
 </h4>
 
-
 <!-- Header -->
 <div class="row">
   <div class="col-12">
     <div class="card mb-4">
       <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
         <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
-          
-          <img alt="Avatar Image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img" src="{{ asset('assets/profile') . '/' . $coordinador->foto }}"
+
+          <img alt="Avatar Image" class="rounded-circle h-px-100 w-px-100" src="{{ asset('assets/img_coordinadores') . '/' . $coordinador->foto }}"
           alt="Foto del coordinador">
         </div>
         <div class="flex-grow-1 mt-3 mt-sm-5">
@@ -48,17 +47,17 @@
               <h4>{{$coordinador->nombre}}</h4>
               <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
                 <li class="list-inline-item fw-semibold">
-                  <i class='bx bx-flag'></i> Semillero
+                  <i class='bx bx-shield'></i> Semillero: <span style="color:rgb(9, 164, 9)">{{$coordinador->semillero->nombre}}</span>
                 </li>
-                
+
                 <li class="list-inline-item fw-semibold">
-                  <i class='bx bx-calendar-alt'></i> Fecha vinculación
+                  <i class='bx bx-calendar-alt'></i> Fecha vinculación: <span style="color:rgb(9, 164, 9)">{{$coordinador->fecha_vinculacion}}</span>
                 </li>
               </ul>
             </div>
-            <a href="{{route('pages-coordinadores')}}" class="btn btn-primary text-nowrap">
-              <i></i> Cerrar
-            </a>
+            <button onclick="handleBack()" class="btn btn-primary text-nowrap">
+              Cerrar
+            </button>
           </div>
         </div>
       </div>
@@ -70,34 +69,48 @@
 
 <!-- User Profile Content -->
 <div class="row justify-content-center">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <!-- About User -->
-    <div class="card mb-4">
-      <div class="card-body">
-        
-        <small class="text-muted text-uppercase">Informacion personal</small>
-        <ul class="list-unstyled mb-4 mt-3">
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Nombre completo:</span> <span>{{$coordinador->nombre}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-phone"></i><span class="fw-semibold mx-2">Teléfono:</span> <span>{{$coordinador->telefono}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-envelope"></i><span class="fw-semibold mx-2">Correo:</span> <span>{{$coordinador->correo}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-map"></i><span class="fw-semibold mx-2">Dirección:</span> <span>{{$coordinador->direccion}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Género:</span> <span>{{$coordinador->genero}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-calendar-alt"></i><span class="fw-semibold mx-2">Fecha nacimiento:</span> <span>{{$coordinador->fecha_nacimiento}}</span></li>
-     
-        </ul>
-        <small class="text-muted text-uppercase">Informacion academica</small>
-        <ul class="list-unstyled mb-4 mt-3">
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-detail"></i><span class="fw-semibold mx-2">Programa academico:</span> <span>{{$coordinador->programa_academico}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-flag"></i><span class="fw-semibold mx-2">Áreas conocimiento:</span> <span>{{$coordinador->areas_conocimiento}}</span></li>
-        </ul>
-        <small class="text-muted text-uppercase">Adjuntos</small>
-        <ul class="list-unstyled mt-3 mb-0">
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-detail"></i><span> Acuerdo nombramiento</span></li>
-        </ul>
+    <div class="card ">
+      <div class="card-body d-flex  flex-wrap justify-content-around gap-4">
+        <div>
+          <small class="text-muted text-uppercase">Informacion personal</small>
+          <ul class="list-unstyled mb-4 mt-3">
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Identificación:</span> <span>{{$coordinador->identificacion}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Nombre completo:</span> <span>{{$coordinador->nombre}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-phone"></i><span class="fw-semibold mx-2">Teléfono:</span> <span>{{$coordinador->telefono}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-envelope"></i><span class="fw-semibold mx-2">Correo:</span> <span>{{$coordinador->correo}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-map"></i><span class="fw-semibold mx-2">Dirección:</span> <span>{{$coordinador->direccion}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Género:</span> <span>{{$coordinador->genero}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-calendar-alt"></i><span class="fw-semibold mx-2">Fecha nacimiento:</span> <span>{{$coordinador->fecha_nacimiento}}</span></li>
+
+          </ul>
+          <small class="text-muted text-uppercase">Informacion academica</small>
+          <ul class="list-unstyled mb-4 mt-3">
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-detail"></i><span class="fw-semibold mx-2">Programa academico:</span> <span>{{$coordinador->programa_academico}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-flag"></i><span class="fw-semibold mx-2">Áreas conocimiento:</span> <span>{{$coordinador->areas_conocimiento}}</span></li>
+          </ul>
+        </div>
+        <div>
+          <small class="text-muted text-uppercase">Adjuntos</small>
+          <ul class="list-unstyled mt-3 mb-0">
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-detail"></i><span> Acuerdo nombramiento</span></li>
+          </ul>
+
+          <iframe src="{{ asset('assets/docs_coordinadores/' . $coordinador->acuerdo_nombramiento) }}" style="width:500px; height:500px;" frameborder="0"></iframe>
+
+        </div>
+
       </div>
     </div>
     <!--/ About User -->
   </div>
 </div>
 <!--/ User Profile Content -->
+
 @endsection
+<script>
+  const handleBack = () => {
+  window.history.back()
+  }
+</script>

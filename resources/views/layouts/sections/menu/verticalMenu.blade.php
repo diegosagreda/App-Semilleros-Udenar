@@ -8,19 +8,62 @@ $configData = Helper::appClasses();
   @if(!isset($navbarFull))
   <div class="app-brand demo">
     <a href="{{url('/')}}" class="app-brand-link">
-      <span class="app-brand-logo demo">
+      <!--<span class="app-brand-logo demo">
         @include('_partials.macros')
+      </span>-->
+      <span class="app-brand-text demo menu-text fw-bold ms-2">
+        @php
+            $role = Auth::user()->roles[0]->name;
+            $coordinador = \App\Models\Coordinador::where('user_id', Auth::id())->first();
+
+            if ($role === 'admin') {
+                echo '<p>Semilleros</p>';
+            } else {
+              // echo '<p>' . $coordinador->nombre . '</p>';
+            }
+        @endphp
       </span>
-      <span class="app-brand-text demo menu-text fw-bold ms-2">Semilleros</span>
+
+
+
     </a>
+
     <!--Ocultar menu-->
-    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+   <!-- <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
       <i class="bx menu-toggle-icon d-none d-xl-block fs-4 align-middle"></i>
       <i class="bx bx-x d-block d-xl-none bx-sm align-middle"></i>
-    </a>
+    </a>-->
   </div>
   @endif
 
+
+
+  @role('coordinador')
+  @php
+  $role = Auth::user()->roles[0]->name;
+  $coordinador = \App\Models\Coordinador::where('user_id', Auth::id())->first();
+  $semillero = \App\Models\Semillero::where('id', $coordinador->semillero_id)->first();
+  @endphp
+
+  <div class="d-flex justify-content-center align-items-center mb-5">
+    @if ($semillero && $semillero->logo)
+      <img src="{{ asset('assets/img_semilleros/' . $semillero->logo) }}" alt="" class="img-fluid rounded-circle"  style="width: 200px; height: 200px;">
+    @else
+      <img src="{{ asset('assets/img/green-clouds.png')}}" alt="" class="img-fluid">
+    @endif
+  </div>
+
+@endrole
+
+
+
+
+
+  @role('semillerista')
+  <div class="d-flex justify-content-center align-items-center mb-5">
+    <img src="{{ asset('assets/img/green-clouds.png')}}" alt="" class="img-fluid">
+  </div>
+  @endrole
   <!-- ! Hide menu divider if navbar-full -->
   @if(!isset($navbarFull))
   <div class="menu-divider mt-0 ">
@@ -31,8 +74,6 @@ $configData = Helper::appClasses();
 
   <ul class="menu-inner py-1">
     @foreach ($menuData[0]->menu as $menu)
-
-    
 
     {{-- menu headers --}}
     @if (isset($menu->menuHeader))
@@ -70,8 +111,9 @@ $configData = Helper::appClasses();
     @endphp
 
     {{-- main menu --}}
-    
+
     @if (is_array($menu->role) && in_array($role, $menu->role))
+
       <li class="menu-item {{$activeClass}}">
         <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0);' }}" class="{{ isset($menu->submenu) ? 'menu-link menu-toggle' : 'menu-link' }}" @if (isset($menu->target) and !empty($menu->target)) target="_blank" @endif>
           @isset($menu->icon)
@@ -79,7 +121,7 @@ $configData = Helper::appClasses();
           @endisset
           <div>{{ isset($menu->name) ? __($menu->name) : '' }}</div>
         </a>
-        
+
         {{-- submenu --}}
         @isset($menu->submenu)
         @include('layouts.sections.menu.submenu',['menu' => $menu->submenu])
@@ -87,8 +129,8 @@ $configData = Helper::appClasses();
       </li>
 
     @endif
-    
-    
+
+
     @endif
     @endforeach
   </ul>

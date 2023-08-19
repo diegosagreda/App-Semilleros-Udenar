@@ -38,8 +38,8 @@
     <div class="card mb-4">
       <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
         <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
-          
-          <img alt="Avatar Image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img" src="{{ $semillerista->foto ? asset('assets/profile') . '/' . $semillerista->foto : asset('assets/img/avatars/avatar.png') }}"
+
+          <img alt="Avatar Image" class="rounded-circle h-px-100 w-px-100" src="{{ asset('assets/img_semilleristas') . '/' . $semillerista->foto }}"
           alt="Foto del semillerista">
         </div>
         <div class="flex-grow-1 mt-3 mt-sm-5">
@@ -48,17 +48,17 @@
               <h4>{{$semillerista->nombre}}</h4>
               <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
                 <li class="list-inline-item fw-semibold">
-                  <i class='bx bx-flag'></i> Semillero
+                  <i class='bx bx-shield'></i> Semillero: <span style="color:rgb(9, 164, 9)">{{$semillerista->semillero->nombre}}</span>
                 </li>
-                
+
                 <li class="list-inline-item fw-semibold">
-                  <i class='bx bx-calendar-alt'></i> Fecha vinculación
+                  <i class='bx bx-calendar-alt'></i> Fecha vinculación: <span style="color:rgb(9, 164, 9)">{{$semillerista->fecha_vinculacion}}</span>
                 </li>
               </ul>
             </div>
-            <a href="{{route('pages-semilleristas')}}" class="btn btn-primary text-nowrap">
-              <i></i> Cerrar
-            </a>
+            <button onclick="handleBack()" class="btn btn-primary text-nowrap">
+              Cerrar
+            </button>
           </div>
         </div>
       </div>
@@ -70,30 +70,42 @@
 
 <!-- User Profile Content -->
 <div class="row justify-content-center">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <!-- About User -->
-    <div class="card mb-4">
-      <div class="card-body">
-        
-        <small class="text-muted text-uppercase">Informacion personal</small>
-        <ul class="list-unstyled mb-4 mt-3">
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Nombre completo:</span> <span>{{$semillerista->nombre}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-phone"></i><span class="fw-semibold mx-2">Teléfono:</span> <span>{{$semillerista->telefono}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-envelope"></i><span class="fw-semibold mx-2">Correo:</span> <span>{{$semillerista->correo}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-map"></i><span class="fw-semibold mx-2">Dirección:</span> <span>{{$semillerista->direccion}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Género:</span> <span>{{$semillerista->genero}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-calendar-alt"></i><span class="fw-semibold mx-2">Fecha nacimiento:</span> <span>{{$semillerista->fecha_nacimiento}}</span></li>
-     
-        </ul>
-        <small class="text-muted text-uppercase">Informacion academica</small>
-        <ul class="list-unstyled mb-4 mt-3">
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-detail"></i><span class="fw-semibold mx-2">Programa academico:</span> <span>{{$semillerista->programa_academico}}</span></li>
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-flag"></i><span class="fw-semibold mx-2">Semestre:</span> <span>{{$semillerista->semestre}}</span></li>
-        </ul>
-        <small class="text-muted text-uppercase">Adjuntos</small>
-        <ul class="list-unstyled mt-3 mb-0">
-          <li class="d-flex align-items-center mb-3"><i class="bx bx-detail"></i><span> Reporte matricula</span></li>
-        </ul>
+    <div class="card">
+      <div class="card-body d-flex  flex-wrap justify-content-around gap-4">
+        <div class="position-relative">
+          @if ($semillero && $semillero->logo)
+          <div class="position-absolute top-0 start-0 w-100 h-100"
+            style="background-image: url('{{ asset('assets/img_semilleros/' . $semillero->logo) }}'); background-size: 300px 300px; background-repeat: no-repeat; background-position: center; opacity: 0.08;">
+          </div>
+          @endif
+          <small class="text-muted text-uppercase">Informacion personal</small>
+          <ul class="list-unstyled mb-4 mt-3">
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Identificacion:</span> <span>{{$semillerista->identificacion}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Código:</span> <span>{{$semillerista->codigo}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Nombre completo:</span> <span>{{$semillerista->nombre}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-phone"></i><span class="fw-semibold mx-2">Teléfono:</span> <span>{{$semillerista->telefono}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-envelope"></i><span class="fw-semibold mx-2">Correo:</span> <span>{{$semillerista->correo}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-map"></i><span class="fw-semibold mx-2">Dirección:</span> <span>{{$semillerista->direccion}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-user"></i><span class="fw-semibold mx-2">Género:</span> <span>{{$semillerista->genero}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-calendar-alt"></i><span class="fw-semibold mx-2">Fecha nacimiento:</span> <span>{{$semillerista->fecha_nacimiento}}</span></li>
+
+          </ul>
+          <small class="text-muted text-uppercase">Informacion academica</small>
+          <ul class="list-unstyled mb-4 mt-3">
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-detail"></i><span class="fw-semibold mx-2">Programa academico:</span> <span>{{$semillerista->programa_academico}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-flag"></i><span class="fw-semibold mx-2">Semestre:</span> <span>{{$semillerista->semestre}}</span></li>
+          </ul>
+        </div>
+        <div>
+          <small class="text-muted text-uppercase">Adjuntos</small>
+          <ul class="list-unstyled mt-3 mb-0">
+            <li class="d-flex align-items-center mb-3"><i class="bx bx-detail"></i><span>Reporte matricula</span></li>
+          </ul>
+
+          <iframe src="{{ asset('assets/docs_semilleristas/' . $semillerista->reporte_matricula) }}" style="width:500px; height:500px;" frameborder="0"></iframe>
+        </div>
       </div>
     </div>
     <!--/ About User -->
@@ -101,3 +113,8 @@
 </div>
 <!--/ User Profile Content -->
 @endsection
+<script>
+  const handleBack = () => {
+  window.history.back()
+  }
+</script>

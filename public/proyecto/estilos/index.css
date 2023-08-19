@@ -1,0 +1,242 @@
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+ /* Estilos personalizados para el botón "Cerrar" */
+
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+}
+
+.no-projects-message {
+    text-align: center; /* Centrar el texto en el contenedor */
+    opacity: 0;
+    transform: translateY(-20px); /* Desplazar el texto hacia arriba */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .no-projects-message.show {
+    opacity: 1;
+    transform: translateY(0); /* Volver a la posición original */
+  }
+  
+  .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+  }
+  
+  .project-card {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+  }
+  
+  .project-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .project-title {
+      font-size: 24px;
+      margin: 0;
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 20px;
+  }
+  
+  .project-image {
+    max-width: 200px; /* Ajusta el tamaño según lo desees */
+    height: auto;
+    border: 2px solid #ddd; /* Borde con color gris claro */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease; /* Transición suave para animaciones */
+    opacity: 0.8; /* Opacidad inicial de la imagen */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transiciones para opacity y transform */
+  }
+  
+  .project-image:hover {
+    transform: scale(1.05); /* Efecto de aumento de tamaño al pasar el cursor */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el cursor */
+    opacity: 1; /* Opacidad completa al pasar el cursor */
+    transform: translateY(-5px); /* Desplazamiento hacia arriba al pasar el cursor */
+  }
+  
+  .project-card {
+    /* Ajusta el tamaño y el espacio entre tarjetas según tus preferencias */
+    width: 350px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center; /* Centra el contenido en el contenedor */
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .project-image {
+    max-width: 150px; /* Ajusta el tamaño de la imagen según lo desees */
+    height: auto;
+    border: 2px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .project-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .project-card .project-title {
+      font-size: 1.2rem; /* Tamaño del título ajustado según tus preferencias */
+        font-weight: bold; /* Texto en negrita para resaltar el título */
+        margin-top: 15px; /* Espacio entre el título y la imagen */
+  }
+  
+  .project-card .project-type {
+    font-style: italic;
+    color: #666;
+    margin: 5px 0; /* Espacio entre el tipo de proyecto y la imagen */
+  }
+  
+  .project-card .project-status {
+    font-weight: bold;
+    margin-bottom: 15px; /* Espacio entre el estado del proyecto y la imagen */
+  }
+  
+  .project-card .project-actions {
+    display: flex;
+    justify-content: center; /* Centra los botones */
+  }
+  
+  .project-card .btn {
+    margin: 5px;
+  }
+  
+  /* Asegúrate de que las imágenes estén centradas verticalmente */
+  .project-card .project-image {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .project-card .project-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px; /* Espacio entre los botones y el resto del contenido */
+  }
+  
+  .project-card .btn {
+    padding: 8px 15px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #fff; /* Fondo blanco por defecto */
+    color: #007bff; /* Texto en color azul por defecto */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
+  }
+  
+  .project-card .btn:hover {
+    background-color: #007bff; /* Color de fondo al pasar el cursor por el botón */
+    color: #fff; /* Texto en color blanco al pasar el cursor por el botón */
+  }
+  
+  
+  .project-type {
+      font-size: 18px;
+      margin: 5px 0;
+      color: #666;
+  }
+  
+  .project-status {
+      font-size: 18px;
+      margin: 5px 0;
+      padding: 5px 10px;
+      border-radius: 5px;
+  }
+  
+.en-progreso {
+    background-color: #28a745;
+    
+    color: #fff;
+}
+
+.terminado {
+    background-color: #ffcd56;
+    color: #fff;
+}
+
+.pendiente {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.project-actions {
+    margin-top: 20px;
+    display: flex;
+}
+
+.project-actions .btn {
+    margin-right: 10px;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.no-projects-message {
+    text-align: center;
+    font-size: 24px;
+    color: #555;
+    margin: 50px 0;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 12px;
+    color: #999;
+}
+.boton.custom-btn {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.boton.custom-btn:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+        transform: scale(1.05);
+}
+
+.boton.custom-btn .bi-search {
+        margin-right: 8px;
+}

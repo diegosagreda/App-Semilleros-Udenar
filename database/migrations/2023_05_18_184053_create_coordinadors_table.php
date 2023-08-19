@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('coordinadors', function (Blueprint $table) {
-            $table->string('identificacion')->primaryKey();
+            $table->string('identificacion')->primaryKey()->unique();
             $table->string('nombre');
             $table->string('direccion');
             $table->string('telefono');
@@ -28,7 +28,14 @@ return new class extends Migration
             $table->string('acuerdo_nombramiento')->nullable();
             //Releacion apuntando al modelo semillero
             $table->unsignedBigInteger('semillero_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();         
+            $table->foreign('semillero_id')
+            ->references('id')->on('semilleros')
+            ->onDelete('cascade');
+            //Releacion apuntando al modelo usuario
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                  ->references('id')->on('users')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -40,6 +47,9 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('coordinadors', function (Blueprint $table) {
+          $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('coordinadors');
     }
 };

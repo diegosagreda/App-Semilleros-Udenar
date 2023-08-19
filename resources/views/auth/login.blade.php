@@ -27,15 +27,14 @@ $customizerHidden = 'customizer-hide';
     <!-- /Left Text -->
 
     <!-- Login -->
-    <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
+    <div  class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
       <div class="w-px-400 mx-auto">
         <!-- Logo -->
         <div class="app-brand justify-content-center mb-4">
-          <img style="width: 150px; padding-bottom: 30px" src="https://www.udenar.edu.co/recursos/wp-content/uploads/2021/09/logo-udenar-blanco.png" alt="">
+          <div class="logo-login"  style="width: 150px; height: 150px; padding-bottom: 10px"></div>
+
         </div>
         <!-- /Logo -->
-      
-
         @if (session('status'))
         <div class="alert alert-success mb-1 rounded-0" role="alert">
           <div class="alert-body">
@@ -85,7 +84,7 @@ $customizerHidden = 'customizer-hide';
           </div>
           <button class="btn btn-primary d-grid w-100" type="submit">Ingresar</button>
         </form>
-       
+
       </div>
     </div>
     <!-- /Login -->
