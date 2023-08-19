@@ -42,14 +42,15 @@ class SemillerosController extends Controller
 
     try {
         if ($request->hasFile('logo')) {
-            $ruta = public_path('assets/img_semilleros/');
+            $ruta = storage_path('app/public/img_semilleros/');
+
             $fotoUsuario = date('YmdHis') . "." . $request->file('logo')->getClientOriginalExtension();
             $request->file('logo')->move($ruta, $fotoUsuario);
             $semillero->logo = $fotoUsuario;
         }
 
         if ($request->hasFile('archivo_resolucion')) {
-            $ruta = public_path('assets/docs_semilleros/');
+            $ruta = storage_path('app/public/docs_semilleros/');
             $documento = date('YmdHis') . "." . $request->file('archivo_resolucion')->getClientOriginalExtension();
             $request->file('archivo_resolucion')->move($ruta, $documento);
             $semillero->archivo_resolucion = $documento;
@@ -125,13 +126,13 @@ public function destroy(Request $request)
 
     if ($semillero) {
         if ($semillero->logo) {
-            $rutaLogo = public_path('assets/img_semilleros/') . $semillero->logo;
+            $rutaLogo = public_path('storage/img_semilleros/') . $semillero->logo;
             if (File::exists($rutaLogo)) {
                 File::delete($rutaLogo);
             }
         }
         if ($semillero->archivo_resolucion) {
-            $rutaResolucion = public_path('assets/docs_semilleros/') . $semillero->archivo_resolucion;
+            $rutaResolucion = public_path('storage/docs_semilleros/') . $semillero->archivo_resolucion;
             if (File::exists($rutaResolucion)) {
                 File::delete($rutaResolucion);
             }
