@@ -10,7 +10,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.25.0/dist/js/bootstrap-icons.min.js"></script>
 <link rel="stylesheet" href="{{ asset('proyecto/estilos/indexBotones.css') }}">
 <link rel="stylesheet" href="{{ asset('proyecto/estilos/index.css') }}">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
 @endsection
 
 @section('vendor-script')
@@ -62,7 +64,7 @@
               </button>
             </div>
             <a href="{{ route('proyectos.index') }}" class="verPro-btn verPro-icon-btn">
-                <i class="fas fa-folder-open"></i>
+                <i class="fas fa-home"></i>
               </a>
           </div>
         </div>
@@ -159,12 +161,9 @@
         </div>
       </div>
     </div>
-    <br>
-    <br>
-    <br>
         <header class="header">
             @role('admin')
-            <a class="btnA btn-outline-light" href="/proyectos/create">Agregar Proyecto</a>
+            <a class="btnA btn-outline-light" href="/proyectos/create"><i class="fas fa-plus-square"></i></a>
             @endrole
             @role('coordinador')
             <a class="btnA btn-outline-light" href="/proyectos/create">Agregar Proyecto</a>
@@ -327,7 +326,7 @@
 
 .close-btn {
     font-size: 1.5rem;
-    color: #141111; /* Color del icono del botón */
+    color: #22a6b3; /* Color del icono del botón */
     opacity: 0.5; /* Opacidad inicial del botón */
     background-color: transparent; /* Fondo transparente */
     border: none; /* Sin borde */
@@ -342,21 +341,30 @@
     opacity: 1; /* Opacidad al hacer clic */
   }
 
-  /* Estilos personalizados para el botón "Buscar Proyectos" */
-
-  .btnA {
-    padding: 10px 20px;
-    border: 2px solid #333;
-    text-decoration: none;
-    color: #333;
-    font-size: 14px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.btnA:hover {
-    background-color: #333;
-    color: #fff;
-}
 </style>
+<style>
+    .btnA {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .btnA:hover {
+            background-color: #22a6b3;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .btnA i {
+            font-size: 40px;
+        }
+</style>
+
+
 @endsection
