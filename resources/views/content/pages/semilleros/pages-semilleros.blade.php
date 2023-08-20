@@ -36,7 +36,7 @@
           @forelse ($semilleros as $semillero)
           <tr>
             <td style="text-align: center;">
-              <img  src="{{ asset('storage/img_semilleros/' . $semillero->logo) }}" alt="Avatar" class="rounded-circle" style="width: 100px; height: 100px; display: block; margin: 0 auto;">
+              <img  src="{{ asset('storage/app/public/' . $semillero->logo) }}" alt="Avatar" class="rounded-circle" style="width: 100px; height: 100px; display: block; margin: 0 auto;">
           </td>
             <td><strong>{{ $semillero->nombre }}</strong></td>
             <td>

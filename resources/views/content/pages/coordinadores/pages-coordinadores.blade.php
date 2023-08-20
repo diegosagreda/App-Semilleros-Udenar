@@ -56,6 +56,7 @@
         </div>
         <!-- Foto-->
         <div class="mx-auto mb-3">
+          <h3>Url= {{asset('assets/img_coordinadores') . '/' . $coordinador->foto}}</h3>
           <img alt="Avatar Image" class="rounded-circle h-px-100 w-px-100" src="{{ asset('assets/img_coordinadores') . '/' . $coordinador->foto }}"
                     alt="Foto del coordinador">
         </div>

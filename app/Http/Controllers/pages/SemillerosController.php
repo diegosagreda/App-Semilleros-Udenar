@@ -42,7 +42,7 @@ class SemillerosController extends Controller
 
     try {
         if ($request->hasFile('logo')) {
-            $ruta = storage_path('app/public/img_semilleros/');
+            $ruta = storage_path('app/public/');
 
             $fotoUsuario = date('YmdHis') . "." . $request->file('logo')->getClientOriginalExtension();
             $request->file('logo')->move($ruta, $fotoUsuario);
@@ -50,7 +50,7 @@ class SemillerosController extends Controller
         }
 
         if ($request->hasFile('archivo_resolucion')) {
-            $ruta = storage_path('app/public/docs_semilleros/');
+            $ruta = storage_path('app/public/');
             $documento = date('YmdHis') . "." . $request->file('archivo_resolucion')->getClientOriginalExtension();
             $request->file('archivo_resolucion')->move($ruta, $documento);
             $semillero->archivo_resolucion = $documento;
