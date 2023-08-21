@@ -25,14 +25,16 @@ class ProyectoController extends Controller
         $tipo = $request->get('tipoProyecto');
         $fecha = $request->get('fecha_inicioPro');
         $estado = $request->get('estProyecto');
+        $nombre = $request->get('nomProyecto');
 
         $proyectos = Proyecto::orderBy('estProyecto', 'DESC')
             ->tipo($tipo)
             ->fecha($fecha)
             ->estado($estado)
+            ->nombre($nombre)
             ->paginate(20);
 
-        return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado'));
+        return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado','nombre'));
       }else if($role === 'coordinador'){
         $coordinador = Coordinador::where('user_id', Auth::id())->first();
         $semillero = $coordinador->semillero;
@@ -40,14 +42,16 @@ class ProyectoController extends Controller
         $tipo = $request->get('tipoProyecto');
         $fecha = $request->get('fecha_inicioPro');
         $estado = $request->get('estProyecto');
+        $nombre = $request->get('nomProyecto');
 
         $proyectos = Proyecto::where('semillero_id', $semillero->id)->orderBy('estProyecto', 'DESC')
             ->tipo($tipo)
             ->fecha($fecha)
             ->estado($estado)
+            ->nombre($nombre)
             ->paginate(20);
 
-        return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado'));
+        return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado','nombre'));
 
       }else if($role === 'semillerista'){
         $semillerista = Semillerista::where('user_id', Auth::id())->first();
@@ -56,10 +60,11 @@ class ProyectoController extends Controller
         $tipo = $request->get('tipoProyecto');
         $fecha = $request->get('fecha_inicioPro');
         $estado = $request->get('estProyecto');
+        $nombre = $request->get('nomProyecto');
 
         $proyectos = $semillerista->proyectos;
 
-        return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado'));
+        return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado','nombre'));
 
       }
     }
@@ -177,13 +182,14 @@ class ProyectoController extends Controller
     public function edit($id)
     {
         //
-
+        
+        $semilleristas = Semillerista::all();
         $proyecto = Proyecto::findOrfail($id);
         $semilleros = Semillero::all();
 
 
         //return view('programas.edit',compact('programa'));
-        return view('content.pages.proyectos.pages-proyectos-edit',compact('proyecto','semilleros'));
+        return view('content.pages.proyectos.pages-proyectos-edit',compact('proyecto','semilleros','semilleristas'));
     }
 
     /**
@@ -239,7 +245,9 @@ class ProyectoController extends Controller
         $codProyectoAntiguo = $proyectoAntiguo->codProyecto;
 
         // Si la validación es exitosa, actualizamos los campos del proyecto (excepto archivos)
-        $datosProyecto = $request->except('_token', '_method');
+        
+        $datosProyecto = $request->except('_token', '_method','seleccionados');
+        
          // Actualizar el proyecto en la base de datos
         Proyecto::where('codProyecto','=',$id)->update($datosProyecto);
 
@@ -251,6 +259,7 @@ class ProyectoController extends Controller
             return redirect()->back()->with('error', 'No se pudo actualizar el proyecto. El proyecto anterior ya no existe.');
         }
 
+        $this->registrarSemilleristas($request, $datosProyecto['codProyecto']);
         // Redireccionar a la página del proyecto actualizado con el nuevo valor de codProyecto
         return redirect('/proyectos/' . $datosProyecto['codProyecto'])->with('mensaje', 'Proyecto actualizado con éxito');
 
@@ -281,11 +290,11 @@ class ProyectoController extends Controller
     public function registrarSemilleristas(Request $request, $codProyecto){
         $proyecto = Proyecto::find($codProyecto);
         $seleccionados = $request->input('seleccionados', []);
-        foreach ($seleccionados as $seleccionado){
-            $proyecto->semilleristas()->attach($seleccionado);
-        }
-
+    
+        // Utiliza el método sync para sincronizar las selecciones
+        $proyecto->semilleristas()->sync($seleccionados);
+    
         $semilleristas = Semillerista::all();
-        return view('content.pages.proyectos.pages-proyectos-show', compact('proyecto','semilleristas'))->with('mensaje','Semillerista asignado con exito');
+        return view('content.pages.proyectos.pages-proyectos-show', compact('proyecto','semilleristas'))->with('mensaje','Semillerista asignado con éxito');
     }
 }

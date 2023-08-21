@@ -29,6 +29,14 @@ class Proyecto extends Model
     public function eventos (){
       return $this->belongsToMany(Evento::class);
     }
+
+
+    public function scopeNombre($query, $nombre){
+
+        if($nombre)
+            return $query->where('nomProyecto','LIKE',"%$nombre%");
+    }
+
     public function scopeTipo($query, $tipo){
 
         if($tipo)
