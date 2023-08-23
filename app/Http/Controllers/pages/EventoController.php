@@ -6,13 +6,25 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Evento;
 use App\Models\Proyecto;
+use Dompdf\Options;
+use Dompdf\Dompdf;
+use PDF;
 
 class EventoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
+    
     {
-
         $eventos = Evento::all(); // Obtener todos los eventos
+        $search = $request->input('search'); // Obtener el término de búsqueda desde la URL
+
+    // Realizar la búsqueda de eventos según el término de búsqueda
+        $eventos = Evento::where('nombre', 'LIKE', '%' . $search . '%')
+                    ->orWhere('descripcion', 'LIKE', '%' . $search . '%')
+                    ->orWhere('tipo', 'LIKE', '%' . $search . '%')
+                    ->paginate(10); // Cambia el número según tus necesidades
+
+       
 
         return view('content.pages.eventos.pages-eventos', compact('eventos'));
     }
@@ -36,22 +48,19 @@ class EventoController extends Controller
      */
     public function store(Request $request)
 {
-    //dd(request)
-   // Validar los datos del formulario
-   $validatedData = $request->validate([
-    // Agrega aquí las reglas de validación para cada campo del formulario
-    'codigo' => 'required',
-    'nombre' => 'required',
-    'descripcion' => 'required',
-    'tipo' => 'required',
-    'modalidad' => 'required',
-    'clasificacion' => 'required',
-    'lugar' => 'required',
-    'fecha_inicio' => 'required',
-    'fecha_fin' => 'required',
-    'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    'observaciones' => 'nullable',
-]);
+    $validatedData = $request->validate([
+        'codigo' => 'required|unique:eventos', // Agregamos la regla unique
+        'nombre' => 'required',
+        'descripcion' => 'required',
+        'tipo' => 'required',
+        'modalidad' => 'required',
+        'clasificacion' => 'required',
+        'lugar' => 'required',
+        'fecha_inicio' => 'required',
+        'fecha_fin' => 'required',
+        'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'observaciones' => 'nullable',
+    ]);
 
         // Guardar el evento en la base de datos
         $evento = new Evento();
@@ -78,7 +87,7 @@ class EventoController extends Controller
 
         // Mostrar los datos del evento en la página
         //dd($evento);
-        return redirect('/eventos');
+        return redirect('/eventos')->with('mensaje', 'Evento creado exitosamente.');
         }
     /**
      * Display the resource.
@@ -87,7 +96,7 @@ class EventoController extends Controller
      */
     public function show($id)
 {
-    $evento = Evento::find($id); // Obtener el evento por su ID
+    $evento = Evento::find($id); 
     $proyectos=Proyecto::all();
     return view('content.pages.eventos.pages-eventos-show', compact('evento', 'proyectos'))->with('mensaje','Proyecto agregado con exito');
 }
@@ -119,6 +128,18 @@ class EventoController extends Controller
             return redirect('/eventos')->with('mensaje','El evento ha sido actualizado con exito');
         } else {
             return redirect('/eventos')->with('mensaje','Error');
+        }
+
+        if ($request->hasFile('foto')) {
+            // Eliminamos la imagen anterior si existe
+            if ($evento->foto && file_exists(public_path('assets/eventos/' . $evento->foto))) {
+                unlink(public_path('assets/eventos/' . $evento->foto));
+            }
+        
+            $foto = $request->file('foto');
+            $fotoNombre = time() . '_' . $foto->getClientOriginalName();
+            $foto->move(public_path('assets/eventos'), $fotoNombre);
+            $evento->foto = $fotoNombre;
         }
     }
 
@@ -187,5 +208,24 @@ class EventoController extends Controller
 
     // ... otros métodos del controlador ...
 
-
+    public function generarReporte(Evento $evento)
+    {
+        $data = [
+            'evento' => $evento,
+            'proyecto' => $evento->proyecto 
+            // Add other data you want to show in the PDF
+        ];
+    
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+    
+        $pdf = new Dompdf($options);
+        $pdf->loadHtml(view('content.pages.eventos.pages-eventos-reportes', $data)->render()); // Create a view named 'generar-reporte.blade.php' to customize the PDF layout
+        $pdf->setPaper('A4', 'portrait'); // Set paper size and orientation
+    
+        $pdf->render();
+    
+        return $pdf->stream('reporte_evento.pdf'); 
+    }
 }

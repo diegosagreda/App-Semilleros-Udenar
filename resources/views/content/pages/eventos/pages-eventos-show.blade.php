@@ -78,14 +78,14 @@
                     <ul class="list-unstyled mb-4 mt-3">
                         <li class="d-flex align-items-center mb-3"><i class="bx bx-key" style="color: rgb(160, 156, 37)"></i><span class="fw-semibold mx-2" >No#:</span>
                             <span>{{$evento->codigo}}</span></li>
+                        <li class="d-flex align-items-center mb-3"><i class="bx bx-book" style="color: rgb(50, 44, 126)"></i><span class="fw-semibold mx-2">Nombre Evento:</span>
+                                <span>{{$evento->nombre}}</span></li>
                         <li class="d-flex align-items-center mb-3"><i class="bx bx-calendar-alt" style="color: rgb(203, 45, 45)"></i><span class="fw-semibold mx-2" >Fecha Inicio:</span>
                             <span>{{$evento->fecha_inicio}}</span></li>
                         <li class="d-flex align-items-center mb-3"><i class="bx bx-calendar-alt" style="color: rgb(203, 45, 45)"></i><span class="fw-semibold mx-2">Fecha Fin:</span>
                             <span>{{$evento->fecha_fin}}</span></li>
                         <li class="d-flex align-items-center mb-3"><i class="bx bx-map" style="color: rgb(230, 144, 25)"></i><span class="fw-semibold mx-2" >Lugar:</span>
                             <span>{{$evento->lugar}}</span></li>
-                        <li class="d-flex align-items-center mb-3"><i class="bx bx-book" style="color: rgb(50, 44, 126)"></i><span class="fw-semibold mx-2">Nombre Evento:</span>
-                            <span>{{$evento->nombre}}</span></li>
                         <li class="d-flex align-items-center mb-3"><i class="bx bx-file" style="color: rgb(126, 84, 44)"></i><span class="fw-semibold mx-2">Descripción:</span>
                             <span>{{$evento->descripcion}}</span></li>
                     </ul>
@@ -132,7 +132,7 @@
                   @role('coordinador')
                   <div class="col-md-12 text-right">
                       <h6>Añadir Proyectos</h6>
-                      <!-- Botón para abrir el modal -->
+                      <!-- Botón modal -->
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                           Proyectos
                       </button>
@@ -158,25 +158,35 @@
                           <td>{{ $proyecto->nomProyecto }}</td>
                           @role('admin')
                           <td>
-                            <form action="{{ route('eventos.proyectos-eliminar', [ 'proyecto' => $proyecto->codProyecto,'evento' => $evento->codigo]) }}" method="POST">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button type="submit" class="btn btn-danger btn-sm">
-                                      <i class="bx bx-trash"></i>
-                                  </button>
-                              </form>
-                          </td>
-                          @endrole
-                          @role('coordinador')
-                          <td>
-                            <form action="{{ route('eventos.proyectos-eliminar', ['proyecto' => $proyecto->codProyecto,'evento' => $evento->codigo]) }}" method="POST">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button type="submit" class="btn btn-danger btn-sm">
-                                      <i class="bx bx-trash"></i>
-                                  </button>
-                              </form>
-                          </td>
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteProyectoModal{{ $proyecto->id }}">
+                                <i class="bx bx-trash"></i>
+                            </button>
+                        
+                            <!-- confirmación de eliminación de proyecto participante -->
+                            <div class="modal fade" id="confirmDeleteProyectoModal{{ $proyecto->id }}" tabindex="-1" aria-labelledby="confirmDeleteProyectoModalLabel{{ $proyecto->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmDeleteProyectoModalLabel{{ $proyecto->id }}">Confirme la Eliminación</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Desea eliminar el proyecto participante "<strong style="font-size: 1.2em;">{{ $proyecto->nomProyecto }}</strong>" del Evento?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <form action="{{ route('eventos.proyectos-eliminar', ['proyecto' => $proyecto->codProyecto, 'evento' => $evento->codigo]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                           @endrole
                       </tr>
                       @empty
@@ -188,7 +198,17 @@
               </table>
           </div>
       </div>
-
+      {{-- foto --}}
+     <div class="row">
+            <div class="card mb-4" style="width: 500px;">
+                <div class="card-body">
+                    <img src="{{ asset('assets/eventos/' . $evento->foto) }}" alt="Foto del Evento" class="img-fluid rounded">
+               
+            </div>
+        </div>
+        </div>
+    </div>
+    
       <!-- Modal -->
       <div class="modal" id="myModal">
           <div class="modal-dialog">
@@ -216,6 +236,7 @@
       </div>
       </div>
       </div>
+      
 
 
 
@@ -223,4 +244,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <div class="text-center">
+        <a href="{{ route('eventos.generar-reporte', $evento->codigo) }}" class="btn btn-primary">Generar PDF</a>
+    </div>
 @endsection
