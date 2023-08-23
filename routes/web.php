@@ -65,6 +65,7 @@ Route::middleware([
 
     /*RUTAS PROYECTOS ----------------------------------------------------------------------*/
     //Route::get('/proyectos', [ProyectoController::class, 'index'])->name('pages-proyectos');
+    Route::get('/proyectos/pdf', [ProyectoController::class, 'pdf'])->name('proyectos.pdf');
     Route::get('/proyectos/buscar', [ProyectoController::class, 'index'])->name('proyectos.buscar');
     Route::post('/proyectos/semilleritas/store/{codProyecto}', [ProyectoController::class, 'registrarSemilleristas'])->name('proyectos.semilleristas');
     Route::resource('/proyectos', ProyectoController::class);

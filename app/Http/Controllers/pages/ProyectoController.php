@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Coordinador;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class ProyectoController extends Controller
@@ -67,6 +68,14 @@ class ProyectoController extends Controller
         return view('content.pages.proyectos.pages-proyectos', compact('proyectos','tipo','fecha','estado','nombre'));
 
       }
+    }
+
+    public function pdf(){
+        //Obtenemos los datos de la tabla proyecto y se lo pasamos a una variable.
+        $proyectos = Proyecto::all();
+        $pdf = Pdf::loadView('content.pages.proyectos.pages-proyectos-pdf', compact('proyectos'));
+        return $pdf->stream();
+        //return view('content.pages.proyectos.pages-proyectos-pdf');
     }
     /**
      * Show the form for creating the resource.

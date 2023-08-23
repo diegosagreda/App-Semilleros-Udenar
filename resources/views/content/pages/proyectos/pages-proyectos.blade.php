@@ -61,7 +61,7 @@
 
             <div class="container-fluid">
                 <a class="navbar-brand" href="javascript:void(0)"><strong>Proyectos</strong></a>
-
+                <a class="fas fa-file-pdf verPro" href="{{ route('proyectos.pdf') }}"></a>
             </div>
         </nav>
         {{-- Formulario --}}

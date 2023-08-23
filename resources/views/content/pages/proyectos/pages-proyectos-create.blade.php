@@ -35,15 +35,15 @@
     @endif
 
 
-   
+
 
     <!-- Sticky Actions -->
     <div class="row">
-        
+
         <div class="col-12">
-            
+
             <div class="card">
-                
+
                 <form action="{{ route('proyectos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div
@@ -51,11 +51,11 @@
                         <h5 class="card-title mb-sm-0 me-2">Registro de Proyecto</h5>
                     </div>
                     <div class="card-body">
-                        
+
                         <div class="row">
-                            
+
                             <div class="col-lg-8 mx-auto">
-                                
+
                                 <fieldset class="border p-4 mb-5">
                                     <legend class="w-auto">Información del Proyecto</legend>
                                     <div class="row g-3">
@@ -75,7 +75,7 @@
                                             </div>
                                         </div>
                                         <button id="mostrar-semilleristas" type="button">Mostrar Semilleristas</button>
-                                        
+
                                         <div id="modal-semilleristas" class="modalSemillerista">
                                             <div class="modal-content-semillerista">
                                                 <span class="cerrarSemillerista">&times;</span>
@@ -99,7 +99,8 @@
                                                                 <td>
                                                                     <label>
                                                                         <input type="checkbox" class="checkbox-semillerista"
-                                                                            name="seleccionados[]" value="{{ $semillerista->identificacion }}">
+                                                                            name="seleccionados[]"
+                                                                            value="{{ $semillerista->identificacion }}">
                                                                     </label>
                                                                 </td>
                                                             </tr>
@@ -108,7 +109,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        
+
 
                                         <div class="col-md-6">
                                             <label class="form-label" for="codProyecto">Código</label>
@@ -379,78 +380,82 @@
     </script>
     <script>
         // Obtener todos los botones de número
-const numerosBtn = document.querySelectorAll('.numero-btn');
+        const numerosBtn = document.querySelectorAll('.numero-btn');
 
-// Botón para mostrar los semilleristas
-const btnMostrarSemilleristas = document.getElementById('mostrar-semilleristas');
+        // Botón para mostrar los semilleristas
+        const btnMostrarSemilleristas = document.getElementById('mostrar-semilleristas');
 
-// Deshabilitar el botón de mostrar semilleristas al cargar la página
-btnMostrarSemilleristas.setAttribute('disabled', 'true');
+        // Deshabilitar el botón de mostrar semilleristas al cargar la página
+        btnMostrarSemilleristas.setAttribute('disabled', 'true');
 
-// Manejar el clic en los botones de número
-numerosBtn.forEach((btn) => {
-    btn.addEventListener('click', () => {
-        // Obtener el valor del número seleccionado
-        const numeroSeleccionado = parseInt(btn.getAttribute('data-value'));
-        
-        // Habilitar el botón de mostrar semilleristas si se seleccionó un número
-        if (!isNaN(numeroSeleccionado)) {
-            btnMostrarSemilleristas.removeAttribute('disabled');
-        } else {
-            btnMostrarSemilleristas.setAttribute('disabled', 'true');
-        }
-    });
-});
+        // Manejar el clic en los botones de número
+        numerosBtn.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                // Obtener el valor del número seleccionado
+                const numeroSeleccionado = parseInt(btn.getAttribute('data-value'));
+
+                // Habilitar el botón de mostrar semilleristas si se seleccionó un número
+                if (!isNaN(numeroSeleccionado)) {
+                    btnMostrarSemilleristas.removeAttribute('disabled');
+                } else {
+                    btnMostrarSemilleristas.setAttribute('disabled', 'true');
+                }
+            });
+        });
     </script>
     <style>
         /* Estilo para el modal */
         .modalSemillerista {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1000; /* Asegura que el modal esté en la parte superior */
-}
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            /* Asegura que el modal esté en la parte superior */
+        }
 
-.modal-content-semillerista {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1001;
-    width: 60%; /* Ajusta el ancho del modal según tu preferencia */
-    max-height: 60%; /* Ajusta la altura máxima del modal según tu preferencia */
-    overflow: auto;
-}
+        .modal-content-semillerista {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            width: 60%;
+            /* Ajusta el ancho del modal según tu preferencia */
+            max-height: 60%;
+            /* Ajusta la altura máxima del modal según tu preferencia */
+            overflow: auto;
+        }
 
-/* Estilo para el botón */
-/* Estilo para el botón */
-#mostrar-semilleristas {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
+        /* Estilo para el botón */
+        /* Estilo para el botón */
+        #mostrar-semilleristas {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
 
-#mostrar-semilleristas:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
+        #mostrar-semilleristas:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
 
-/* Efecto de hover */
-#mostrar-semilleristas:hover:not(:disabled) {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
+        /* Efecto de hover */
+        #mostrar-semilleristas:hover:not(:disabled) {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
         /* Estilo para el botón de cerrar */
         .cerrarSemillerista {
             float: right;
@@ -462,33 +467,38 @@ numerosBtn.forEach((btn) => {
         .cerrarSemillerista:hover {
             color: red;
         }
+
         /* Estilo para la tabla */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    overflow-y: auto; /* Agregar barra de desplazamiento vertical si el contenido excede la altura */
-    max-height: 300px; /* Ajustar la altura máxima según tu preferencia */
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-y: auto;
+            /* Agregar barra de desplazamiento vertical si el contenido excede la altura */
+            max-height: 300px;
+            /* Ajustar la altura máxima según tu preferencia */
+        }
 
-th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-}
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
 
-th {
-    background-color: #f2f2f2;
-}
-.checkbox-cell {
-    text-align: center;
-}
+        th {
+            background-color: #f2f2f2;
+        }
 
-/* Estilo para las casillas de verificación */
-.checkbox-semillerista {
-    margin: 0;
-    padding: 0;
-}
+        .checkbox-cell {
+            text-align: center;
+        }
+
+        /* Estilo para las casillas de verificación */
+        .checkbox-semillerista {
+            margin: 0;
+            padding: 0;
+        }
     </style>
     <style>
         .file-input-container {
