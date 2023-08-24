@@ -42,8 +42,8 @@
 
 
         <!--[if IE]>
-                  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-                 <![endif]-->
+                      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+                     <![endif]-->
     </head>
     @if (session('mensaje'))
         <div class="alert alert-success">
@@ -192,8 +192,48 @@
                     @endrole
                     @role('coordinador')
                         <a class="btnA btn-outline-light" href="/proyectos/create"><i class="fas fa-plus-square"></i></a>
+                        <div class="header">
+
+                            <div class="search-box">
+                                <button class="btn-search {{ $switchValue ? '' : 'disabled-btn' }}" id="btnAbrirModal"
+                                    data-bs-toggle="modal" data-bs-target="#modalBusqueda">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <form action="{{ route('proyectos.buscar') }}">
+                                    <div id="searchBoxContainer" class="d-none">
+                                        <button type="button" class="btn-search2" id="buscarButton"><i
+                                                class="fas fa-search"></i></button>
+                                        <input type="text" class="input-search" name="nomProyecto" id="nomProyecto"
+                                            placeholder="Buscar... ">
+                                    </div>
+                                </form>
+                            </div>
+                            <a class="fas fa-home verPro" href="{{ route('proyectos.index') }}"></a>
+                        </div>
                     @endrole
 
+                    @role('semillerista')
+                        
+                        <div class="header">
+
+                            <div class="search-box">
+                                <button class="btn-search {{ $switchValue ? '' : 'disabled-btn' }}" id="btnAbrirModal"
+                                    data-bs-toggle="modal" data-bs-target="#modalBusqueda">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <form action="{{ route('proyectos.buscar') }}">
+                                    <div id="searchBoxContainer" class="d-none">
+                                        <button type="button" class="btn-search2" id="buscarButton"><i
+                                                class="fas fa-search"></i></button>
+                                        <input type="text" class="input-search" name="nomProyecto" id="nomProyecto"
+                                            placeholder="Buscar... ">
+                                    </div>
+                                </form>
+                            </div>
+                            <a class="fas fa-home verPro" href="{{ route('proyectos.index') }}"></a>
+                        </div>
+                    @endrole
+                    
                 </header>
                 <section class="projects-section">
                     <div class="projects-grid">
@@ -207,33 +247,40 @@
                                 ];
                             @endphp
                             @foreach ($proyectos as $proyecto)
-                                <div class="project-card">
-                                    <div class="dropdown btn-pinned">
-                                        <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                <div class="project-card card">
+                                    <div class="dropdown btn-pinned ">
+                                        <button type="button" class="btn dropdown-toggle hide-arrow p-0"
+                                            data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                class="bx bx-dots-vertical-rounded"></i></button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                          <li>
-                                            @role('admin')
-                                            <a class="dropdown-item text-info" href="{{ route('proyectos.edit', $proyecto->codProyecto) }}">Editar</a>
-                                            @endrole
-                                            @role('coordinador')
-                                            <a class="dropdown-item text-info" href="{{ route('proyectos.edit', $proyecto->codProyecto) }}">Editar</a>
-                                            @endrole
-                                            </li>
-                                          <li>
-                                            <form action="{{ url('proyectos/' . $proyecto->codProyecto) }}" method="POST" class="delete-form">
-                                                @csrf
-                                                @method('DELETE')
+                                            <li>
                                                 @role('admin')
-                                                    <button type="button" class="dropdown-item text-danger delete-button">Eliminar</button>
+                                                    <a class="dropdown-item text-info"
+                                                        href="{{ route('proyectos.edit', $proyecto->codProyecto) }}">Editar</a>
                                                 @endrole
                                                 @role('coordinador')
-                                                    <button type="button" class="dropdown-item text-danger delete-button">Eliminar</button>
+                                                    <a class="dropdown-item text-info"
+                                                        href="{{ route('proyectos.edit', $proyecto->codProyecto) }}">Editar</a>
                                                 @endrole
-                                            </form>
-                                          </li>
+                                            </li>
+                                            <li>
+                                                <form action="{{ url('proyectos/' . $proyecto->codProyecto) }}"
+                                                    method="POST" class="delete-form">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    @role('admin')
+                                                        <button type="button"
+                                                            class="dropdown-item text-danger delete-button">Eliminar</button>
+                                                    @endrole
+                                                    @role('coordinador')
+                                                        <button type="button"
+                                                            class="dropdown-item text-danger delete-button">Eliminar</button>
+                                                    @endrole
+                                                </form>
+                                            </li>
                                         </ul>
-                                      </div>
-                                    <h3 class="project-title">{{ $proyecto->nomProyecto }}</h3>
+                                    </div>
+                                    <h3 class="project-title ">{{ $proyecto->nomProyecto }}</h3>
                                     @php
                                         // Convertimos el tipo de proyecto a minúsculas para que coincida con las claves del diccionario
                                         $tipoProyecto = strtolower($proyecto->tipoProyecto);
@@ -249,7 +296,7 @@
                                         {{ $proyecto->estProyecto }}</p>
                                     <div class="project-actions">
                                         <a href="{{ route('proyectos.show', $proyecto->codProyecto) }}"
-                                            class="btn btn-primary">Ver detalles</a>
+                                            class="btnV btn-primary">Ver detalles</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -329,7 +376,7 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const deleteButtons = document.querySelectorAll('.delete-button');
-            
+
                     deleteButtons.forEach(button => {
                         button.addEventListener('click', function() {
                             Swal.fire({
@@ -346,7 +393,7 @@
                                     // Por ejemplo, usando fetch o Axios
                                     const form = button.closest('.delete-form');
                                     form.submit();
-            
+
                                     Swal.fire(
                                         '¡Eliminado!',
                                         'Tu proyecto ha sido eliminado.',
@@ -357,12 +404,14 @@
                         });
                     });
                 });
-            </script>         
+            </script>
         </div>
     </body>
 
     </html>
+    <style>
 
+    </style>
     <style>
         .container {
             max-width: 1200px;
@@ -402,11 +451,11 @@
             transition: all .5s ease-in-out;
             background-color: #91a4a5;
             padding-right: 40px;
-            color: #000000;
+
         }
 
         .input-search::placeholder {
-            color: rgba(3, 2, 2, 0.5);
+
             font-size: 18px;
             letter-spacing: 2px;
             font-weight: 100;
@@ -423,7 +472,7 @@
             border-radius: 50%;
             position: absolute;
             right: 0px;
-            color: #000000;
+
             background-color: transparent;
             pointer-events: painted;
         }
@@ -440,7 +489,7 @@
             width: 300px;
             border-radius: 0px;
             background-color: transparent;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+
             transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
         }
 
@@ -458,7 +507,31 @@
             align-items: center;
         }
 
-        .btn-search,
+        .btn-search {
+            width: 50px;
+            height: 50px;
+            border-style: none;
+            font-size: 20px;
+            font-weight: bold;
+            outline: none;
+            cursor: pointer;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #91a4a5;
+            pointer-events: painted;
+            transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+        }
+
+        .btn-search:focus {
+            width: 100px;
+            border-radius: 0;
+            background-color: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
         .verPro {
             width: 50px;
             height: 50px;
@@ -478,7 +551,6 @@
             transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
         }
 
-        .btn-search:focus,
         .verPro:focus {
             width: 100px;
             border-radius: 0;

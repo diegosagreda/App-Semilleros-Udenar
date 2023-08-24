@@ -26,7 +26,6 @@
 
     @if ($errors->any())
         <div class="error-container">
-            <h4 class="error-heading">¡Oops! Se encontraron errores:</h4>
             <ul class="error-list">
                 @foreach ($errors->all() as $item)
                     <li class="error-item">{{ $item }}</li>
@@ -72,35 +71,69 @@
                                                 @endfor
                                             </div>
                                         </div>
-                                        <button id="mostrar-semilleristas-modal" type="button">Mostrar Semilleristas</button>
-                                        <div id="modal-semilleristas" class="modalSemillerista">
-                                            <div class="modal-content-semillerista">
-                                                <span class="cerrarSemillerista">&times;</span>
-                                                <h2>Semilleristas</h2>
-                                                <table>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Identificación</th>
-                                                            <th>Nombre</th>
-                                                            <th>Seleccionar</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($semilleristas as $index => $semillerista)
-                                                            <tr>
-                                                                <td>{{ $index + 1 }}</td>
-                                                                <td>{{ $semillerista->identificacion }}</td>
-                                                                <td>{{ $semillerista->nombre }}</td>
-                                                                <td>
-                                                                    <input type="checkbox" class="checkbox-semillerista"
-                                                                        name="seleccionados[]" value="{{ $semillerista->identificacion }}"
-                                                                        {{ in_array($semillerista->identificacion, $proyecto->semilleristas->pluck('identificacion')->toArray()) ? 'checked' : '' }}>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                        <button id="mostrar-semilleristas" type="button" data-toggle="modal"
+                                            data-target="#modal-semilleristas">Mostrar Semilleristas</button>
+
+                                        <div class="modal fade" id="modal-semilleristas" tabindex="-1" role="dialog"
+                                            aria-labelledby="modal-semilleristas-label" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h2 class="modal-title" id="modal-semilleristas-label">Semilleristas
+                                                        </h2>
+
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Cerrar">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="input-group mb-3">
+                                                            <input id="searchInput" type="text" class="form-control"
+                                                                placeholder="Buscar por Identificacion o Nombre">
+                                                            <div class="input-group-append">
+                                                                <button id="searchButton" class="btn btn-outline-secondary"
+                                                                    type="button">Buscar</button>
+                                                                <button id="mostrar-todos" type="button"
+                                                                    class="btn btn-outline-secondary">
+                                                                    <i class="fas fa-list"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div id="lista-semilleristas"></div>
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Identificación</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Seleccionar</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($semilleristas as $index => $semillerista)
+                                                                    <tr>
+                                                                        <td>{{ $index + 1 }}</td>
+                                                                        <td>{{ $semillerista->identificacion }}</td>
+                                                                        <td>{{ $semillerista->nombre }}</td>
+                                                                        <td>
+                                                                            <input type="checkbox"
+                                                                                class="checkbox-semillerista"
+                                                                                name="seleccionados[]"
+                                                                                value="{{ $semillerista->identificacion }}"
+                                                                                {{ in_array($semillerista->identificacion, $proyecto->semilleristas->pluck('identificacion')->toArray()) ? 'checked' : '' }}>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -132,7 +165,8 @@
                                             <label class="form-label" for="estProyecto">Estado De proyecto</i></b></label>
                                             <select id="estProyecto" name="estProyecto" class="form-control">
                                                 <option value="">Seleccionar estado</option>
-                                                <option value="Propuesta" @if ($proyecto->estProyecto === 'Propuesta') selected @endif>
+                                                <option value="Propuesta"
+                                                    @if ($proyecto->estProyecto === 'Propuesta') selected @endif>
                                                     Propuesta</option>
                                                 <option value="En curso" @if ($proyecto->estProyecto === 'En curso') selected @endif>
                                                     En curso</option>
@@ -147,8 +181,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="fecha_finPro">Fecha de Finalización</label>
-                                            <input type="date" id="fecha_finPro" name="fecha_finPro" class="form-control"
-                                                value="{{ $proyecto->fecha_finPro }}" />
+                                            <input type="date" id="fecha_finPro" name="fecha_finPro"
+                                                class="form-control" value="{{ $proyecto->fecha_finPro }}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="PropProyecto">Propuesta</label>
@@ -221,11 +255,55 @@
             </div>
             </form>
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const searchButton = document.getElementById("searchButton");
+                const searchInput = document.getElementById("searchInput");
+                const tableBody = document.querySelector(".table tbody");
+                const checkboxes = document.querySelectorAll(".checkbox-semillerista");
+                const modal = document.getElementById("modal-semilleristas");
+                const showAllButton = document.getElementById("mostrar-todos");
+        
+                // Evitar el envío del formulario dentro del modal al presionar Enter
+                modal.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                    }
+                });
+        
+                searchButton.addEventListener("click", function() {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    tableBody.innerHTML = ""; // Limpiar la tabla antes de mostrar resultados
+        
+                    checkboxes.forEach(function(checkbox) {
+                        const row = checkbox.closest("tr");
+                        const identificacion = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                        const nombre = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+        
+                        if (identificacion.includes(searchTerm) || nombre.includes(searchTerm)) {
+                            tableBody.appendChild(row.cloneNode(true));
+                        }
+                    });
+                });
+        
+                function showAll() {
+                    tableBody.innerHTML = ""; // Limpiar la tabla antes de mostrar todos los elementos
+        
+                    checkboxes.forEach(function(checkbox) {
+                        const row = checkbox.closest("tr");
+                        tableBody.appendChild(row.cloneNode(true));
+                    });
+                }
+                showAllButton.addEventListener("click", function() {
+                    showAll();
+                });
+            });
+        </script>
     </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const numeroButtons = document.querySelectorAll('.numero-btn');
@@ -293,75 +371,79 @@
 
     <script>
         const btnMostrarModal = document.getElementById("mostrar-semilleristas-modal");
-const modal = document.getElementById("modal-semilleristas");
-const btnCerrar = document.querySelector(".cerrarSemillerista");
+        const modal = document.getElementById("modal-semilleristas");
+        const btnCerrar = document.querySelector(".cerrarSemillerista");
 
-// Mostrar el modal al hacer clic en el botón
-btnMostrarModal.addEventListener("click", () => {
-    modal.style.display = "block";
-});
+        // Mostrar el modal al hacer clic en el botón
+        btnMostrarModal.addEventListener("click", () => {
+            modal.style.display = "block";
+        });
 
-// Cerrar el modal al hacer clic en el botón de cerrar
-btnCerrar.addEventListener("click", () => {
-    modal.style.display = "none";
-});
+        // Cerrar el modal al hacer clic en el botón de cerrar
+        btnCerrar.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
 
-// Cerrar el modal al hacer clic fuera del contenido del modal
-window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
-});
+        // Cerrar el modal al hacer clic fuera del contenido del modal
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
     </script>
     <style>
         /* Estilo para el modal */
         .modalSemillerista {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1000; /* Asegura que el modal esté en la parte superior */
-}
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            /* Asegura que el modal esté en la parte superior */
+        }
 
-.modal-content-semillerista {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1001;
-    width: 60%; /* Ajusta el ancho del modal según tu preferencia */
-    max-height: 60%; /* Ajusta la altura máxima del modal según tu preferencia */
-    overflow: auto;
-}
+        .modal-content-semillerista {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            width: 60%;
+            /* Ajusta el ancho del modal según tu preferencia */
+            max-height: 60%;
+            /* Ajusta la altura máxima del modal según tu preferencia */
+            overflow: auto;
+        }
 
-/* Estilo para el botón */
-/* Estilo para el botón */
-#mostrar-semilleristas-modal {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
+        /* Estilo para el botón */
+        /* Estilo para el botón */
+        #mostrar-semilleristas {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
 
-#mostrar-semilleristas-modal:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
+        #mostrar-semilleristas:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
 
-/* Efecto de hover */
-#mostrar-semilleristas:hover:not(:disabled) {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
+        /* Efecto de hover */
+        #mostrar-semilleristas:hover:not(:disabled) {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
         /* Estilo para el botón de cerrar */
         .cerrarSemillerista {
             float: right;
@@ -373,34 +455,39 @@ window.addEventListener("click", (event) => {
         .cerrarSemillerista:hover {
             color: red;
         }
+
         /* Estilo para la tabla */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    overflow-y: auto; /* Agregar barra de desplazamiento vertical si el contenido excede la altura */
-    max-height: 300px; /* Ajustar la altura máxima según tu preferencia */
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-y: auto;
+            /* Agregar barra de desplazamiento vertical si el contenido excede la altura */
+            max-height: 300px;
+            /* Ajustar la altura máxima según tu preferencia */
+        }
 
-th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-}
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
 
-th {
-    background-color: #f2f2f2;
-}
-.checkbox-cell {
-    text-align: center;
-}
+        th {
+            background-color: #f2f2f2;
+        }
 
-/* Estilo para las casillas de verificación */
-.checkbox-semillerista {
-    margin: 0;
-    padding: 0;
-}
-</style>
+        .checkbox-cell {
+            text-align: center;
+        }
+
+        /* Estilo para las casillas de verificación */
+        .checkbox-semillerista {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
     <style>
         .error-container {
             background-color: #f8d7da;
