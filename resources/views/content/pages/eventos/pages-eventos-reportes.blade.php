@@ -32,11 +32,11 @@
     </style>
 </head>
 <body>
-    <p class="text-right">Fecha del Reporte: {{ date('d/m/Y') }}</p>
+    <p class="text-right">  Fecha del Reporte: {{ date('d/m/Y') }}</p>
     <div class="container">
         <div class="event-details">
             
-            <h2>Detalles Evento</h2>
+            <h2> Evento: {{$evento->nombre}}</h2>
             <table class="table">
                 <tbody>
                     <tr>
@@ -59,8 +59,17 @@
                         <th>Descripción</th>
                         <td>{{$evento->descripcion}}</td>
                     </tr>
+                    <tr>
+                        <th>Observaciones</th>
+                        <td>{{$evento->observaciones}}</td>
+                    </tr>
+                <tr>
+                    <th>Lugar </th>
+                    <td>{{$evento->lugar}}</td>
+                </tr>
                 </tbody>
             </table>
+           
         </div>
     </div>
 </body>

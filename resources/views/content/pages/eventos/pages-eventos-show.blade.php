@@ -34,7 +34,11 @@
     <h4 class="py-3 breadcrumb-wrapper mb-5">
         <span class="text-muted fw-light">Informacion /</span> Eventos
     </h4>
-
+    <div class="text-center">
+        <a href="{{ route('eventos.generar-reporte', $evento->codigo) }}" class="btn btn-light " style="position: relative; top: -30px; right: -350px; ">
+            <i class="fas fa-file-pdf fa-2x"  style="color: #9d0b0b;"></i> 
+        </a>
+    </div>
     <!-- Header -->
     <div class="row">
         <div class="col-12">
@@ -245,7 +249,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <div class="text-center">
+    {{-- <div class="text-center">
         <a href="{{ route('eventos.generar-reporte', $evento->codigo) }}" class="btn btn-primary">Generar PDF</a>
-    </div>
+    </div> --}}
 @endsection

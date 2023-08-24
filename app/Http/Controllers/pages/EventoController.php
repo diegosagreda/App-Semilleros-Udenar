@@ -228,4 +228,6 @@ class EventoController extends Controller
     
         return $pdf->stream('reporte_evento.pdf'); 
     }
+
+   
 }
