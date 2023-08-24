@@ -32,7 +32,12 @@
     </style>
 </head>
 <body>
-    <p class="text-right">  Fecha del Reporte: {{ date('d/m/Y') }}</p>
+    <div class="container">
+        <div class="event-details">
+            <p class="text-right">Fecha: {{ date('d/m/Y') }}</p>
+            <p class="text-left">Hora: {{ date('H:i:s') }}</p>
+        </div>
+    </div>
     <div class="container">
         <div class="event-details">
             
@@ -69,7 +74,6 @@
                 </tr>
                 </tbody>
             </table>
-           
         </div>
     </div>
 </body>
