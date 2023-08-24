@@ -148,7 +148,8 @@
                                         <div class="col-md-6">
                                             <label class="form-label" for="codProyecto">Código</label>
                                             <input type="text" id="codProyecto" name="codProyecto" class="form-control"
-                                                value="{{ isset($proyecto) ? old('codProyecto', $proyecto->codProyecto) : old('codProyecto') }}" />
+                                                value="{{ isset($proyecto) ? old('codProyecto', $proyecto->codProyecto) : old('codProyecto') }}"
+                                                inputmode="numeric" pattern="[0-9]*" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="nomProyecto">Título del Proyecto</label>
