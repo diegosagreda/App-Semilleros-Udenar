@@ -25,7 +25,6 @@
 @section('content')
     @if ($errors->any())
         <div class="error-container">
-            <h4 class="error-heading">¡Oops! Se encontraron errores:</h4>
             <ul class="error-list">
                 @foreach ($errors->all() as $item)
                     <li class="error-item">{{ $item }}</li>
@@ -62,59 +61,95 @@
                                         <input type="hidden" name="numero_integrantes" id="numero_integrantes"
                                             value="{{ isset($proyecto) ? old('numero_integrantes', $proyecto->numero_integrantes) : old('numero_integrantes') }}">
 
-                                        <div class="mb-3">
-                                            <h5>Seleccione el número de integrantes:</h5>
-                                            <div class="row">
-                                                @for ($i = 1; $i <= min(5, count($semilleristas)); $i++)
-                                                    <div class="col-2">
-                                                        <button type="button"
-                                                            class="btn btn-primary btn-lg btn-block numero-btn"
-                                                            data-value="{{ $i }}">{{ $i }}</button>
-                                                    </div>
-                                                @endfor
+                                            <div class="mb-3">
+                                                <h5>Seleccione el número de integrantes:</h5>
+                                                <div class="row">
+                                                    @for ($i = 1; $i <= min(5, count($semilleristas)); $i++)
+                                                        <div class="col-2">
+                                                            <button type="button"
+                                                                class="btn btn-primary btn-lg btn-block numero-btn"
+                                                                data-value="{{ $i }}" data-required="{{ $i }}">{{ $i }}</button>
+                                                        </div>
+                                                    @endfor
+                                                </div>
                                             </div>
-                                        </div>
-                                        <button id="mostrar-semilleristas" type="button">Mostrar Semilleristas</button>
 
-                                        <div id="modal-semilleristas" class="modalSemillerista">
-                                            <div class="modal-content-semillerista">
-                                                <span class="cerrarSemillerista">&times;</span>
-                                                <h2>Semilleristas</h2>
-                                                <div id="lista-semilleristas"></div>
-                                                <table>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Identificación</th>
-                                                            <th>Nombre</th>
-                                                            <th>Seleccionar</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($semilleristas as $index => $semillerista)
-                                                            <tr>
-                                                                <td>{{ $index + 1 }}</td>
-                                                                <td>{{ $semillerista->identificacion }}</td>
-                                                                <td>{{ $semillerista->nombre }}</td>
-                                                                <td>
-                                                                    <label>
-                                                                        <input type="checkbox" class="checkbox-semillerista"
-                                                                            name="seleccionados[]"
-                                                                            value="{{ $semillerista->identificacion }}">
-                                                                    </label>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                        <button id="mostrar-semilleristas" type="button" data-toggle="modal"
+                                            data-target="#modal-semilleristas">Mostrar Semilleristas</button>
+
+                                        <div class="modal fade" id="modal-semilleristas" tabindex="-1" role="dialog"
+                                            aria-labelledby="modal-semilleristas-label" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h2 class="modal-title" id="modal-semilleristas-label">Semilleristas
+                                                        </h2>
+
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Cerrar">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="input-group mb-3">
+                                                            <input id="searchInput" type="text" class="form-control"
+                                                                placeholder="Buscar por Identificacion o Nombre">
+                                                            <div class="input-group-append">
+                                                                <button id="searchButton" class="btn btn-outline-secondary"
+                                                                    type="button">Buscar</button>
+                                                                    <button id="mostrar-todos" type="button" class="btn btn-outline-secondary">
+                                                                        <i class="fas fa-list"></i>
+                                                                    </button>
+                                                            </div>
+                                                        </div>
+                                                        <div id="lista-semilleristas"></div>
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Identificación</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Seleccionar</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($semilleristas as $index => $semillerista)
+                                                                    <tr>
+                                                                        <td>{{ $index + 1 }}</td>
+                                                                        <td>{{ $semillerista->identificacion }}</td>
+                                                                        <td>{{ $semillerista->nombre }}</td>
+                                                                        <td>
+                                                                        
+                                                                            <label>
+                                                                                <input type="checkbox"
+                                                                                    class="checkbox-semillerista"
+                                                                                    name="seleccionados[]"
+                                                                                    value="{{ $semillerista->identificacion }}">
+                                                                                    <span class="checkbox-custom"></span>
+                                                                            </label>
+                                                                    
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
 
 
                                         <div class="col-md-6">
                                             <label class="form-label" for="codProyecto">Código</label>
                                             <input type="text" id="codProyecto" name="codProyecto" class="form-control"
-                                                value="{{ isset($proyecto) ? old('codProyecto', $proyecto->codProyecto) : old('codProyecto') }}" />
+                                                value="{{ isset($proyecto) ? old('codProyecto', $proyecto->codProyecto) : old('codProyecto') }}"
+                                                inputmode="numeric" pattern="[0-9]*" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="nomProyecto">Título del Proyecto</label>
@@ -195,7 +230,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="fecha_finPro">Fecha de Finalización</label>
-                                            <input type="date" id="fecha_finPro" name="fecha_finPro" class="form-control"
+                                            <input type="date" id="fecha_finPro" name="fecha_finPro"
+                                                class="form-control"
                                                 value="{{ isset($proyecto) ? old('fecha_finPro', $proyecto->fecha_finPro) : old('fecha_finPro') }}" />
                                         </div>
                                         <div class="col-md-6">
@@ -261,9 +297,83 @@
                     </div>
                 </form>
             </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <!--<script>
+                $(document).ready(function () {
+                    var selectedRequired = 0; // Almacenará la cantidad requerida de semilleristas
+                    
+                    $(".numero-btn").click(function () {
+                        selectedRequired = parseInt($(this).data("required"));
+                    });
+                    
+                    $(".checkbox-semillerista").change(function () {
+                        var selectedCount = $(".checkbox-semillerista:checked").length;
+                        if (selectedCount >= selectedRequired) {
+                            $(".checkbox-semillerista:not(:checked)").prop("disabled", true);
+                        } else {
+                            $(".checkbox-semillerista").prop("disabled", false);
+                        }
+                    });
+                    
+                    $("#modal-semilleristas").on("hide.bs.modal", function (e) {
+                        var selectedCount = $(".checkbox-semillerista:checked").length;
+                        if (selectedCount !== selectedRequired) {
+                            e.preventDefault();
+                            alert("Debes seleccionar exactamente " + selectedRequired + " semilleristas.");
+                        }
+                    });
+                });
+            </script>-->
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const searchButton = document.getElementById("searchButton");
+                    const searchInput = document.getElementById("searchInput");
+                    const tableBody = document.querySelector(".table tbody");
+                    const checkboxes = document.querySelectorAll(".checkbox-semillerista");
+                    const modal = document.getElementById("modal-semilleristas");
+                    const showAllButton = document.getElementById("mostrar-todos");
+            
+                    // Evitar el envío del formulario dentro del modal al presionar Enter
+                    modal.addEventListener('keydown', function(event) {
+                        if (event.key === 'Enter') {
+                            event.preventDefault();
+                        }
+                    });
+            
+                    searchButton.addEventListener("click", function() {
+                        const searchTerm = searchInput.value.toLowerCase();
+                        tableBody.innerHTML = ""; // Limpiar la tabla antes de mostrar resultados
+            
+                        checkboxes.forEach(function(checkbox) {
+                            const row = checkbox.closest("tr");
+                            const identificacion = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                            const nombre = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+            
+                            if (identificacion.includes(searchTerm) || nombre.includes(searchTerm)) {
+                                tableBody.appendChild(row.cloneNode(true));
+                            }
+                        });
+                    });
+            
+                    function showAll() {
+                        tableBody.innerHTML = ""; // Limpiar la tabla antes de mostrar todos los elementos
+            
+                        checkboxes.forEach(function(checkbox) {
+                            const row = checkbox.closest("tr");
+                            tableBody.appendChild(row.cloneNode(true));
+                        });
+                    }
+                    showAllButton.addEventListener("click", function() {
+                        showAll();
+                    });
+                });
+            </script>
+            
+
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -403,6 +513,40 @@
             });
         });
     </script>
+    <style>
+        /* Estilo personalizado para el checkbox */
+        .checkbox-semillerista {
+            display: none; /* Oculta el checkbox real */
+        }
+    
+        /* Estilo para el contenedor del checkbox personalizado */
+        .checkbox-custom {
+            width: 18px;
+            height: 18px;
+            background-color: white; /* Color de fondo del checkbox */
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            display: inline-block;
+            position: relative;
+        }
+    
+        /* Estilo para el marcador de verificación (cuando está marcado) */
+        .checkbox-custom::before {
+            content: '\2713'; /* Símbolo de marca de verificación */
+            color: green; /* Color del marcador de verificación */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            visibility: hidden;
+        }
+    
+        /* Cambia la apariencia del marcador de verificación cuando el checkbox está marcado */
+        .checkbox-semillerista:checked + .checkbox-custom::before {
+            visibility: visible;
+        }
+    </style>
     <style>
         /* Estilo para el modal */
         .modalSemillerista {

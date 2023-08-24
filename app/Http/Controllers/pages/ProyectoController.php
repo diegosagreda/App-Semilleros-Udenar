@@ -71,8 +71,20 @@ class ProyectoController extends Controller
     }
 
     public function pdf(){
-        //Obtenemos los datos de la tabla proyecto y se lo pasamos a una variable.
-        $proyectos = Proyecto::all();
+        $user = auth()->user();
+        if ($user->hasRole('admin')) {
+            $proyectos = Proyecto::all();
+        } elseif ($user->hasRole('coordinador')) {
+            $coordinador = Coordinador::where('user_id', Auth::id())->first();
+            $semillero = $coordinador->semillero;
+            $proyectos = Proyecto::where('semillero_id', $semillero->id)->orderBy('estProyecto', 'DESC')->paginate(20);
+        } elseif ($user->hasRole('semillerista')) {
+            $semillerista = Semillerista::where('user_id', Auth::id())->first();
+            $proyectos = $semillerista->proyectos()->orderBy('estProyecto', 'DESC')->paginate(20);
+        } else {
+            // Manejar otro caso si es necesario, como mostrar todos los proyectos por defecto
+            $proyectos = Proyecto::all();
+        }
         $pdf = Pdf::loadView('content.pages.proyectos.pages-proyectos-pdf', compact('proyectos'));
         return $pdf->stream();
         //return view('content.pages.proyectos.pages-proyectos-pdf');
@@ -82,12 +94,27 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function create()
     {
+        // Obtener el rol del usuario
+        $role = Auth::user()->roles[0]->name;
+
         $semilleros = Semillero::all();
         $semilleristas = Semillerista::all();
-        return view('content.pages.proyectos.pages-proyectos-create', compact('semilleros','semilleristas'));
+
+        // Si el usuario es coordinador, obtener el semillero del coordinador
+        if ($role === 'coordinador') {
+            $coordinador = Coordinador::where('user_id', Auth::id())->first();
+            $semillero_id = $coordinador->semillero_id;
+        } else {
+            $semillero_id = null;
+        }
+
+        return view('content.pages.proyectos.pages-proyectos-create', compact('semilleros', 'semilleristas', 'semillero_id'));
     }
+
 
     /**
      * Store the newly created resource in storage.
@@ -134,7 +161,7 @@ class ProyectoController extends Controller
         $role = Auth::user()->roles[0]->name;
         if($role === 'coordinador'){
             $coordinador = Coordinador::where('user_id', Auth::id())->first();
-            $request->merge(['semillero_id' => $coordinador->semillero_id]);
+            $datosProyecto['semillero_id'] = $coordinador->semillero_id;
         }
 
         if ($request->hasFile('PropProyecto')) {

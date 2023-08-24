@@ -94,7 +94,7 @@
                             <p><i class="fas fa-user-friends "></i> <strong>Semilleristas Asignados:</strong></p>
                             <div class="overflow-x">
                                 <div class="horizontal-friends-list">
-                                    @foreach ($proyecto->semilleristas as $semillerista)
+                                    @forelse ($proyecto->semilleristas as $semillerista)
                                         <figure class="semillerista-figure">
                                             <picture>
                                                 <img src="{{ asset('assets/img_semilleristas') . '/' . $semillerista->foto }}">
@@ -103,7 +103,9 @@
                                                 <a href="{{ route('semilleristas.show', $semillerista->identificacion) }}" class="semillerista-link">{{ $semillerista->nombre }}</a>
                                             </figcaption>
                                         </figure>
-                                    @endforeach
+                                        @empty
+                                        <p>No hay semilleristas.</p>
+                                    @endforelse
                                 </div>
                             </div>
                             
