@@ -107,6 +107,8 @@ class ProyectoController extends Controller
         // Si el usuario es coordinador, obtener el semillero del coordinador
         if ($role === 'coordinador') {
             $coordinador = Coordinador::where('user_id', Auth::id())->first();
+            $semillero = $coordinador->semillero;
+            $semilleristas = Semillerista::where('semillero_id',$semillero->id)->get();
             $semillero_id = $coordinador->semillero_id;
         } else {
             $semillero_id = null;
@@ -218,7 +220,7 @@ class ProyectoController extends Controller
     public function edit($id)
     {
         //
-        
+
         $semilleristas = Semillerista::all();
         $proyecto = Proyecto::findOrfail($id);
         $semilleros = Semillero::all();
@@ -281,9 +283,9 @@ class ProyectoController extends Controller
         $codProyectoAntiguo = $proyectoAntiguo->codProyecto;
 
         // Si la validación es exitosa, actualizamos los campos del proyecto (excepto archivos)
-        
+
         $datosProyecto = $request->except('_token', '_method','seleccionados');
-        
+
          // Actualizar el proyecto en la base de datos
         Proyecto::where('codProyecto','=',$id)->update($datosProyecto);
 
@@ -326,10 +328,10 @@ class ProyectoController extends Controller
     public function registrarSemilleristas(Request $request, $codProyecto){
         $proyecto = Proyecto::find($codProyecto);
         $seleccionados = $request->input('seleccionados', []);
-    
+
         // Utiliza el método sync para sincronizar las selecciones
         $proyecto->semilleristas()->sync($seleccionados);
-    
+
         $semilleristas = Semillerista::all();
         return view('content.pages.proyectos.pages-proyectos-show', compact('proyecto','semilleristas'))->with('mensaje','Semillerista asignado con éxito');
     }
