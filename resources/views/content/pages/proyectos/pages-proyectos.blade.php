@@ -284,7 +284,7 @@
                                     @php
                                         // Convertimos el tipo de proyecto a minúsculas para que coincida con las claves del diccionario
                                         $tipoProyecto = strtolower($proyecto->tipoProyecto);
-                                        
+
                                         // Verificamos si el tipo de proyecto existe en el diccionario antes de acceder a la imagen
                                         $imagen = $imagenesPorTipoProyecto[$tipoProyecto] ?? 'default.jpg'; // Usamos 'default.jpg' si no hay imagen para ese tipo de proyecto
                                     @endphp
