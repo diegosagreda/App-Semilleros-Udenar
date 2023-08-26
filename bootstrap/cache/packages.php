@@ -1,147 +1,149 @@
 <?php return array (
-  'barryvdh/laravel-snappy' =>
+  'barryvdh/laravel-dompdf' => 
   array (
-    'providers' =>
-    array (
-      0 => 'Barryvdh\\Snappy\\ServiceProvider',
-    ),
-    'aliases' =>
-    array (
-      'PDF' => 'Barryvdh\\Snappy\\Facades\\SnappyPdf',
-      'SnappyImage' => 'Barryvdh\\Snappy\\Facades\\SnappyImage',
-  'barryvdh/laravel-dompdf' =>
-  array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Barryvdh\\DomPDF\\ServiceProvider',
     ),
-    'aliases' =>
+    'aliases' => 
     array (
       'Pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
       'PDF' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
     ),
   ),
-  'fruitcake/laravel-cors' =>
+  'barryvdh/laravel-snappy' => 
   array (
-    'providers' =>
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\Snappy\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'PDF' => 'Barryvdh\\Snappy\\Facades\\SnappyPdf',
+      'SnappyImage' => 'Barryvdh\\Snappy\\Facades\\SnappyImage',
+    ),
+  ),
+  'fruitcake/laravel-cors' => 
+  array (
+    'providers' => 
     array (
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
     ),
   ),
-  'jenssegers/agent' =>
+  'jenssegers/agent' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Jenssegers\\Agent\\AgentServiceProvider',
     ),
-    'aliases' =>
+    'aliases' => 
     array (
       'Agent' => 'Jenssegers\\Agent\\Facades\\Agent',
     ),
   ),
-  'laravel/fortify' =>
+  'laravel/fortify' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Laravel\\Fortify\\FortifyServiceProvider',
     ),
   ),
-  'laravel/jetstream' =>
+  'laravel/jetstream' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Laravel\\Jetstream\\JetstreamServiceProvider',
     ),
   ),
-  'laravel/sail' =>
+  'laravel/sail' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Laravel\\Sail\\SailServiceProvider',
     ),
   ),
-  'laravel/sanctum' =>
+  'laravel/sanctum' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     ),
   ),
-  'laravel/tinker' =>
+  'laravel/tinker' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
-  'livewire/livewire' =>
+  'livewire/livewire' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Livewire\\LivewireServiceProvider',
     ),
-    'aliases' =>
+    'aliases' => 
     array (
       'Livewire' => 'Livewire\\Livewire',
     ),
   ),
-  'nesbot/carbon' =>
+  'nesbot/carbon' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
-  'nunomaduro/collision' =>
+  'nunomaduro/collision' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
-  'nunomaduro/laravel-desktop-notifier' =>
+  'nunomaduro/laravel-desktop-notifier' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'NunoMaduro\\LaravelDesktopNotifier\\LaravelDesktopNotifierServiceProvider',
     ),
-    'aliases' =>
+    'aliases' => 
     array (
       'Notifier' => 'NunoMaduro\\LaravelDesktopNotifier\\Facaces\\Notifier',
     ),
   ),
-  'nunomaduro/termwind' =>
+  'nunomaduro/termwind' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
-  'pixinvent/frest-html-laravel-jetstream' =>
+  'pixinvent/frest-html-laravel-jetstream' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Pixinvent\\Jetstrap\\JetstrapServiceProvider',
     ),
-    'aliases' =>
+    'aliases' => 
     array (
       'Jetstrap' => 'Pixinvent\\Jetstrap\\JetstrapFacade',
     ),
   ),
-  'spatie/laravel-ignition' =>
+  'spatie/laravel-ignition' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
     ),
-    'aliases' =>
+    'aliases' => 
     array (
       'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
     ),
   ),
-  'spatie/laravel-permission' =>
+  'spatie/laravel-permission' => 
   array (
-    'providers' =>
+    'providers' => 
     array (
       0 => 'Spatie\\Permission\\PermissionServiceProvider',
     ),
