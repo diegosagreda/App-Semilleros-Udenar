@@ -55,7 +55,7 @@
             <div class="mx-auto mb-3">
               <img alt="Foto del evento"
      class="h-px-100 w-px-111 rounded h-px-0 w-px-111 img-fluid"
-     src="{{ asset(Storage::disk('public')->url('img_eventos/' . $evento->foto)) }}"
+     src="{{ asset(Storage::disk('public')->url('assets/img_eventos/' . $evento->foto)) }}"
      alt="Foto del evento">
 
 

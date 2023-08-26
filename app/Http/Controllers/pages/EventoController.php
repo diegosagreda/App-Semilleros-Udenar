@@ -75,7 +75,7 @@ class EventoController extends Controller
 
             $archivoFoto = $request->file('foto');
             $nombre = $archivoFoto->getClientOriginalName();
-            $rutaFoto = $archivoFoto->storeAs('img_eventos', $nombre, 'public');
+            $rutaFoto = $archivoFoto->storeAs('assets/img_eventos', $nombre, 'public');
             $evento->foto = $nombre;
 
         }
