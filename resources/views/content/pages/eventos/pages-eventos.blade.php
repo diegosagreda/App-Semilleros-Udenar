@@ -58,7 +58,7 @@
      src="{{ asset(Storage::url('assets/img_eventos/' . $evento->foto)) }}"
      alt="Foto del evento">
 
-
+<!--hpola-->
             </div>
             <!-- Nombre del evento -->
             <h5 class="mb-1 card-title" style="color: rgb(0, 0, 0); font-size: 30px;">{{ $evento->nombre }}</h5>
