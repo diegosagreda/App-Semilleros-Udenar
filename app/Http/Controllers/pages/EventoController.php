@@ -68,10 +68,16 @@ class EventoController extends Controller
 
         // Procesar y almacenar la imagen del evento
         if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-            $fotoNombre = time() . '_' . $foto->getClientOriginalName();
-            $foto->move(public_path('assets/eventos'), $fotoNombre);
-            $evento->foto = $fotoNombre;
+            // $foto = $request->file('foto');
+            // $fotoNombre = time() . '_' . $foto->getClientOriginalName();
+            // $foto->move(public_path('assets/eventos'), $fotoNombre);
+            // $evento->foto = $fotoNombre;
+
+            $archivoFoto = $request->file('foto');
+            $nombre = $archivoFoto->getClientOriginalName();
+            $rutaFoto = $archivoFoto->storeAs('img_eventos', $nombre, 'public');
+            $evento->foto = $nombre;
+
         }
 
         $evento->save();

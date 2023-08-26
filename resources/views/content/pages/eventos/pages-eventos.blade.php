@@ -53,7 +53,12 @@
             </div>
             <!-- Foto -->
             <div class="mx-auto mb-3">
-              <img alt="Foto del evento" class=" h-px-100 w-px-111; rounded h-px-0 w-px-111 img-fluid" src="{{ asset('assets/eventos/' . $evento->foto) }}" alt="Foto del evento">
+              <img alt="Foto del evento"
+     class="h-px-100 w-px-111 rounded h-px-0 w-px-111 img-fluid"
+     src="{{ asset(Storage::disk('public')->url('img_eventos/' . $evento->foto)) }}"
+     alt="Foto del evento">
+
+
             </div>
             <!-- Nombre del evento -->
             <h5 class="mb-1 card-title" style="color: rgb(0, 0, 0); font-size: 30px;">{{ $evento->nombre }}</h5>
