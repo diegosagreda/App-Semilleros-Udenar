@@ -59,10 +59,10 @@
 
 <!-- User Profile Content -->
 <div class="row justify-content-center contenido">
-  <div class="col-md-12">
+  <div class="col-md-16">
     <!-- About User -->
     <div class="card">
-      <div class="card-body d-flex flex-wrap justify-content-around gap-4">
+      <div class="card-body d-flex flex-wrap justify-content-around">
         <div>
           <small class="text-muted text-uppercase">Informacion de contacto</small>
           <ul class="list-unstyled mb-4 mt-3">
@@ -111,9 +111,8 @@
     </div>
   </div>
   <!--/ About User -->
-
   <!-- Adjuntos -->
-  <div class="card mt-4 adjunto">
+  <div class="card mt-4">
     <div class="card-body">
       <small class="text-muted text-uppercase">Adjuntos</small>
       <ul class="list-unstyled mt-3 mb-0">
@@ -128,6 +127,43 @@
   <!--/ Adjuntos -->
 </div>
 </div>
+
+<div class="col-md-12 texto">
+  <h1>Semilleristas</h1>
+</div>
+<!-- Cards semilleristas-->
+<div class="semilleristas">
+  <div class="row g-4">
+@forelse ($semillero->semilleristas as $semillerista)
+<div class="col-xl-4 col-lg-6 col-md-6">
+<div class="card">
+<div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+  <!--Opciones editar e eliminar boton 3 puntos-->
+  <!-- Foto-->
+  <div class="mx-auto mb-3">
+    <img alt="Avatar Image" class="rounded-circle h-px-100 w-px-100" src="{{ asset('assets/img_semilleristas') . '/' . $semillerista->foto}}"
+              alt="Foto del coordinador">
+  </div>
+  <!--Nombre--->
+  <h5 class="mb-1 card-title">{{$semillerista->nombre}}</h5>
+  <!--Semillero--->
+
+  <span style="color: rgb(123, 179, 39)"><i  style="margin-right: 5px;" class='bx bx-shield'></i><strong>{{$semillero->nombre}}</strong></span>
+
+
+  <div class="d-flex align-items-center justify-content-center mt-5">
+    <a href="{{route('semilleristas.show',$semillerista->identificacion)}}" class="btn btn-primary d-flex align-items-center me-3"><i class="bx bx-user"></i>Ver perfil</a>
+  </div>
+</div>
+</div>
+</div>
+@empty
+
+@endforelse
+</div>
+</div>
+
+<!--/ Semilleristas Cards -->
 <!--/ User Profile Content -->
 @endsection
 
@@ -141,17 +177,27 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 50%;
+    height: 50%;
+  }
+  .semilleristas{
+    text-align: left;
+    padding: 1% 10%;
   }
   /* Ajusta los márgenes para el contenedor principal */
   .contenido {
+    display: flex;
     text-align: left;
     padding: 1% 10%; /* Ajusta el espaciado superior e inferior según tus preferencias */
   }
   .card {
     margin: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .texto{
+    padding:1% 10%;
+    text-align: center;
+    justify-content: center;
   }
 
 </style>

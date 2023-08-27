@@ -59,7 +59,7 @@
                             </li>
                         @endforeach
                     @else
-                        <li>No hay personas</li>
+                        <li>Sin asignar</li>
                     @endif
                 </ul>
             </td>

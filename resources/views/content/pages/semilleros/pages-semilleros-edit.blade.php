@@ -25,7 +25,7 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <form action="{{ route('semilleros.update',$semillero->id) }}" method="POST" enctype="multipart/form-data">
+      <form id="semillerista-form" action="{{ route('semilleros.update',$semillero->id) }}" method="POST" enctype="multipart/form-data">
            @csrf
            @method("PUT")
           <div class="botones card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
@@ -35,7 +35,7 @@
               <a href="{{ route('pages-semilleros')}}" class="btn btn-danger">
                 <span class="align-middle">Cancelar</span>
               </a>
-              <button type="" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Actualizar
               </button>
             </div>
@@ -74,6 +74,7 @@
                         <option value="Pasto" {{$semillero->sede == 'Pasto' ? 'selected' : ''}}>Pasto</option>
                         <option value="Ipiales"{{$semillero->sede == 'Ipiales' ? 'selected' : ''}} >Ipiales</option>
                         <option value="Tumaco" {{$semillero->sede == 'Tumaco' ? 'selected' : ''}}>Tumaco</option>
+                        <option value="Tumaco" {{$semillero->sede == 'Túquerres' ? 'selected' : ''}}>Túqueres</option>
                       </select>
                     </div>
                             <div class="col-md-12">
@@ -164,6 +165,43 @@ function handleFileSelect(event) {
 }
 document.getElementById('upload').addEventListener('change', handleFileSelect);
 
+//Formulario
+document.getElementById('semillerista-form').addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent default form submission
+
+  const formElement = event.target;
+  const formData = new FormData(formElement); // Serialize form data
+
+  fetch(formElement.action, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      // Include CSRF token in the request headers
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+    },
+  })
+  .then(response => response.json()) // Parsear la respuesta JSON
+  .then(data => {
+      if (data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: data.message, // El mensaje de éxito desde la respuesta JSON
+          showConfirmButton: false, // Ocultar el botón de confirmación
+          timer: 2000, // Cerrar la ventana emergente después de 3 segundos
+        }).then(() => {
+          window.location.href = "{{ route('pages-semilleros') }}";
+        });
+      } else {
+        console.log('Form submitted successfully');
+      }
+      console.error('Form submission failed');
+  })
+  .catch(error => {
+
+      console.error('Network error occurred', error);
+  });
+});
 
 
 </script>
