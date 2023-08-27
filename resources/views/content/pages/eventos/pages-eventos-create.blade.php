@@ -46,8 +46,16 @@
                   <div class="row g-3">
                     <div class="col-md-6">
                       <label class="form-label" for="codigo">Codigo</label>
-                      <input type="text" id="codigo" name="codigo" class="form-control" required/>
-                    </div> 
+                      <input type="text" id="codigo" name="codigo" class="form-control @error('codigo') is-invalid @enderror" required inputmode="numeric" pattern="[0-9]+" title="Ingrese solo números"  />
+                      
+                      @error('codigo')
+                      <div class="invalid-feedback">
+                          {{ $message }}
+                          El código del evento ya está en uso. Por favor, elige otro código.
+                      </div>
+                      @enderror
+                  </div>
+                  
                     <div class="col-md-6">
                       <label class="form-label" for="nombre">Nombre Evento</label>
                       <input type="text" id="nombre" name="nombre" class="form-control" required/>
@@ -108,9 +116,9 @@
                   </div>
                   <br>
                   <div class="col-12">
-                   
                     <label class="form-label" for="foto">Foto del Evento</label>
-                    <input type="file" id="foto" name="foto" class="form-control" required />
+                    <input type="file" id="foto" name="foto" class="form-control" required accept="image/jpeg, image/png" />
+                    <br>
                     <p class="mb-0">Permitido JPG o PNG</p>
                   </div>
               </div>
@@ -128,10 +136,28 @@
                   </div>
                 </div>
           </form>
-
+          <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Evento Creado Exitosamente</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        El evento ha sido creado con éxito.
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+      
               
 <!-- /Sticky Actions -->
 @endsection
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
 <style>
   .form-label {
     font-style: italic;
@@ -139,3 +165,4 @@
   }
   
 </style>
+

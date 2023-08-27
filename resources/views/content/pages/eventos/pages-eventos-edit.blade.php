@@ -106,19 +106,38 @@
                   <label class="form-label" for="foto">Foto del Evento</label>
                   <input type="file" id="foto" name="foto" class="form-control" />
                 </div>-->
-                <div class="d-flex flex-column align-items-center align-items-sm-center gap-4">
+                {{-- <div class="d-flex flex-column align-items-center align-items-sm-center gap-4">
                   <img src="{{ asset('assets/eventos') . '/' . $evento->foto }}" alt="user-avatar" class=" h-px-205 w-px-200" height="100" width="100" id="uploadedAvatar" />
                   <div class="button-wrapper">
-                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                      <i class="bx bx-upload d-block "></i>
-                      <input name="foto" type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg"/>
+                      <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                          <i class="bx bx-upload d-block "></i>
+                          <input name="nueva_foto" type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg"/>
+                      </label>
                     </label>
                     <button id="btn-reset" type="button" class="btn btn-label-secondary account-image-reset mb-4">
-                      <i class="bx bx-reset d-block"></i>
-                    </button>
-                    <p class="mb-0">Permitido JPG o PNG</p>
+                    <i class="bx bx-reset d-block"></i>
+                      </button>
+                      
+                    {{-- <p class="mb-0">Deshacer</p>
+                      <p class="mb-0">Permitido JPG o PNG</p>
                   </div>
+              </div>--}}
+
+              <div class="col-12">
+                <label class="form-label" for="foto">Foto del Evento</label>
+                <input type="file" id="foto" name="foto" class="form-control" accept="image/jpeg, image/png">
+                <br>
+                <p class="mb-0">Permitido JPG o PNG</p>
+            </div>
+            
+            @if($evento->foto)
+            <div class="col-12 mt-4">
+                <label class="form-label">Foto Actual del Evento</label>
+                <div>
+                  <img src="{{ asset('assets/eventos/' . $evento->foto) }}" alt="Foto del Evento" class="img-fluid" style="max-width:200px; height: auto;">
                 </div>
+            </div>
+            @endif
             </div>
             <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
               <h5 class="card-title mb-sm-0 me-2">Eventos</h5>

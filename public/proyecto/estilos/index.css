@@ -62,7 +62,6 @@ body {
   .project-title {
       font-size: 24px;
       margin: 0;
-      color: #333;
       font-weight: bold;
       margin-bottom: 20px;
   }
@@ -118,7 +117,6 @@ body {
   
   .project-card .project-type {
     font-style: italic;
-    color: #666;
     margin: 5px 0; /* Espacio entre el tipo de proyecto y la imagen */
   }
   
@@ -148,28 +146,27 @@ body {
     margin-top: 15px; /* Espacio entre los botones y el resto del contenido */
   }
   
-  .project-card .btn {
+  .card .btnV {
     padding: 8px 15px;
     margin: 0 5px;
     border: none;
     border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
-    background-color: #fff; /* Fondo blanco por defecto */
-    color: #007bff; /* Texto en color azul por defecto */
+    color: #ffffff;
+    background-color: #91a4a5; /* Fondo blanco por defecto */
     transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
   }
   
-  .project-card .btn:hover {
-    background-color: #007bff; /* Color de fondo al pasar el cursor por el botón */
-    color: #fff; /* Texto en color blanco al pasar el cursor por el botón */
+  .card .btnV:hover {
+    color: #f0f0f0;
+    background-color: #91a4a5 ;/* Color azul oscuro al pasar el ratón encima*/
   }
   
   
   .project-type {
       font-size: 18px;
       margin: 5px 0;
-      color: #666;
   }
   
   .project-status {
@@ -232,8 +229,8 @@ body {
 }
 
 .boton.custom-btn:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
+        background-color: #6c9fd6;
+        border-color: #6c9fd6;
         transform: scale(1.05);
 }
 
