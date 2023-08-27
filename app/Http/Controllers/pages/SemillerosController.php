@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Semillero;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class SemillerosController extends Controller
@@ -63,6 +64,13 @@ class SemillerosController extends Controller
 
     return redirect()->route('pages-semilleros');
 }
+public function pdf(){
+    $semilleros = Semillero::all();
+    $pdf = Pdf::loadView('content.pages.semilleros.pages-semilleros-pdf', compact('semilleros'));
+     return $pdf->stream();
+  //return view('content.pages.proyectos.pages-proyectos-pdf');
+}
+
 public function edit($id){
   $semillero=Semillero::where('id',$id)->first();
   return view('content.pages.semilleros.pages-semilleros-edit', compact('semillero'));

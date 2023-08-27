@@ -10,9 +10,14 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="javascript:void(0)">Semilleros</a>
 
-    <a href="{{route('semilleros.create')}}" class="btn btn-primary text-nowrap">
-      <i class='bx bx-user'></i> Nuevo
-    </a>
+    <div class="ml-auto align-items-center"> <!-- Agregar esta división para alinear a la derecha -->
+      <a href="{{ route('semilleros.pdf') }}" id="reporte" name="reporte" class="btn btn-danger text-nowrap verPro reportes">
+        <i class='fas fa-file-pdf'></i> Reporte
+      </a>
+      <a href="{{route('semilleros.create')}}" class="btn btn-primary text-nowrap verPro">
+        <i class='bx bx-user'></i> Nuevo
+      </a>
+    </div>
   </div>
 </nav>
 
@@ -65,7 +70,7 @@
             </td>
             
 
-            <td><span class="badge bg-label-primary me-1">{{ $semillero->correo }}</span></td>
+            <td><span class="badge bg-label-primary me-1">{{ strtolower($semillero->correo) }}</span></td>
             <td>
               <div class="dropdown">
 
@@ -97,11 +102,17 @@
   </div>
 </div>
 <style>
-  .centered-avatar {
-    width: 30px;
-    height: 30px;
-    display: block;
-    margin: 0 auto;}
+
+  .verPro:focus {
+      width: 100px;
+      border-radius: 0;
+      background-color: transparent;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .reportes{
+    margin-right: 10px;
+  }
+
 </style>
 @endsection
 
