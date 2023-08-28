@@ -1,6 +1,9 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Tables - Basic Tables')
+@section('title', 'Semilleros')
+@section('page-style')
+<link rel="stylesheet" href="{{asset('assets/vendor/css/pages/page-profile.css')}}" />
+@endsection
 
 @section('content')
 <h4 class="py-3 breadcrumb-wrapper mb-4">
@@ -68,26 +71,19 @@
                     @endif
                 </ul>
             </td>
-            
-
             <td><span class="badge bg-label-primary me-1">{{ strtolower($semillero->correo) }}</span></td>
             <td>
               <div class="dropdown">
-
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"></button>
-                {{--  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>  --}}
                 <div class="dropdown @if(count($semilleros) < 3) show-all-options @endif">
                   <a class="dropdown-item" href="{{route('semilleros.view',$semillero->id)}}"><i class="bx bx-search-alt me-1"></i> Ver</a>
                   <a class="dropdown-item" href="{{route('semilleros.edit',$semillero->id)}}"><i class="bx bx-edit-alt me-1"></i> Editar</a>
-                  <a class="dropdown-item" href="{{ route('semilleros.destroy', $semillero->id) }}"
-                    onclick="event.preventDefault(); document.getElementById('delete-form-{{ $semillero->id }}').submit();">
-                     <i class="bx bx-trash me-1"></i> Eliminar
-                 </a>
-                 <form id="delete-form-{{ $semillero->id }}" action="{{ route('semilleros.destroy', $semillero->id) }}"
-                       method="POST" style="display: none;">
-                     @csrf
-                     @method('DELETE')
-                 </form>
+                  
+                  <form id="delete-form-{{ $semillero->id  }}" method="POST" action="{{ route('semilleros.destroy', $semillero->id) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="dropdown-item delete-button"  me-1 data-id="{{ $semillero->id }}"><i class="bx bx-trash me-1"></i> Eliminar</button>
+                  </form>
                 </div>
               </div>
             </td>
@@ -103,17 +99,46 @@
 </div>
 <style>
 
-  .verPro:focus {
-      width: 100px;
-      border-radius: 0;
-      background-color: transparent;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  }
   .reportes{
     margin-right: 10px;
   }
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+<script>
+  document.querySelectorAll('.delete-button').forEach(button => {
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+  
+      const semilleroId = event.target.getAttribute('data-id');
+      const form = document.getElementById(`delete-form-${semilleroId}`);
+  
+      Swal.fire({
+        icon: 'warning',
+        title: '¿Estás seguro?',
+        text: '¿Deseas eliminar el semillero?',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Si el usuario confirma, enviar el formulario
+          form.submit();
+        } else {
+          // Si el usuario cancela, no sucede nada
+          Swal.fire({
+            icon: 'info',
+            title: 'Cancelado',
+            text: 'La eliminación ha sido cancelada',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+    });
+  });
+</script>
 @endsection
 
 

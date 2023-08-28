@@ -6,6 +6,9 @@
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
 <!--Input upload file-->
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/dropzone/dropzone.css')}}" />
+
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/animate-css/animate.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
 @endsection
 
 @section('vendor-script')
@@ -15,12 +18,15 @@
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 <!--Input upload file-->
 <script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 @endsection
 
 @section('page-script')
 <script src="{{asset('assets/js/form-layouts.js')}}"></script>
 <!--Input upload file-->
 <script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
+<!--Sweet alert-->
+<script src="{{asset('assets/js/extended-ui-sweetalert2.js')}}"></script>
 @endsection
 
 

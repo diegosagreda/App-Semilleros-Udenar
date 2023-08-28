@@ -4,6 +4,8 @@
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
+<!--Input upload file-->
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/dropzone/dropzone.css')}}" />
 @endsection
 
 @section('vendor-script')
@@ -11,12 +13,15 @@
 <script src="{{asset('assets/vendor/libs/cleavejs/cleave.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/cleavejs/cleave-phone.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
+<!--Input upload file-->
+<script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
 @endsection
 
 @section('page-script')
 <script src="{{asset('assets/js/form-layouts.js')}}"></script>
+<!--Input upload file-->
+<script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
 @endsection
-
 
 
 @section('content')
@@ -25,13 +30,12 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <form id="semillerista-form" action="{{ route('semilleros.update',$semillero->id) }}" method="POST" enctype="multipart/form-data">
+      <form id="semillero-form" action="{{ route('semilleros.update',$semillero->id) }}" method="POST" enctype="multipart/form-data">
            @csrf
            @method("PUT")
           <div class="botones card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
             <h5 class="card-title mb-sm-0 me-2">Actualizar Semillero</h5>
             <div class="action-btns">
-
               <a href="{{ route('pages-semilleros')}}" class="btn btn-danger">
                 <span class="align-middle">Cancelar</span>
               </a>
@@ -93,10 +97,7 @@
                       <label class="form-label" for="genero">lineas de investigación</label>
                       <input type="text" id="lineas_investigacion" name="lineas_investigacion" class="form-control" value="{{ $semillero->lineas_investigacion }}" required/>
                     </div>
-                             {{--  <div class="mb-3">
-                      <label for="exampleFormControlTextarea1" class="form-label">Archivo resolucion</label>
-                      <input name="arhivo_resolucion" type="file" class="form-control" id="arhivo_resolucion" name="arhivo_resolucion" required accept="application/pdf">
-                  </div>  --}}
+
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>
                       <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ $semillero->descripcion }}</textarea>
@@ -149,6 +150,9 @@
     </div>
   </div>
 </div>
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
 <script>
 document.getElementById('btn-reset').addEventListener('click', ()=>{
   document.getElementById('uploadedAvatar').src = "{{ url('assets/img/avatars/avatar.png') }}";
@@ -166,9 +170,9 @@ function handleFileSelect(event) {
 document.getElementById('upload').addEventListener('change', handleFileSelect);
 
 //Formulario
-document.getElementById('semillerista-form').addEventListener('submit', function (event) {
+document.getElementById('semillero-form').addEventListener('submit', function (event) {
   event.preventDefault(); // Prevent default form submission
-
+  console.log("paso 1")
   const formElement = event.target;
   const formData = new FormData(formElement); // Serialize form data
 
@@ -182,7 +186,9 @@ document.getElementById('semillerista-form').addEventListener('submit', function
   })
   .then(response => response.json()) // Parsear la respuesta JSON
   .then(data => {
+    console.log("paso 3")
       if (data.success) {
+        console.log("paso 2")
         Swal.fire({
           icon: 'success',
           title: '¡Éxito!',

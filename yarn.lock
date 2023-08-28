@@ -1958,8 +1958,7 @@ bootstrap-maxlength@~1.10.0:
 
 "bootstrap-select@github:snapappointments/bootstrap-select#main":
   version "1.14.0-beta3"
-  resolved "https://codeload.github.com/snapappointments/bootstrap-select/tar.gz/939e94b14a34759e193f616b753e0a33081cc0c5"
-  integrity sha512-g1N441sYt9uUgabb21u9hs5puz/yisvSaYw6HEx96J5GA7QwrHrF6mvKSAlEvm0HBgqOeOiAE5Y59+0kHwZLcw==
+  resolved "git+ssh://git@github.com/snapappointments/bootstrap-select.git#939e94b14a34759e193f616b753e0a33081cc0c5"
 
 bootstrap@^4.4.1:
   version "4.6.2"

@@ -62,7 +62,12 @@ class SemillerosController extends Controller
 
     $semillero->save();
 
-    return redirect()->route('pages-semilleros');
+    // return redirect()->route('pages-semilleros');
+    return response()->json([
+      'success' => true,
+      'message' => 'Los datos se han guardado exitosamente.',
+      'coordinador_id' => $semillero->id,
+    ]);
 }
 public function pdf(){
     $semilleros = Semillero::all();
@@ -121,8 +126,12 @@ $semillero->logo = $newLogo;
 $semillero->archivo_resolucion = $newDoc;
 $semillero->save();
 
-return redirect()->route('pages-semilleros');
-
+// return redirect()->route('pages-semilleros');
+return response()->json([
+  'success' => true,
+  'message' => 'Los datos se han guardado exitosamente.',
+  'coordinador_id' => $semillero->id,
+]);
 }
 
 
